@@ -9,17 +9,14 @@ class WorkItemController extends Controller
 {
     //
     public function index(){
-        $workitem = WorkItem::all();
-        // return response()->json($workitem);
-        return view('work_item.index',['workitem' => $workitem]);
+        $workitem = WorkItem::with('modules','projects','users')->get();
+        return response()->json($workitem);
+        // return view('work_item.index',['workitem' => $workitem]);
     }
 
-    public function create(){
-        return view('work_item.create');
-    }
     public function store(Request $request){
         $workitem = new WorkItem;
-        $workitem->code = $request->code;
+        $workitem->work_item_code = $request->work_item_code;
         $workitem->name = $request->name;
         $workitem->module_id = $request->module_id;
         $workitem->project_id = $request->project_id;
@@ -28,7 +25,9 @@ class WorkItemController extends Controller
         $workitem->note = $request->note;
         $workitem->save();
 
-        return redirect('/work_item')->with('success', 'Thêm dau muc thành công!');
+        return response()->json($workitem);
+
+        // return redirect('/work_item')->with('success', 'Thêm dau muc thành công!');
     }
 
 

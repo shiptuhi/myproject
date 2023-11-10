@@ -43,7 +43,10 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
                                             <label class = "form-label" for="user_id">Người phụ trách</label>
-                                            <input required type="text" placeholder="Nhập tên người phụ trách" class="form-control form-control-lg" v-model="projects.user_id"/>
+                                            <select class="form-control form-control-lg" v-model="projects.user_id">
+                                                <option value="">--Chọn--</option>
+                                                <option v-for="user in user_project" :value="user.id">{{ user.name}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
@@ -76,7 +79,7 @@
                                                         formControlName="status"
                                                         v-model="projects.active_status"
                                                     />
-                                                    <label class="form-check-label" for="active_status">Không hoạt động</label>
+                                                    <label class="form-check-label" for="active_status">Ngừng hoạt động</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,28 +115,49 @@ export default {
     name: 'project-edit',
     data() {
         return {
-            projects: [],
+            projects: 
+            {
+                project_code: "",
+                name: "",
+                active_status: "",
+                date_start: "",
+                date_end: "",
+                user_id: [],
+                note: ""
+            },
+            user_project:[],
             
             
         };
     },
 
     mounted(){
-        console.log(this.$route.params.id);
         this.showProject();
+        this.getUserList();
+        this.updateProject();
+        // console.log(this.$route.params.id);
+        
     },
     methods:{
+        getUserList(){
+            axios.get("/api/list").then(response => {
+                this.user_project = response.data;
+            });
+        },
         showProject(){
             const id = this.$route.params.id;
+            // console.log(this.projects);
             axios.get(`/api/project/update/${id}`).then(response => {
-                // this.projects=response.data;
-                this.projects = response.data;
+                // console.log(this.projects);
+                this.projects=response.data;
+                // this.projects = response.data;
                 // console.log(this.projects);
             });
         },
         updateProject(){
             const id = this.$route.params.id;
-            axios.put(`/api/project/update/${id}`).then(response => {
+            axios.put(`/api/project/update/${id}`, this.projects).then(response => {
+                console.log(response.data);
                 this.$router.push('/project/list');
             })
         }

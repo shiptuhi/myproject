@@ -20,10 +20,10 @@ class WorkItem extends Model
 
     ];
 
-    public function project() {
+    public function projects() {
         return $this->belongsTo(Project::class,'project_id');
     }
-    public function module() {
+    public function modules() {
         return $this->belongsTo(Module::class,'module_id');
     }
 

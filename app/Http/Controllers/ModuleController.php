@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Module;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,8 +18,11 @@ class ModuleController extends Controller
         return response()->json($module);
     }
 
-    public function create(){
-        return view('module.create');
+    public function getModulesByProject($id){
+        $prj = Project::findOrfail($id);
+        $modules = $prj->modules;
+        // $modules = Module::where('project_id', $projectId)->get();
+        return response()->json($modules);
     }
     public function store(Request $request){
 
@@ -59,7 +63,7 @@ class ModuleController extends Controller
 
     public function edit($id) {
         $module = Module::findOrFail($id);
-        return view('module.edit', ['module' => $module]);
+        return response()->json($module);
     }
     public function update(Request $request, $id){
         $module = Module::findOrFail($id);

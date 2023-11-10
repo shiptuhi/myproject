@@ -1,0 +1,250 @@
+<template>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div
+                        class="card shadow-2-strong card-registration"
+                        style="border-radius: 15px"
+                    >
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
+                                THÊM ĐẦU MỤC
+                            </h3>
+                            <form @submit.prevent="addWorkItem">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class = "form-label" for="work_item_code">Mã đầu mục : <span>*</span></label>
+                                            <input required type="text" placeholder="Nhập mã đầu mục" class='form-control form-control-lg' v-model="work_items.work_item_code"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class = "form-label" for="module_id">Module : </label>
+                                            <select class="form-control form-control-lg" v-model="work_items.module_id">
+                                                <option value="">--Chọn--</option>
+                                                <option v-for="mod in module_work_items" :value="mod.id">{{ mod.module_code }}</option>  
+                                            </select>
+                                            <!-- <input required type="text" placeholder="Nhập tên người phụ trách" class="form-control form-control-lg" id="user_id" v-model="modules.user_module"/> -->
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class = "form-label" for="name">Tên đầu mục : <span>*</span></label>
+                                            <input required type="text" placeholder="Nhập tên module" class="form-control form-control-lg" v-model="work_items.name"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class = "form-label" for="user_id">Người phụ trách : </label>
+                                            <select class="form-control form-control-lg" v-model="work_items.emp_workitem">
+                                                <option value="">--Chọn--</option>
+                                                <option v-for="user in user_work_items" :value="user.id">{{ user.name}}</option>  
+                                            </select>
+                                            <!-- <input required type="text" placeholder="Nhập tên người phụ trách" class="form-control form-control-lg" id="user_id" v-model="modules.user_module"/> -->
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class = "form-label" for="project_id">Dự án :</label>
+                                            <select class="form-control form-control-lg" id="project_id" v-model="selectedProject" @change="getModuleList">
+                                                <option value="">--Chọn--</option>
+                                                <option v-for="prj in project_work_items" :value="prj.id">{{prj.project_code}}</option>
+                                                
+                                            </select>
+                                            <!-- <input type="text" class="form-control form-control-lg" id='date_end' v-model="modules.project_id"/> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="note">Ghi chú : </label>
+                                            <input type="note" class="form-control form-control-lg" v-model="work_items.note"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-outline">
+                                            <label for="status" class="form-label">Mức độ ưu tiên : <span>*</span></label>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="status"
+                                                            id="priority"
+                                                            value="Emergency"
+                                                            formControlName="status"
+                                                            v-model="work_items.priority"
+                                                        />
+                                                        <label class="form-check-label" for="priority"> Khẩn Cấp</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="status"
+                                                            id="priority"
+                                                            value="High"
+                                                            formControlName="status"
+                                                            v-model="work_items.priority"
+                                                        />
+                                                        <label Class="form-check-label" for="priority">Cao</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="status"
+                                                            id="priority"
+                                                            value="Medium"
+                                                            formControlName="status"
+                                                            v-model="work_items.priority"
+                                                        />
+                                                        <label class="form-check-label" for="priority">Trung Bình</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="status"
+                                                            id="priority"
+                                                            value="Low"
+                                                            formControlName="status"
+                                                            v-model="work_items.priority"
+                                                        />
+                                                        <label Class="form-check-label" for="priority">Thấp</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <router-link to="/module/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+<script>
+import axios from "axios";
+
+export default {
+    name: 'work-item-edit',
+    data() {
+        return {
+            work_items: {
+                'work_item_code': "",
+                'name': "", 
+                'module_id': [],
+                'project_id': [],
+                'priority': "",
+                'emp_workitem': [],
+                'note': "",
+            },
+            module_work_items: [],
+            project_work_items: [],
+            user_work_items: [],
+            selectedProject: null,
+        };
+    },
+    mounted(){
+        this.getProjectList();
+        this.getModuleList();
+        this.getUserList();
+        // this.showModule();
+        // this.addWorkItem();
+        // console.log(this.$route.params.id);
+    },
+    methods:{
+        getProjectList(){
+            axios.get("/api/project").then(response => {
+                this.project_work_items = response.data;
+            });
+        },
+
+        getModuleList(){
+            console.log(this.work_items.project_id);
+            axios.get(`/api/get-modules-by-project/${this.selectedProject}`).then(response => {
+                console.log(this.module_work_items);
+                this.module_work_items = response.data.module_work_items;
+            });
+            // axios.get("/api/module").then(response => {
+            //     this.module_work_items = response.data;
+            // });
+        },
+        
+        getUserList(){
+            axios.get("/api/list").then(response => {
+                this.user_work_items = response.data;
+            });
+        },
+        addWorkItem(event){
+            event.preventDefault();
+            console.log(this.work_items);
+            axios.post("/api/work_item/create", this.work_items).then(response => {
+                console.log(this.work_items);
+                this.$router.push('/work_item/list');
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    }
+};
+
+
+
+
+</script>
+<style>
+.gradient-custom {
+    background: #f093fb;
+    background: -webkit-linear-gradient(
+        to bottom right,
+        rgb(147, 171, 251),
+        rgb(87, 187, 245)
+    );
+    background: linear-gradient(
+        to bottom right,
+        rgb(149, 147, 251),
+        rgb(87, 208, 245)
+    );
+}
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+}
+.card-registration .select-arrow {
+    top: 13px;
+}
+</style>

@@ -29,7 +29,9 @@
                         <td>{{ prj.name }}</td>
                         <td>{{ prj.date_start }}</td>
                         <td>{{ prj.users.name}}</td>
-                        <td>{{ prj.active_status }}</td>
+                        <td><span v-if="prj.active_status === 'Active'" class="active text-success">Hoạt động</span>
+                        <span v-else class="Inactive text-danger">Ngừng hoạt động</span></td>
+                        <!-- <td>{{ prj.active_status }}</td> -->
                         
                         <td>
                             <router-link :to= "{path: '/project/edit/' + prj.id}" class="btn btn-info">Edit</router-link>
@@ -85,3 +87,8 @@ export default {
     // getProjects();
 }
 </script>
+<style>
+/* span {
+    color: rgba(237, 28, 36, 1);
+} */
+</style>

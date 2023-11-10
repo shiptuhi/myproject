@@ -8,6 +8,8 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkItemController;
+use App\Http\Controllers\WorkDoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,18 +73,19 @@ Route::delete('/project/delete/{id}',[ProjectController::class, 'destroy'])->nam
 
 
 
-
-
-
-
-
 //Module
 //truy vấn
 Route::get('/module',[ModuleController::class, 'index']);
+
+Route::get('/get-modules-by-project/{id}',[ModuleController::class, 'getModulesByProject']);
+
+
+
 // //thêm
 Route::post('/module/create',[ModuleController::class, 'store'])->name('module.store');
 
 // //sửa
+Route::get('/module/update/{id}',[ModuleController::class, 'edit'])->name('module.edit');
 Route::put('/module/update/{id}',[ModuleController::class, 'update'])->name('module.update');
 
 // //xóa
@@ -90,24 +93,33 @@ Route::delete('/module/delete/{id}',[ModuleController::class, 'destroy'])->name(
 
 
 
-
-// //Dau muc
-// //truy vấn
-// Route::get('/work_item',[WorkItemController::class, 'index']);
-// //thêm
-// Route::get('/work_item/create', [WorkItemController::class, 'create'])->name('work_item.create');
-
-
-// Route::post('/work_item/create',[WorkItemController::class, 'store'])->name('work_item.store');
+//Dau muc
+//truy vấn
+Route::get('/work_item',[WorkItemController::class, 'index']);
+//thêm
+Route::post('/work_item/create',[WorkItemController::class, 'store'])->name('work_item.store');
 
 
+//sửa
+Route::get('/work_item/update/{id}', [WorkItemController::class, 'edit'])->name('work_item.edit');
+Route::put('/work_item/update/{id}',[WorkItemController::class, 'update'])->name('work_item.update');
 
 
-// //sửa
-// Route::get('/work_item/update/{id}', [WorkItemController::class, 'edit'])->name('work_item.edit');
-// Route::put('/work_item/update/{id}',[WorkItemController::class, 'update'])->name('work_item.update');
+//xóa
+Route::get('/work_item/delete/{id}',[WorkItemController::class, 'destroy'])->name('work_item.destroy');
 
 
-// //xóa
-// Route::get('/work_item/delete/{id}',[WorkItemController::class, 'destroy'])->name('work_item.destroy');
+//Công việc
+//truy vấn
+Route::get('/work_do',[WorkDoController::class, 'index']);
+//thêm
+Route::post('/work_do/create',[WorkDoController::class, 'store'])->name('work_do.store');
+
+//sửa
+Route::get('/work_do/update/{id}', [WorkDoController::class, 'edit'])->name('work_do.edit');
+Route::put('/work_do/update/{id}',[WorkDoController::class, 'update'])->name('work_do.update');
+
+
+//xóa
+Route::get('/work_do/delete/{id}',[WorkDoController::class, 'destroy'])->name('work_do.destroy');
 

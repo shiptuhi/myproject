@@ -58,7 +58,7 @@ const router = createRouter({
             component: ModuleAdd, 
         },
         { 
-            path: '/module/edit',
+            path: '/module/edit/:id',
             name: 'module-edit',
             component: ModuleEdit, 
         },
@@ -73,7 +73,7 @@ const router = createRouter({
             component: WorkItemAdd, 
         },
         { 
-            path: '/work-item/edit',
+            path: '/work-item/edit/:id',
             name: 'work-item-edit',
             component: WorkItemEdit, 
         },
@@ -88,7 +88,7 @@ const router = createRouter({
             component: WorkDoAdd, 
         },
         { 
-            path: '/work-do/edit',
+            path: '/work-do/edit/:id',
             name: 'work-do-edit',
             component: WorkDoEdit, 
         },

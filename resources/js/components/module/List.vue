@@ -30,7 +30,7 @@
                         <td>{{ mod.projects.project_code }}</td>
                         <td>{{ mod.users.name }}</td>
                         <td>
-                            <router-link to="/module/edit" class="btn btn-info">Edit</router-link>
+                            <router-link :to= "{path: '/module/edit/' + mod.id}" class="btn btn-info">Edit</router-link>
                             <button type="button" @click="$event => deleteModule(mod.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
                             
                         </td>

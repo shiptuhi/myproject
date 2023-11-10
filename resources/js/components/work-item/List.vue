@@ -7,31 +7,36 @@
     </nav>
     
     <div class="panel panel-default">
-        <!-- <div class="panel-heading">Project list</div> -->
+
         <div class="panel-body ">
             <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">STT</th>
                         <th scope="col">Mã đầu mục</th>
                         <th scope="col">Tên đầu mục</th>
-                        <th scope="col">Mã module</th>
                         <th scope="col">Dự án</th>
+                        <th scope="col">Module</th>
                         <th scope="col">Người thực hiện</th>
                         <th scope="col">Trạng thái</th>
+                        <th scope="col">Ghi chú</th>
                         <th scope="col">Hành động</th>
                         <!-- <th width="100">&nbsp;</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="prj in projects" :key="prj.id">
-                        <td>{{ prj.id }}</td>
-                        <td>{{ prj.project_code }}</td>
-                        <td>{{ prj.name }}</td>
-                        <td>{{ prj.note }}</td>
+                    <tr v-for="wi in work_items" :key="wi.id">
+                        <td>{{ wi.id }}</td>
+                        <td>{{ wi.work_item_code }}</td>
+                        <td>{{ wi.name }}</td>
+                        <td>{{ wi.projects.project_code }}</td>
+                        <td>{{ wi.modules.module_code }}</td>
+                        <td>{{ wi.users.name }}</td>
+                        <td>{{ wi.priority}}</td>
+                        <td>{{ wi.note }}</td>
                         <td>
-                            <router-link to="/project/edit" class="btn btn-info">Edit</router-link>
-                            <router-link to="/project/delete" class="btn btn-danger" style="margin-left: 10px;">Delete</router-link>
+                            <router-link :to = "{path: '/work-item/edit' + wi.id}" class="btn btn-info">Edit</router-link>
+                            <button type="button" @click="$event => deleteWorkItem(wi.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
                             
                         </td>
                     </tr>
@@ -43,22 +48,30 @@
 <script>
 import axios from "axios";
 
-// export default {
-//     name: 'project-list',
-//     data() {
-//         return {
-//             projects: [],
-//         };
-//     },
-//     mounted(){
-//         this.getProjects();
-//     },
-//     methods:{
-//         getProjects(){
-//             axios.get("http://127.0.0.1:8080/api/project").then(response => {
-//             this.projects = response.data;
-//         });
-//         }
-//     }
-// };
+export default {
+    name: 'work-item-list',
+    data() {
+        return {
+            work_items: [],
+        };
+    },
+    mounted(){
+        this.getWorkItems();
+    },
+    methods:{
+        getWorkItems(){
+            axios.get("/api/work_item").then(response => {
+            this.work_items = response.data;
+            // console.log(response.data);
+        });
+        },
+        deleteWorkItem(id){
+            axios.delete(`/api/work_item/delete/${id}`).then(response => {
+                this.getWorkItems();
+            }).catch(error =>{
+                console.log(error);
+            })
+        }
+    }
+};
 </script>

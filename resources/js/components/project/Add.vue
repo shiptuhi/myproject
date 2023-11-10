@@ -77,12 +77,11 @@
                                                         type="radio"
                                                         name="status"
                                                         id="active_status"
-                                                        checked
-                                                        value="Active"
+                                                        value="Inactive"
                                                         formControlName="status"
                                                         v-model="projects.active_status"
                                                     />
-                                                    <label Class="form-check-label" for="active_status">Không hoạt động</label>
+                                                    <label Class="form-check-label" for="active_status">Ngừng hoạt động</label>
                                                 </div>
                                             </div>
                                         </div>
