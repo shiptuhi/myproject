@@ -15,19 +15,18 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <label class = "form-label" for="work_item_code">Mã đầu mục : <span>*</span></label>
+                                            <label class="form-label" for="work_item_code">Mã đầu mục : <span>*</span></label>
                                             <input required type="text" placeholder="Nhập mã đầu mục" class='form-control form-control-lg' v-model="work_items.work_item_code"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <label class = "form-label" for="module_id">Module : </label>
+                                            <label class="form-label" for="module_id">Module : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.module_id">
                                                 <option value="">--Chọn--</option>
                                                 <option v-for="mod in module_work_items" :value="mod.id">{{ mod.module_code }}</option>  
                                             </select>
-                                            <!-- <input required type="text" placeholder="Nhập tên người phụ trách" class="form-control form-control-lg" id="user_id" v-model="modules.user_module"/> -->
                                         </div>
                                     </div>
 
@@ -36,19 +35,18 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <label class = "form-label" for="name">Tên đầu mục : <span>*</span></label>
+                                            <label class="form-label" for="name">Tên đầu mục : <span>*</span></label>
                                             <input required type="text" placeholder="Nhập tên module" class="form-control form-control-lg" v-model="work_items.name"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <label class = "form-label" for="user_id">Người phụ trách : </label>
+                                            <label class="form-label" for="user_id">Người phụ trách : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.emp_workitem">
                                                 <option value="">--Chọn--</option>
                                                 <option v-for="user in user_work_items" :value="user.id">{{ user.name}}</option>  
                                             </select>
-                                            <!-- <input required type="text" placeholder="Nhập tên người phụ trách" class="form-control form-control-lg" id="user_id" v-model="modules.user_module"/> -->
                                         </div>
                                     </div>
                                     
@@ -57,13 +55,12 @@
 
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <label class = "form-label" for="project_id">Dự án :</label>
-                                            <select class="form-control form-control-lg" id="project_id" v-model="selectedProject" @change="getModuleList">
+                                            <label class="form-label" for="project_id">Dự án :</label>
+                                            <select class="form-control form-control-lg" id="project_id" v-model="work_items.project_id" @change="getModuleList">
                                                 <option value="">--Chọn--</option>
                                                 <option v-for="prj in project_work_items" :value="prj.id">{{prj.project_code}}</option>
                                                 
                                             </select>
-                                            <!-- <input type="text" class="form-control form-control-lg" id='date_end' v-model="modules.project_id"/> -->
                                         </div>
                                     </div>
 
@@ -158,7 +155,7 @@
 import axios from "axios";
 
 export default {
-    name: 'work-item-edit',
+    name: 'work-item-add',
     data() {
         return {
             work_items: {
@@ -173,13 +170,13 @@ export default {
             module_work_items: [],
             project_work_items: [],
             user_work_items: [],
-            selectedProject: null,
         };
     },
     mounted(){
         this.getProjectList();
         this.getModuleList();
         this.getUserList();
+
         // this.showModule();
         // this.addWorkItem();
         // console.log(this.$route.params.id);
@@ -192,14 +189,9 @@ export default {
         },
 
         getModuleList(){
-            console.log(this.work_items.project_id);
-            axios.get(`/api/get-modules-by-project/${this.selectedProject}`).then(response => {
-                console.log(this.module_work_items);
-                this.module_work_items = response.data.module_work_items;
+            axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`).then(response => {
+                this.module_work_items = response.data;
             });
-            // axios.get("/api/module").then(response => {
-            //     this.module_work_items = response.data;
-            // });
         },
         
         getUserList(){
@@ -209,9 +201,9 @@ export default {
         },
         addWorkItem(event){
             event.preventDefault();
-            console.log(this.work_items);
+            // console.log(this.work_items);
             axios.post("/api/work_item/create", this.work_items).then(response => {
-                console.log(this.work_items);
+                // console.log(this.work_items);
                 this.$router.push('/work_item/list');
             }).catch(error => {
                 console.error('Error:', error);

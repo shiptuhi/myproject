@@ -148,18 +148,18 @@ export default {
             const id = this.$route.params.id;
             // console.log(this.projects);
             axios.get(`/api/project/update/${id}`).then(response => {
-                // console.log(this.projects);
                 this.projects=response.data;
-                // this.projects = response.data;
                 // console.log(this.projects);
             });
         },
         updateProject(){
             const id = this.$route.params.id;
             axios.put(`/api/project/update/${id}`, this.projects).then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.$router.push('/project/list');
-            })
+            }).catch(error => {
+                console.error('Error:', error);
+            });
         }
 
     }

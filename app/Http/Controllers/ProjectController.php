@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,13 +12,20 @@ use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
+    public function __construct() {
+        $this->middleware('api');
+      
+    }
     //
     public function index(){
         $project = Project::with('users')->get();
         // $project = Project::take(10)->get();
         // return $project;
         // return view('project.index',['project' => $project]);
-        return response()->json($project);
+        if(auth('api')->check()){
+            return response()-> json($project);
+        } 
+        abort(403, 'Unauthorized');
     }
     public function store(Request $request){
 
@@ -58,11 +66,7 @@ class ProjectController extends Controller
     public function edit($id) {
         $project = Project::findOrFail($id);
         return response()->json($project);
-        // return response()->json([
-        //     'message' => 'Project successfully printed',
-        //     'project' => $project
-        // ], 201);
-        // return view('project.edit', ['project' => $project]);
+    
     }
     public function update(Request $request, $id){
         $project = Project::findOrFail($id);

@@ -19,9 +19,9 @@ class ModuleController extends Controller
     }
 
     public function getModulesByProject($id){
-        $prj = Project::findOrfail($id);
-        $modules = $prj->modules;
-        // $modules = Module::where('project_id', $projectId)->get();
+        // $prj = Project::findOrfail($id);
+        // $modules = $prj->modules;
+        $modules = Module::where('project_id', $id)->get();
         return response()->json($modules);
     }
     public function store(Request $request){
@@ -37,9 +37,8 @@ class ModuleController extends Controller
         ];
 
         $message = [
-            'project_code.required' => 'Mã dự án là bắt buộc.',
+            'module_code.required' => 'Mã dự án là bắt buộc.',
             'name.required' => 'Tên dự án là bắt buộc.',
-            'active_status.required'=> 'Trạng thái dự án là bắt buộc.',
             'user_id.exists' => 'Nhân viên không tồn tại'
         ];
 
@@ -49,11 +48,10 @@ class ModuleController extends Controller
             return response()->json(['error' => $validator->errors()], 404);
         }
         // Log::info($project);
-        $module = Module::create(array_merge($validator->validated(),
-        ));
+        $module = Module::create(array_merge($validator->validated()));
 
         return response()->json([
-            'message' => 'Thêm module thành công!',
+            'message' => 'Module được thành công!',
             'project' => $module
         ], 201);
 

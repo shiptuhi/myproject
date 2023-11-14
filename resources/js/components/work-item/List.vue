@@ -19,7 +19,6 @@
                         <th scope="col">Module</th>
                         <th scope="col">Người thực hiện</th>
                         <th scope="col">Trạng thái</th>
-                        <th scope="col">Ghi chú</th>
                         <th scope="col">Hành động</th>
                         <!-- <th width="100">&nbsp;</th> -->
                     </tr>
@@ -33,9 +32,8 @@
                         <td>{{ wi.modules.module_code }}</td>
                         <td>{{ wi.users.name }}</td>
                         <td>{{ wi.priority}}</td>
-                        <td>{{ wi.note }}</td>
                         <td>
-                            <router-link :to = "{path: '/work-item/edit' + wi.id}" class="btn btn-info">Edit</router-link>
+                            <router-link :to="{path: '/work-item/edit/' + wi.id}" class="btn btn-info">Edit</router-link>
                             <button type="button" @click="$event => deleteWorkItem(wi.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
                             
                         </td>

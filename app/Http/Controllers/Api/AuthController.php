@@ -13,6 +13,8 @@ class AuthController extends Controller {
     
    public function __construct() {
        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+       
+    //    $this->middleware('role:admin', ['only'=> 'userList']);
      
    }
 
@@ -22,9 +24,9 @@ class AuthController extends Controller {
     * @return \Illuminate\Http\JsonResponse
     */
 
-    public function getLogin(){
-        return view('home.index');
-    }
+    // public function getLogin(){
+    //     return view('home.index');
+    // }
 
    public function login(Request $request){
        $validator = Validator::make($request->all(), [

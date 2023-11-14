@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class WorkDo extends Model
 {
     use HasFactory;
-    use HasFactory;
     protected $table = 'work_dos';
     protected $fillable = [
         'work_do_code',
@@ -24,18 +23,18 @@ class WorkDo extends Model
 
     ];
 
-    public function project() {
+    public function projects() {
         return $this->belongsTo(Project::class,'project_id');
     }
-    public function module() {
+    public function modules() {
         return $this->belongsTo(Module::class,'module_id');
     }
 
-    public function workitem() {
+    public function workitems() {
         return $this->belongsTo(WorkItem::class,'work_item_id');
     }
 
     public function users() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'emp_workdo');
     }
 }

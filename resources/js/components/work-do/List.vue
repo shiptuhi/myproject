@@ -3,34 +3,39 @@
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách công việc</span>
         
-        <router-link to="/module/add" class="btn btn-danger">Add</router-link>
-        <router-link to="/project/edit" class="btn btn-info" style="margin-left: 10px;">Edit</router-link>
+        <router-link to="/work-do/add" class="btn btn-primary">Thêm mới</router-link>
     </div>
     </nav>
     
     <div class="panel panel-default">
-        <!-- <div class="panel-heading">Project list</div> -->
         <div class="panel-body ">
             <table class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Mã module</th>
-                        <th scope="col">Tên module</th>
-                        <th scope="col">Ghi chú</th>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã công việc</th>
+                        <th scope="col">Tên công việc</th>
+                        <th scope="col">Thuộc đầu mục</th>
+                        <th scope="col">Thuộc module</th>
+                        <th scope="col">Dự án</th>
+                        <th scope="col">Người thực hiện</th>
+                        <th scope="col">Trạng thái</th>
                         <th scope="col">Hành động</th>
-                        <!-- <th width="100">&nbsp;</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="mod in modules" :key="mod.id">
-                        <td>{{ mod.id }}</td>
-                        <td>{{ mod.module_code }}</td>
-                        <td>{{ mod.name }}</td>
-                        <td>{{ mod.note }}</td>
+                    <tr v-for="wd in work_does" :key="wd.id">
+                        <td>{{ wd.id }}</td>
+                        <td>{{ wd.work_do_code }}</td>
+                        <td>{{ wd.name }}</td>
+                        <td>{{ wd.workitems.work_item_code }}</td>
+                        <td>{{ wd.modules.module_code }}</td>
+                        <td>{{ wd.projects.project_code }}</td>
+                        <td>{{ wd.users.name}}</td>
+                        <td>{{ wd.status}}</td>
                         <td>
-                            <router-link to="/module/add" class="btn btn-danger">Add</router-link>
-                            <router-link to="/module/edit" class="btn btn-info" style="margin-left: 10px;">Edit</router-link>
+                            <router-link :to="{path: '/work-do/edit/' + wd.id}" class="btn btn-info">Sửa</router-link>
+                            <button type="button" @click="$event => deleteWorkDo(wd.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>
                         </td>
                     </tr>
                 </tbody>
@@ -41,22 +46,31 @@
 <script>
 import axios from "axios";
 
-// export default {
-//     name: 'project-list',
-//     data() {
-//         return {
-//             projects: [],
-//         };
-//     },
-//     mounted(){
-//         this.getProjects();
-//     },
-//     methods:{
-//         getProjects(){
-//             axios.get("http://127.0.0.1:8080/api/project").then(response => {
-//             this.projects = response.data;
-//         });
-//         }
-//     }
-// };
+export default {
+    name: 'work-do-list',
+    data() {
+        return {
+            work_does: [],
+        };
+    },
+    mounted(){
+        this.getWorkDoes();
+    },
+    methods:{
+        getWorkDoes(){
+            axios.get("/api/work_do").then(response => {
+                this.work_does = response.data;
+            });
+        },
+        deleteWorkDo(id){
+            if(confirm("Bạn có chắc chắn muốn xóa công việc không?")){
+                axios.delete(`/api/work_do/delete/${id}`).then(response=>{
+                    this.getWorkDoes()
+                }).catch(error=>{
+                    console.log(error)
+                })
+            }
+        }
+    }
+};
 </script>

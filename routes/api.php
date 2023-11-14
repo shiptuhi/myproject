@@ -1,15 +1,17 @@
 <?php
 
-
-use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkItemController;
 use App\Http\Controllers\WorkDoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,39 +30,42 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
+Auth::routes();
+
 //login
-Route::group([
-    'middleware' => 'api',
-    'namespace' => 'App\Http\Controllers',
-    'prefix' => 'auth'
- 
-], function ($router) {
-    // Route::get('/', 'Api\AuthController@getLogin');
+Route::prefix('auth')->middleware('api')->group( function () {
     Route::post('/login', [AuthController::class, 'login'])->name('user.login');
-    // Route::post('/login', 'Api\AuthController@login')->name('user.login');
+
     Route::post('/register',[AuthController::class,'register']);
     Route::post('/logout', [AuthController::class,'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile',[AuthController::class, 'userProfile']);
+    Route::post('/change-pass', [AuthController::class, 'changePassWord']); 
+
     
-    Route::post('/change-pass', [AuthController::class, 'changePassWord']);  
+    Route::get('/user-profile',[AuthController::class, 'userProfile']);
+
+    Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('admin')]], function () {
+        Route::get('/user-list', [AuthController::class, 'userList']);
+       
+    });
+
+
+
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+ 
 });
 
-
-Route::get('/list',[UserController::class, 'index']);
-
+    // Route::get('/list',[UserController::class, 'index']);
 
 
-// Route::middleware('auth:api',['role:admin', 'permission:view user'])->group(function () {
-//     // Routes requiring the "admin" role and "create-post" permission.
-//     Route::get('/user-list','Api\AuthController@userList');
-// });
 
 
+
+    Route::get('/project',[ProjectController::class, 'index']);
 
 //Dự án
 //truy vấn
-Route::get('/project',[ProjectController::class, 'index']);
+// Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('admin')]], function () {
+    
 // //thêm
 Route::post('/project/create',[ProjectController::class, 'store'])->name('project.store');
 
@@ -106,7 +111,7 @@ Route::put('/work_item/update/{id}',[WorkItemController::class, 'update'])->name
 
 
 //xóa
-Route::get('/work_item/delete/{id}',[WorkItemController::class, 'destroy'])->name('work_item.destroy');
+Route::delete('/work_item/delete/{id}',[WorkItemController::class, 'destroy'])->name('work_item.destroy');
 
 
 //Công việc
@@ -121,5 +126,5 @@ Route::put('/work_do/update/{id}',[WorkDoController::class, 'update'])->name('wo
 
 
 //xóa
-Route::get('/work_do/delete/{id}',[WorkDoController::class, 'destroy'])->name('work_do.destroy');
+Route::delete('/work_do/delete/{id}',[WorkDoController::class, 'destroy'])->name('work_do.destroy');
 
