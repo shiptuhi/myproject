@@ -5,8 +5,7 @@
           <div class="nav-item dropdown">
               <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Nhân viên</button>
                 <ul class="dropdown-menu">
-                  <li><router-link to="/customer/list" class="nav-item nav-link text-center" >Nhan vien</router-link></li>
-                  <li><router-link to="/customer/list" class="nav-item nav-link text-center" >Khách hàng</router-link></li>
+                  <li><router-link to="/employee/list" class="nav-item nav-link text-center" >Nhân viên</router-link></li>
                 </ul>
           </div>
     
@@ -21,15 +20,40 @@
                 </ul>
           </div>
           
-          <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
     
           <a class="navbar-brand" to="#">TASK MANAGEMENT</a>
     
-            <router-link to="/" class="nav-item nav-link">Home</router-link>
-            <router-link to="/login" class="btn btn-outline-success" >Tài khoản</router-link>
+          <router-link to="/project/list" class="nav-item nav-link">Home</router-link>
+
+          <div class="nav-item dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <ul class="dropdown-menu">
+                <li><router-link to="/project/list" class="nav-item nav-link text-center" >Đổi mật khẩu</router-link></li>
+                <li><span class="nav-item nav-link text-center" v-on:click="logout">Đăng xuất</span></li>
+                
+              </ul>
+          </div>
         </div>
       </nav>
 </template>
+<script>
+import axios from 'axios';
+
+  export default{
+    computed: {
+    },
+    methods: {
+      logout(){
+        try{
+          // axios.post('/api/auth/logout');
+          localStorage.clear();
+          this.$router.push('/login');
+        }catch(error){
+          console.error('Logout failed:', error);
+        }
+      },
+    }
+  }
+
+
+</script>

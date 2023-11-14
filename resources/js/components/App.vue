@@ -14,7 +14,7 @@ export default {
     },
     computed: {
       showNavbar(){
-        return this.$route.path != '/login';
+        return this.$route.path != '/login' && this.$route.path != '/register';
       }
     },
   }

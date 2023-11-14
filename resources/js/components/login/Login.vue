@@ -10,10 +10,12 @@
                                 <form @submit.prevent="login">
                                     <div class="form-group">
                                         <input required type="text" placeholder="Email" class='form-control form-control-lg' v-model='users.email' />
+                                        <!-- <ErrorMessage name="email" class="error-feedback"/> -->
                                     </div>
 
                                     <div class="form-group">
                                         <input required type="password" placeholder="Password" class="form-control form-control-lg" v-model="users.password" />
+                                        <!-- <ErrorMessage name="password" class="error-feedback" /> -->
                                     </div>
 
                                     <div class="col-12 justify-content-center d-flex p ">
@@ -52,7 +54,9 @@ export default {
     methods: {
         login(event) {
             event.preventDefault();
+            // console.log(this.users);
             axios.post('/api/auth/login',this.users).then(response => {
+                // console.log(this.users);
             //    console.log(response.data.access_token); 
                localStorage.setItem('token', response.data.access_token);
                this.$router.push('/project/list');
@@ -114,5 +118,9 @@ input[type=password] {
     color: #234666;
     text-decoration: none;
 }
+
+/* .error-feedback {
+  color: red;
+} */
 
 </style>

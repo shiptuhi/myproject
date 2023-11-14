@@ -69,7 +69,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
     public function projects(){
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'project_id');
     } 
 
     public function modules(){
@@ -77,7 +77,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function workitem(){
-        return $this->hasMany(WorkItem::class);
+        return $this->hasMany(WorkItem::class, );
     } 
 
     public function workdo() {

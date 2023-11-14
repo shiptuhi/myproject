@@ -12,21 +12,42 @@ use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
-    public function __construct() {
-        $this->middleware('api');
+    // public function __construct() {
+    //     $this->middleware('api');
       
-    }
+    // }
     //
     public function index(){
         $project = Project::with('users')->get();
         // $project = Project::take(10)->get();
-        // return $project;
-        // return view('project.index',['project' => $project]);
-        if(auth('api')->check()){
-            return response()-> json($project);
-        } 
-        abort(403, 'Unauthorized');
+        return response()-> json($project);
+        // if(auth('api')->check()){
+        //     return response()-> json($project);
+        // } 
+        // abort(403, 'Unauthorized');
     }
+
+    public function filter(Request $request){
+        $query = Project::query();
+
+        $searchInput = $request->input('input');
+        $query->where(function ($subQuery) use ($searchInput) {
+            $subQuery->where('id', $searchInput)
+                ->orWhere('name', 'like', '%' . $searchInput . '%')
+                ->orWhere('project_code', 'like', '%' . $searchInput . '%')
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('user_id', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('users')->where('name', 'like', '%' . $searchInput . '%');
+                    });
+                });
+            });
+        $projects = $query->get();
+
+        return response()->json($projects);
+    }
+
+
+
     public function store(Request $request){
 
         $rules = [

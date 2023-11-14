@@ -39,7 +39,7 @@ class AuthController extends Controller {
            return response()->json($validator->errors(), 422);
        }
 
-       if (! $token = auth('api')->attempt($validator->validated())) {
+       if (!$token = auth('api')->attempt($validator->validated())) {
            return response()->json(['error' => 'Unauthorized'], 401);
        }
 
@@ -109,10 +109,14 @@ class AuthController extends Controller {
 
 
    public function userList(){
-    $user= User::all();
+    $user= User::with('roles')->get();
+    // $userRoles = $user->getRoleNames();
     
     if(auth('api')->user()){
-        return response()-> json($user);
+        return response()-> json([
+            'user' => $user,
+            // 'roles' => $userRoles
+        ]);
     } 
     abort(403, 'Unauthorized');
 //     if(auth('api')->user()->hasRole('admin')){

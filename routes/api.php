@@ -43,10 +43,10 @@ Route::prefix('auth')->middleware('api')->group( function () {
     
     Route::get('/user-profile',[AuthController::class, 'userProfile']);
 
-    Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('admin')]], function () {
+    // Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('admin')]], function () {
         Route::get('/user-list', [AuthController::class, 'userList']);
        
-    });
+    // });
 
 
 
@@ -54,18 +54,18 @@ Route::prefix('auth')->middleware('api')->group( function () {
  
 });
 
-    // Route::get('/list',[UserController::class, 'index']);
+    Route::get('/list',[UserController::class, 'index']);
 
 
 
 
 
-    Route::get('/project',[ProjectController::class, 'index']);
 
 //Dự án
 //truy vấn
-// Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('admin')]], function () {
-    
+Route::get('/project',[ProjectController::class, 'index']); 
+Route::get('/project/search',[ProjectController::class, 'filter']); 
+
 // //thêm
 Route::post('/project/create',[ProjectController::class, 'store'])->name('project.store');
 

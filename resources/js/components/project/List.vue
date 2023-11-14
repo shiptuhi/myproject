@@ -2,7 +2,11 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách dự án</span>
-            <router-link to="/project/add" class="btn btn-primary">Add</router-link>
+        <form class="d-flex" role="search">
+              <input class="form-control mb-6" type="search" placeholder="Search" aria-label="Search" v-model="input">
+              <button class="btn btn-outline-success" @click.prevent="filter()">Search</button>
+        </form>
+        <router-link to="/project/add" class="btn btn-primary">Add</router-link>
     </div>
     </nav>
     
@@ -23,22 +27,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="prj in projects" :key="prj.id">
-                        <td>{{ prj.id }}</td>
+                    <tr v-for="(prj,idx) in projects" :key="idx">
+                        <td>{{ idx+1 }}</td>
                         <td>{{ prj.project_code }}</td>
                         <td>{{ prj.name }}</td>
                         <td>{{ prj.date_start }}</td>
-                        <td>{{ prj.users.name}}</td>
+                        <!-- <td >{{ prj.users.name}}</td> -->
                         <td><span v-if="prj.active_status === 'Active'" class="active text-success">Hoạt động</span>
                         <span v-else class="Inactive text-danger">Ngừng hoạt động</span></td>
                         <!-- <td>{{ prj.active_status }}</td> -->
                         
                         <td>
                             <router-link :to= "{path: '/project/edit/' + prj.id}" class="btn btn-info">Edit</router-link>
-                            <button type="button" @click="deleteProject(prj.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
+                            <button type="button" @click    ="deleteProject(prj.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
                             
                         </td>
                     </tr>
+
+
                 </tbody>
             </table>
         </div>
@@ -52,12 +58,14 @@ export default {
     data() {
         return {
             projects: [],
-            // counter: 1,
+            input: '',
+            
             
         };
     },
     mounted(){
         this.getProjects();
+        this.filter();
     },
     methods:{
         getProjects(){
@@ -74,7 +82,18 @@ export default {
                     console.log(error)
                 })
             }
-        }
+        },
+        filter() {
+            const params = {
+                input: this.input   
+            }
+            axios.get("/api/project/search/", {params}).then(response=>{
+                // console.log(params);
+                this.projects = response.data;
+            }).catch(error => {
+                console.error(error);
+            });
+        },
     }
     // const getProjects = async()=>{
     //     try {

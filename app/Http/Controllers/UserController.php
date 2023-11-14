@@ -9,8 +9,10 @@ class UserController extends Controller
 {
     //
     public function index(){
-        $user = User::all();
+        $user = User::with('roles')->get();
         return response()->json($user);
     }
+
+    // public functio
     
 }

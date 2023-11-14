@@ -110,7 +110,7 @@
                                                             id="type_of_work"
                                                             value="Simple"
                                                             formControlName="type_of_work"
-                                                            v-model="work_does.priority"
+                                                            v-model="work_does.type_of_work"
                                                         />
                                                         <label Class="form-check-label" for="priority">Đơn giản</label>
                                                     </div>

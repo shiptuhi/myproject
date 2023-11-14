@@ -10,6 +10,8 @@ import App from './components/App.vue';
 import Login from './components/login/Login.vue';
 import Register from './components/login/Register.vue';
 
+import EmployeeList from './components/employee/List.vue';
+
 import ProjectList from './components/project/List.vue';
 import ProjectAdd from './components/project/Add.vue';
 import ProjectEdit from './components/project/Edit.vue';
@@ -31,7 +33,9 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import store from './store';
 
 
 const router = createRouter({
@@ -48,10 +52,15 @@ const router = createRouter({
             component: Register, 
         },
         { 
+            path: '/employee/list',
+            name: 'employee-list',
+            component: EmployeeList, 
+        },
+        { 
             path: '/project/list',
             name: 'project-list',
             component: ProjectList,
-            meta: { requiresAuth: true }, 
+            // meta: { requiresAuth: true }, 
         },
         { 
             path: '/project/add',
@@ -114,4 +123,16 @@ const router = createRouter({
 library.add(faPhone);
 
 const app = createApp(App);
-app.use(router).component("font-awesome-icon", FontAwesomeIcon).mount('#app');
+app.use(router,store).component("font-awesome-icon", FontAwesomeIcon).mount('#app');
+
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/login', '/register'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('user');
+  
+    // if (authRequired && !loggedIn) {
+    //   return next('/login');
+    // }
+  
+    next();
+});
