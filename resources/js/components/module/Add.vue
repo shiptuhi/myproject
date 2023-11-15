@@ -4,38 +4,38 @@
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
                     <div
-                        class="card shadow-2-strong card-registration"
+                        class="card shadow-2-strong"
                         style="border-radius: 15px"
                     >
-                        <div class="card-body p-4 p-md-5">
+                        <div class="p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
                                 THÊM MODULE
                             </h3>
                             <form @submit.prevent="addModule">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="module_code">Mã module: <span>*</span></label>
                                             <input required type="text" placeholder="Nhập mã module" class='form-control form-control-lg' v-model="modules.module_code"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="date_start">Ngày bắt đầu :</label>
-                                            <input type="text" placeholder="yyyy-mm-dd" class="form-control form-control-lg" id='date_start' v-model="modules.date_start"/>
+                                            <input type="text" placeholder="dd-mm-yyyy" class="form-control form-control-lg" id='date_start' v-model="modules.date_start"/>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="name">Tên module: <span>*</span></label>
                                             <input required type="text" placeholder="Nhập tên module" class="form-control form-control-lg" id='name' v-model="modules.name"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="project_id">Mã dự án :</label>
                                             <select class="form-control form-control-lg" v-model="modules.project_id">
                                                 <option value="">--Chọn--</option>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="user_id">Người phụ trách</label>
                                             <select class="form-control form-control-lg" v-model="modules.user_module">
                                                 <option value="">--Chọn--</option>
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="note">Ghi chú</label>
                                             <input type="note" class="form-control form-control-lg" v-model="modules.note"/>
                                         </div>
@@ -140,14 +140,5 @@ export default {
         rgb(149, 147, 251),
         rgb(87, 208, 245)
     );
-}
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-}
-.card-registration .select-arrow {
-    top: 13px;
 }
 </style>

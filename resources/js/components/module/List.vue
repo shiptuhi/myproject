@@ -2,7 +2,11 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách module</span>
-            <router-link to="/module/add" class="btn btn-primary">Add</router-link>
+        <form class="d-flex" role="search">
+              <input class="form-control mb-6" type="search" placeholder="Search" aria-label="Search" @input="filter" v-model="input">
+              <button class="btn btn-outline-success" @click.prevent="filter()">Search</button>
+        </form>
+            <router-link to="/module/add" class="btn btn-primary">Thêm mới</router-link>
     </div>
     </nav>
     
@@ -30,8 +34,8 @@
                         <td>{{ mod.projects.project_code }}</td>
                         <td>{{ mod.users.name }}</td>
                         <td>
-                            <router-link :to= "{path: '/module/edit/' + mod.id}" class="btn btn-info">Edit</router-link>
-                            <button type="button" @click="$event => deleteModule(mod.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
+                            <router-link :to= "{path: '/module/edit/' + mod.id}" class="btn btn-info">Sửa</router-link>
+                            <button type="button" @click="$event => deleteModule(mod.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>
                             
                         </td>
                     </tr>
@@ -48,6 +52,7 @@ export default {
     data() {
         return {
             modules: [],
+            input:''
         };
     },
     mounted(){
@@ -65,6 +70,21 @@ export default {
             }).catch(error=>{
                 console.log(error)
             })
+        },
+
+        filter(){
+            const params = {
+                input: this.input 
+            }
+            try {
+                axios.get("/api/module/search", {params}).then(response => {
+                    console.log(params);
+                    this.modules=response.data;
+                });
+
+            } catch(error){
+                console.error(error);
+            }
         }
     }
 };

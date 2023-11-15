@@ -3,21 +3,21 @@
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
-                    <div class="card shadow-2-strong" style="border-radius: 15px">
-                        <div class="card-body p-4 p-md-5">
+                    <div class="card shadow-2-strong form-add" style="border-radius: 15px">
+                        <div class="p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
                                 THÊM MỚI DỰ ÁN
                             </h3>
                             <form @submit.prevent="addProject">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="project_code">Mã dự án: <span>*</span></label>
                                             <input required type="text" placeholder="Nhập mã dự án" class='form-control form-control-lg' id='project_code' v-model='projects.project_code'/>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="date_start">Ngày bắt đầu :</label>
                                             <input type="text" placeholder="dd-mm-yyyy" class="form-control form-control-lg" id='date_start' v-model="projects.date_start"/>
                                         </div>
@@ -26,13 +26,13 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="name">Tên dự án: <span>*</span></label>
                                             <input required type="text" placeholder="Nhập tên dự án" class="form-control form-control-lg" id='name' v-model="projects.name"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="date_end">Ngày kết thúc :</label>
                                             <input type="text" placeholder="dd-mm-yyyy" class="form-control form-control-lg" id='date_end' v-model="projects.date_end"/>
                                         </div>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="user_id">Người phụ trách</label>
                                             <select class="form-control form-control-lg" v-model="projects.user_id">
                                                 <option value="">--Chọn--</option>
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label for="status" class="form-label">Trạng thái: <span>*</span></label>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -87,7 +87,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-4">
-                                    <div class="form-outline">
+                                    <div class="form-group">
                                         <label class="form-label" for="note">Ghi chú</label>
                                         <input type="note" class="form-control form-control-lg" id="note" v-model="projects.note"/>
                                     </div>
@@ -140,10 +140,10 @@ export default {
 
         addProject(event){
             event.preventDefault();
-            // console.log(this.projects);
+            console.log(this.projects);
             axios.post("/api/project/create", this.projects).then(response => {
                 console.log(response.data);
-                // console.log('Success');
+                console.log('Success');
                 this.$router.push('/project/list');
             }).catch(error => {
                 console.error('Error:', error);
@@ -176,14 +176,5 @@ export default {
         rgb(149, 147, 251),
         rgb(87, 208, 245)
     );
-}
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-}
-.card-registration .select-arrow {
-    top: 13px;
 }
 </style>

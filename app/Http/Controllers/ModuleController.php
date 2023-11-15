@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Module;
-use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,18 +17,45 @@ class ModuleController extends Controller
         return response()->json($module);
     }
 
+    public function filter(Request $request){
+        $query = Module::query();
+
+        $searchInput = $request->input('input');
+        $query->with('projects', 'users')->where(function ($subQuery) use ($searchInput) {
+            $subQuery->where('id', $searchInput)
+                ->orWhere('name', 'like', '%' . $searchInput . '%')
+                ->orWhere('module_code', 'like', '%' . $searchInput . '%')
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('user_module', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('users')->where('name', 'like', '%' . $searchInput . '%');
+                    });
+                })
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('project_id', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('projects')->where('project_code', 'like', '%' . $searchInput . '%');
+                    });
+                })
+                ;
+            });
+        $modules = $query->get();
+
+        return response()->json($modules);
+    }
+
+
     public function getModulesByProject($id){
         // $prj = Project::findOrfail($id);
         // $modules = $prj->modules;
         $modules = Module::where('project_id', $id)->get();
         return response()->json($modules);
     }
+
     public function store(Request $request){
 
         $rules = [
             'module_code' => 'required|string|max:255',
             'name' => 'required|max:255',
-            'date_start' => 'date',
+            'date_start' => 'nullable|date|date_format:d-m-Y',
             'project_id' => 'required|exists:projects,id',
             'user_module' => 'required|exists:users,id',
             'note' => 'max:255',

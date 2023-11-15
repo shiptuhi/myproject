@@ -2,7 +2,11 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách đầu mục công việc</span>
-            <router-link to="/work-item/add" class="btn btn-primary">Add</router-link>
+        <form class="d-flex" role="search">
+              <input class="form-control mb-6" type="search" placeholder="Search" aria-label="Search" @input="filter" v-model="input">
+              <button class="btn btn-outline-success" @click.prevent="filter()">Search</button>
+        </form>
+            <router-link to="/work-item/add" class="btn btn-primary">Thêm mới</router-link>
     </div>
     </nav>
     
@@ -18,7 +22,7 @@
                         <th scope="col">Dự án</th>
                         <th scope="col">Module</th>
                         <th scope="col">Người thực hiện</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Mức ưu tiên</th>
                         <th scope="col">Hành động</th>
                         <!-- <th width="100">&nbsp;</th> -->
                     </tr>
@@ -31,10 +35,16 @@
                         <td>{{ wi.projects.project_code }}</td>
                         <td>{{ wi.modules.module_code }}</td>
                         <td>{{ wi.users.name }}</td>
-                        <td>{{ wi.priority}}</td>
                         <td>
-                            <router-link :to="{path: '/work-item/edit/' + wi.id}" class="btn btn-info">Edit</router-link>
-                            <button type="button" @click="$event => deleteWorkItem(wi.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
+                            <span v-if="wi.priority === 'Emergency'" class="emergency text-danger-emphasis">Khẩn Cấp</span>
+                            <span v-else-if="wi.priority === 'High'" class="high text-danger">Cao</span>
+                            <span v-else-if="wi.priority === 'Medium'" class="medium text-info">Trung Bình</span>
+                            <span v-else-if="wi.priority === 'Low'" class="low text-success">Thấp</span>
+                        </td>
+
+                        <td>
+                            <router-link :to="{path: '/work-item/edit/' + wi.id}" class="btn btn-info">Sửa</router-link>
+                            <button type="button" @click="$event => deleteWorkItem(wi.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>
                             
                         </td>
                     </tr>
@@ -51,6 +61,7 @@ export default {
     data() {
         return {
             work_items: [],
+            input: ''
         };
     },
     mounted(){
@@ -69,6 +80,19 @@ export default {
             }).catch(error =>{
                 console.log(error);
             })
+        },
+        filter(){
+            const params = {
+                input: this.input
+            }
+            try {
+            axios.get("/api/work_item/search", {params}).then(response=>{
+                console.log(params);
+                this.work_items=response.data;
+            });
+            } catch(error){
+                console.error(error);
+            }
         }
     }
 };

@@ -69,19 +69,19 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
     public function projects(){
-        return $this->hasMany(Project::class, 'project_id');
+        return $this->hasMany(Project::class, 'user_id', 'id');
     } 
 
     public function modules(){
-        return $this->hasMany(Module::class);
+        return $this->hasMany(Module::class, 'user_id', 'id');
     }
 
     public function workitem(){
-        return $this->hasMany(WorkItem::class, );
+        return $this->hasMany(WorkItem::class, 'user_id', 'id');
     } 
 
     public function workdo() {
-        return $this->hasMany(WorkDo::class);
+        return $this->hasMany(WorkDo::class, 'user_id', 'id');
     }
 
 }

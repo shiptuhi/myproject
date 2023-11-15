@@ -15,6 +15,36 @@ class WorkItemController extends Controller
         return response()->json($workitem);
     }
 
+
+    public function filter(Request $request){
+        $query = WorkItem::query();
+
+        $searchInput = $request->input('input');
+        $query->with('modules', 'projects', 'users')->where(function ($subQuery) use ($searchInput) {
+            $subQuery->where('id', $searchInput)
+                ->orWhere('name', 'like', '%' . $searchInput . '%')
+                ->orWhere('work_item_code', 'like', '%' . $searchInput . '%')
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('emp_workitem', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('users')->where('name', 'like', '%' . $searchInput . '%');
+                    });
+                })
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('project_id', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('projects')->where('project_code', 'like', '%' . $searchInput . '%');
+                    });
+                })
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('module_id', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('modules')->where('module_code', 'like', '%' . $searchInput . '%');
+                    });
+                });
+            });
+        $modules = $query->get();
+
+        return response()->json($modules);
+    }
+
     public function store(Request $request){
 
         $rules = [

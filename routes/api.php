@@ -64,7 +64,12 @@ Route::prefix('auth')->middleware('api')->group( function () {
 //Dự án
 //truy vấn
 Route::get('/project',[ProjectController::class, 'index']); 
+
 Route::get('/project/search',[ProjectController::class, 'filter']); 
+
+
+
+
 
 // //thêm
 Route::post('/project/create',[ProjectController::class, 'store'])->name('project.store');
@@ -82,8 +87,9 @@ Route::delete('/project/delete/{id}',[ProjectController::class, 'destroy'])->nam
 //truy vấn
 Route::get('/module',[ModuleController::class, 'index']);
 
-Route::get('/get-modules-by-project/{id}',[ModuleController::class, 'getModulesByProject']);
+Route::get('/module/search',[ModuleController::class, 'filter']); 
 
+Route::get('/get-modules-by-project/{id}',[ModuleController::class, 'getModulesByProject']);
 
 
 // //thêm
@@ -101,6 +107,10 @@ Route::delete('/module/delete/{id}',[ModuleController::class, 'destroy'])->name(
 //Dau muc
 //truy vấn
 Route::get('/work_item',[WorkItemController::class, 'index']);
+
+
+Route::get('/work_item/search',[WorkItemController::class, 'filter']); 
+
 //thêm
 Route::post('/work_item/create',[WorkItemController::class, 'store'])->name('work_item.store');
 

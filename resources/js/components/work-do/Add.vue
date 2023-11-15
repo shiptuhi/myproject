@@ -1,5 +1,5 @@
 <template>
-    <section class="vh-100 gradient-custom">
+    <section class="vh-200 gradient-custom">
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
@@ -11,7 +11,7 @@
                             <form @submit.prevent="addWorkDo">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="work_do_code">Mã công việc : <span>*</span></label>
                                             <input required type="text" class='form-control form-control-lg' v-model="work_does.work_do_code"/>
                                         </div>
@@ -19,7 +19,7 @@
 
                                     
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="work_item_id">Thuộc đầu mục:</label>
                                             <select class="form-control form-control-lg" id="work_item_id" v-model="work_does.work_item_id">
                                                 <option value="">--Chọn--</option>
@@ -32,14 +32,14 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="name">Tên công việc : <span>*</span></label>
                                             <input required type="text" class="form-control form-control-lg" v-model="work_does.name"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="emp_workdo">Người thực hiện : </label>
                                             <select class="form-control form-control-lg" v-model="work_does.emp_workdo">
                                                 <option value="">--Chọn--</option>
@@ -52,7 +52,7 @@
                                 <div class="row">
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="project_id">Dự án :</label>
                                             <select class="form-control form-control-lg" id="project_id" v-model="work_does.project_id">
                                                 <option value="">--Chọn--</option>
@@ -63,7 +63,7 @@
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="note">Ghi chú : </label>
                                             <input type="note" class="form-control form-control-lg" v-model="work_does.note"/>
                                         </div>
@@ -72,7 +72,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="module_id">Thuộc module : </label>
                                             <select class="form-control form-control-lg" v-model="work_does.module_id">
                                                 <option value="">--Chọn--</option>
@@ -84,7 +84,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label for="type_of_work" class="form-label">Loại công việc : <span>*</span></label>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -124,7 +124,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label for="priority" class="form-label">Mức độ ưu tiên : <span>*</span></label>
                                             <div class="row">
                                                 <div class="col-md-3">
@@ -193,7 +193,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label for="status" class="form-label">Trạng thái : <span>*</span></label>
                                             <div class="row">
                                                 <div class="col-md-3">
@@ -231,7 +231,7 @@
                                                             type="radio"
                                                             name="status"
                                                             id="status"
-                                                            value="Tạm dừng"
+                                                            value="Pause"
                                                             formControlName="status"
                                                             v-model="work_does.status"
                                                         />

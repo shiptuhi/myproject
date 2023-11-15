@@ -9,17 +9,17 @@
                             <form @submit.prevent="updateWorkItem">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="work_item_code">Mã đầu mục : <span>*</span></label>
                                             <input required type="text" placeholder="Nhập mã đầu mục" class='form-control form-control-lg' v-model="work_items.work_item_code"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="module_id">Module : </label>
-                                            <select class="form-control form-control-lg" v-model="work_items.module_id">
-                                                <option value="">--Chọn--</option>
+                                            <select class="form-control form-control-lg" v-model="work_items.module_id" @change="getProjectList_2">
+                                                <option value="" disabled>--Chọn--</option>
                                                 <option v-for="mod in module_work_items" :value="mod.id">{{ mod.module_code }}</option>  
                                             </select>
                                         </div>
@@ -29,14 +29,14 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="name">Tên đầu mục : <span>*</span></label>
                                             <input required type="text" placeholder="Nhập tên đầu mục" class="form-control form-control-lg" v-model="work_items.name"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="user_id">Người phụ trách : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.emp_workitem">
                                                 <option value="">--Chọn--</option>
@@ -49,10 +49,10 @@
                                 <div class="row">
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="project_id">Dự án :</label>
-                                            <select class="form-control form-control-lg" id="project_id" v-model="work_items.project_id" @change="getModuleList">
-                                                <option value="">--Chọn--</option>
+                                            <select class="form-control form-control-lg" id="project_id" v-model="work_items.project_id">
+                                                <option value="" default>--Chọn--</option>
                                                 <option v-for="prj in project_work_items" :value="prj.id">{{prj.project_code}}</option>
                                                 
                                             </select>
@@ -60,7 +60,7 @@
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="note">Ghi chú : </label>
                                             <input type="note" class="form-control form-control-lg" v-model="work_items.note"/>
                                         </div>
@@ -69,7 +69,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label for="status" class="form-label">Mức độ ưu tiên : <span>*</span></label>
                                             <div class="row">
                                                 <div class="col-md-3">
@@ -165,14 +165,16 @@ export default {
             module_work_items: [],
             project_work_items: [],
             user_work_items: [],
-            selectedProject: null,
         };
     },
     mounted(){
         this.getProjectList();
-        this.getModuleList();
         this.getUserList();
 
+        this.getModuleList();
+        // this.getModuleList_2();
+
+        // this.handleChange();
         this.showWorkItem();
         // this.updateWorkItem();
     },
@@ -182,12 +184,20 @@ export default {
                 this.project_work_items = response.data;
             });
         },
-
         getModuleList(){
             axios.get("/api/module").then(response => {
                 this.module_work_items = response.data;
             });
         },
+
+
+        getModuleList_2(){
+            axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`).then(response => {
+                this.module_work_items = response.data;
+            });
+        },
+
+        
         
         getUserList(){
             axios.get("/api/list").then(response => {
@@ -235,13 +245,5 @@ export default {
         rgb(87, 208, 245)
     );
 }
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-}
-.card-registration .select-arrow {
-    top: 13px;
-}
+
 </style>

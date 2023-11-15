@@ -2,7 +2,10 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách công việc</span>
-        
+        <form class="d-flex" role="search">
+              <input class="form-control mb-6" type="search" placeholder="Search" aria-label="Search" @input="filter" v-model="input">
+              <button class="btn btn-outline-success" @click.prevent="filter()">Search</button>
+        </form>
         <router-link to="/work-do/add" class="btn btn-primary">Thêm mới</router-link>
     </div>
     </nav>
@@ -32,7 +35,12 @@
                         <td>{{ wd.modules.module_code }}</td>
                         <td>{{ wd.projects.project_code }}</td>
                         <td>{{ wd.users.name}}</td>
-                        <td>{{ wd.status}}</td>
+                        <td>
+                            <span v-if="wd.status === 'Finish'" class="emergency text-success">Hoàn thành</span>
+                            <span v-else-if="wd.status === 'Processing'" class="high text-info">Đang làm</span>
+                            <span v-else-if="wd.status === 'Pause'" class="medium text-warning">Tạm dừng</span>
+                            <span v-else-if="wd.status === 'Cancel'" class="cancel text-danger-emphasis">Hủy bỏ</span>
+                        </td>
                         <td>
                             <router-link :to="{path: '/work-do/edit/' + wd.id}" class="btn btn-info">Sửa</router-link>
                             <button type="button" @click="$event => deleteWorkDo(wd.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>

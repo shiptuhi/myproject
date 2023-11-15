@@ -3,25 +3,22 @@
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
-                    <div
-                        class="card shadow-2-strong card-registration"
-                        style="border-radius: 15px"
-                    >
-                        <div class="card-body p-4 p-md-5">
+                    <div class="card shadow-2-strong" style="border-radius: 15px">
+                        <div class="p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
                                 THÊM ĐẦU MỤC
                             </h3>
                             <form @submit.prevent="addWorkItem">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="work_item_code">Mã đầu mục : <span>*</span></label>
                                             <input required type="text" placeholder="Nhập mã đầu mục" class='form-control form-control-lg' v-model="work_items.work_item_code"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="module_id">Module : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.module_id">
                                                 <option value="">--Chọn--</option>
@@ -34,17 +31,17 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="name">Tên đầu mục : <span>*</span></label>
                                             <input required type="text" placeholder="Nhập tên module" class="form-control form-control-lg" v-model="work_items.name"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="user_id">Người phụ trách : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.emp_workitem">
-                                                <option value="">--Chọn--</option>
+                                                <option value="" default>--Chọn--</option>
                                                 <option v-for="user in user_work_items" :value="user.id">{{ user.name}}</option>  
                                             </select>
                                         </div>
@@ -54,7 +51,7 @@
                                 <div class="row">
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="project_id">Dự án :</label>
                                             <select class="form-control form-control-lg" id="project_id" v-model="work_items.project_id" @change="getModuleList">
                                                 <option value="">--Chọn--</option>
@@ -65,7 +62,7 @@
                                     </div>
 
                                     <div class="col-md-6 mb-4">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label class="form-label" for="note">Ghi chú : </label>
                                             <input type="note" class="form-control form-control-lg" v-model="work_items.note"/>
                                         </div>
@@ -74,7 +71,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-outline">
+                                        <div class="form-group">
                                             <label for="status" class="form-label">Mức độ ưu tiên : <span>*</span></label>
                                             <div class="row">
                                                 <div class="col-md-3">
@@ -88,7 +85,7 @@
                                                             formControlName="status"
                                                             v-model="work_items.priority"
                                                         />
-                                                        <label class="form-check-label" for="priority"> Khẩn Cấp</label>
+                                                        <label class="form-check-label" for="priority">Khẩn Cấp</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -102,7 +99,7 @@
                                                             formControlName="status"
                                                             v-model="work_items.priority"
                                                         />
-                                                        <label Class="form-check-label" for="priority">Cao</label>
+                                                        <label class="form-check-label" for="priority">Cao</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -229,14 +226,5 @@ export default {
         rgb(149, 147, 251),
         rgb(87, 208, 245)
     );
-}
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-}
-.card-registration .select-arrow {
-    top: 13px;
 }
 </style>

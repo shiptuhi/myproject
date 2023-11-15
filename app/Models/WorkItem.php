@@ -21,18 +21,18 @@ class WorkItem extends Model
     ];
 
     public function projects() {
-        return $this->belongsTo(Project::class,'project_id');
+        return $this->belongsTo(Project::class,'project_id', 'id');
     }
     public function modules() {
-        return $this->belongsTo(Module::class,'module_id');
+        return $this->belongsTo(Module::class,'module_id', 'id');
     }
 
     public function users() {
-        return $this->belongsTo(User::class,'emp_workitem');
+        return $this->belongsTo(User::class,'emp_workitem', 'id');
     }
 
     public function workdo(){
-        return $this->hasMany(WorkItem::class, 'work_do_id');
+        return $this->hasMany(WorkItem::class, 'work_item_id', 'id');
     }
 
 

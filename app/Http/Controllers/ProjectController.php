@@ -10,28 +10,26 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Log;
 
+use Carbon\Carbon;
+
 class ProjectController extends Controller
 {
     // public function __construct() {
     //     $this->middleware('api');
       
     // }
-    //
+
     public function index(){
         $project = Project::with('users')->get();
-        // $project = Project::take(10)->get();
+            
         return response()-> json($project);
-        // if(auth('api')->check()){
-        //     return response()-> json($project);
-        // } 
-        // abort(403, 'Unauthorized');
     }
 
     public function filter(Request $request){
         $query = Project::query();
 
         $searchInput = $request->input('input');
-        $query->where(function ($subQuery) use ($searchInput) {
+        $query->with('users')->where(function ($subQuery) use ($searchInput) {
             $subQuery->where('id', $searchInput)
                 ->orWhere('name', 'like', '%' . $searchInput . '%')
                 ->orWhere('project_code', 'like', '%' . $searchInput . '%')
@@ -54,8 +52,8 @@ class ProjectController extends Controller
             'project_code' => 'required|string|max:255',
             'name' => 'required|max:255',
             'active_status'=> 'required|in:Active,Inactive',
-            'date_start' => 'date',
-            'date_end' => 'date',
+            'date_start' => 'nullable|date|date_format:d-m-Y',
+            'date_end' => 'nullable|date|date_format:d-m-Y',
             'user_id' => 'required|exists:users,id',
             'note' => 'max:255',
             
@@ -89,6 +87,13 @@ class ProjectController extends Controller
         return response()->json($project);
     
     }
+
+    // public function getUserByProject($id){
+    //     $user = Project::where('user_id', $id)->get();
+    //     return response()->json($user);
+    // }
+
+
     public function update(Request $request, $id){
         $project = Project::findOrFail($id);
 
