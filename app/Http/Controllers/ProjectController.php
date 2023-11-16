@@ -15,12 +15,19 @@ use Carbon\Carbon;
 class ProjectController extends Controller
 {
     // public function __construct() {
-    //     $this->middleware('api');
+    //     $this->middleware('auth:api');
       
     // }
 
     public function index(){
         $project = Project::with('users')->get();
+
+        // if(auth('api')->user()){
+        //     return response()-> json([
+        //         'project' => $project,
+        //     ]);
+        // } 
+        // abort(403, 'Unauthorized');
             
         return response()-> json($project);
     }

@@ -31,7 +31,7 @@
                         <td>{{ wd.id }}</td>
                         <td>{{ wd.work_do_code }}</td>
                         <td>{{ wd.name }}</td>
-                        <td>{{ wd.workitems.work_item_code }}</td>
+                        <td>{{ wd.work_items.work_item_code }}</td>
                         <td>{{ wd.modules.module_code }}</td>
                         <td>{{ wd.projects.project_code }}</td>
                         <td>{{ wd.users.name}}</td>
@@ -59,6 +59,7 @@ export default {
     data() {
         return {
             work_does: [],
+            input:''
         };
     },
     mounted(){
@@ -78,7 +79,21 @@ export default {
                     console.log(error)
                 })
             }
+        },
+
+        filter(){
+            const params = {
+                input: this.input
+            }
+            try {
+            axios.get("/api/work_do/search", {params}).then(response=>{
+                this.work_does=response.data;
+            });
+            } catch(error){
+                console.log(error);
+            }
         }
+
     }
 };
 </script>

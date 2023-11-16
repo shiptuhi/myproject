@@ -40,9 +40,9 @@ class WorkItemController extends Controller
                     });
                 });
             });
-        $modules = $query->get();
+        $workItem = $query->get();
 
-        return response()->json($modules);
+        return response()->json($workItem);
     }
 
     public function store(Request $request){

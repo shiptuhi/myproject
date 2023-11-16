@@ -13,9 +13,6 @@ class AuthController extends Controller {
     
    public function __construct() {
        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-       
-    //    $this->middleware('role:admin', ['only'=> 'userList']);
-     
    }
 
    /**
@@ -23,10 +20,6 @@ class AuthController extends Controller {
     *
     * @return \Illuminate\Http\JsonResponse
     */
-
-    // public function getLogin(){
-    //     return view('home.index');
-    // }
 
    public function login(Request $request){
        $validator = Validator::make($request->all(), [
@@ -135,12 +128,12 @@ class AuthController extends Controller {
     *
     * @return \Illuminate\Http\JsonResponse
     */
-   protected function createNewToken($token){
+   protected function createNewToken($token){   
        return response()->json([
            'access_token' => $token,
            'token_type' => 'bearer',
            'expires_in' => auth('api')->factory()->getTTL() * 60,
-           'user' =>auth('api')->user()
+           'user' =>auth('api')->user()->load('roles')
        ]);
    }
 

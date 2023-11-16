@@ -6,14 +6,14 @@
                     <div class="card shadow-2-strong" style="border-radius: 15px">
                         <div class="p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
-                                THÊM CÔNG VIỆC
+                                CHỈNH SỬA CÔNG VIỆC
                             </h3>
-                            <form @submit.prevent="addWorkDo">
+                            <form @submit.prevent="updateWorkDo">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="work_do_code">Mã công việc : <span>*</span></label>
-                                            <input required type="text" class='form-control form-control-lg' v-model="work_does.work_do_code"/>
+                                            <input required type="text" class='form-control form-control-lg' id="work_do_code" v-model="work_does.work_do_code"/>
                                         </div>
                                     </div>
 
@@ -34,14 +34,14 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="name">Tên công việc : <span>*</span></label>
-                                            <input required type="text" class="form-control form-control-lg" v-model="work_does.name"/>
+                                            <input required type="text" class="form-control form-control-lg" id="name" v-model="work_does.name"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="emp_workdo">Người thực hiện : </label>
-                                            <select class="form-control form-control-lg" v-model="work_does.emp_workdo">
+                                            <select class="form-control form-control-lg" id="emp_workdo" v-model="work_does.emp_workdo">
                                                 <option value="">--Chọn--</option>
                                                 <option v-for="user in user_work_does" :value="user.id">{{ user.name}}</option>  
                                             </select>
@@ -65,7 +65,7 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="note">Ghi chú : </label>
-                                            <input type="note" class="form-control form-control-lg" v-model="work_does.note"/>
+                                            <input type="note" class="form-control form-control-lg" id="note" v-model="work_does.note"/>
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +275,7 @@
 import axios from "axios";
 
 export default {
-    name: 'work-do-add',
+    name: 'work-do-edit',
     data() {
         return {
             work_does: {
@@ -301,6 +301,8 @@ export default {
         this.getModuleList();
         this.getProjectList();
         this.getUserList();
+
+        this.showWorkDo();
     },
     methods:{
         getWorkItemList(){
@@ -330,10 +332,25 @@ export default {
                 this.user_work_does = response.data;
             });
         },
-        addWorkDo(event){
-            event.preventDefault();
+        showWorkDo(){
+            const id = this.$route.params.id;
+            try {
+                axios.get(`/api/work_do/update/${id}`).then(response => {
+                    console.log(id);
+                    console.log(response.data);
+                    this.work_does=response.data;
+                    // console.log(this.work_does);
+                })
+            } catch(error) {
+                console.error('Error:', error);
+            };
+        },
+
+
+        updateWorkDo(){
             // console.log(this.work_does);
-            axios.post("/api/work_do/create", this.work_does).then(response => {
+            const id = this.$route.params.id;
+            axios.post(`/api/work_do/update/${id}`, this.work_does).then(response => {
                 alert('Successfully created');
                 // console.log(this.work_does);
                 this.$router.push('/work-do/list');

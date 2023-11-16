@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+        <div class="container-sm">
     
           <div class="nav-item dropdown">
               <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Nhân viên</button>
@@ -27,7 +27,7 @@
 
           <div class="nav-item dropdown ">
             <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-              <ul class="dropdown-menu dropdown-menu-right">
+              <ul class="dropdown-menu">
                 <li><router-link to="/project/list" class="dropdown-item text-center" >Đổi mật khẩu</router-link></li>
                 <li><span class="dropdown-item text-center" v-on:click="logout">Đăng xuất</span></li>
               </ul>
@@ -56,3 +56,6 @@ import axios from 'axios';
 
 
 </script>
+<style>
+
+</style>

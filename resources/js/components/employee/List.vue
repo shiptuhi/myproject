@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách nhân viên</span>
-            <router-link to="/project/add" class="btn btn-primary">Add</router-link>
+            <router-link to="/register" class="btn btn-primary">Thêm mới</router-link>
     </div>
     </nav>
     
@@ -42,8 +42,8 @@
                         </td>
                         
                         <td>
-                            <router-link :to= "{path: '/employee/edit/' + us.id}" class="btn btn-info">Edit</router-link>
-                            <button type="button" @click="deleteEmployee(us.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
+                            <router-link :to= "{path: '/employee/edit/' + us.id}" class="btn btn-info">Sửa</router-link>
+                            <button type="button" @click="deleteEmployee(us.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>
                             
                         </td>
                     </tr>

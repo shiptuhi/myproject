@@ -8,13 +8,22 @@ use Illuminate\Support\Facades\Validator;
 
 class ModuleController extends Controller
 {
+    // public function __construct() {
+    //     $this->middleware('auth:api');
+      
+    // }
     //
     public function index(){
         // $module = Module::all();
         $module = Module::with('projects','users')->get();
 
-        // return view('module.index',['module' => $module]);
         return response()->json($module);
+        // if(auth('api')->user()){
+        //     return response()-> json([
+        //         'module' => $module,
+        //     ]);
+        // } 
+        // abort(403, 'Unauthorized');
     }
 
     public function filter(Request $request){

@@ -11,7 +11,42 @@ class WorkDoController extends Controller
 {
     //
     public function index(){
-        $workDo = WorkDo::with('workitems','modules','projects','users')->get();
+        $workDo = WorkDo::with('work_items','modules','projects','users')->get();
+        return response()->json($workDo);
+    }
+
+    public function filter(Request $request){
+        $query = WorkDo::query();
+        
+        $searchInput = $request->input('input');
+        $query->with('work_items','modules', 'projects', 'users')->where(function ($subQuery) use ($searchInput) {
+            $subQuery->where('id', $searchInput)
+                ->orWhere('name', 'like', '%' . $searchInput . '%')
+                ->orWhere('work_do_code', 'like', '%' . $searchInput . '%')
+                ->orWhere('priority', 'like', '%' . $searchInput . '%')
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('emp_workdo', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('users')->where('name', 'like', '%' . $searchInput . '%');
+                    });
+                })
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('project_id', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('projects')->where('project_code', 'like', '%' . $searchInput . '%');
+                    });
+                })
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('module_id', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('modules')->where('module_code', 'like', '%' . $searchInput . '%');
+                    });
+                })
+                ->orWhere(function ($s_query) use ($searchInput) {
+                    $s_query->whereIn('work_item_id', function ($s2_query) use ($searchInput) {
+                        $s2_query->select('id')->from('work_items')->where('work_item_code', 'like', '%' . $searchInput . '%');
+                    });
+                });
+            });
+        $workDo = $query->get();
+
         return response()->json($workDo);
     }
 
@@ -62,6 +97,8 @@ class WorkDoController extends Controller
         $workDo = WorkDo::findOrFail($id);
         return response() -> json($workDo);
     }
+
+
 
 
     public function update(Request $request, $id){

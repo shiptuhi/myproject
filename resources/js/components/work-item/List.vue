@@ -75,11 +75,13 @@ export default {
         });
         },
         deleteWorkItem(id){
-            axios.delete(`/api/work_item/delete/${id}`).then(response => {
-                this.getWorkItems();
-            }).catch(error =>{
-                console.log(error);
-            })
+            if(confirm("Bạn có chắc chắn muốn xóa đầu mục công việc không?")){
+                axios.delete(`/api/work_item/delete/${id}`).then(response => {
+                    this.getWorkItems();
+                }).catch(error =>{
+                    console.log(error);
+                })
+            }
         },
         filter(){
             const params = {
@@ -87,7 +89,7 @@ export default {
             }
             try {
             axios.get("/api/work_item/search", {params}).then(response=>{
-                console.log(params);
+                // console.log(params);
                 this.work_items=response.data;
             });
             } catch(error){

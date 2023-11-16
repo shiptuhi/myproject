@@ -24,17 +24,17 @@ class WorkDo extends Model
     ];
 
     public function projects() {
-        return $this->belongsTo(Project::class,'project_id');
+        return $this->belongsTo(Project::class,'project_id', 'id');
     }
     public function modules() {
-        return $this->belongsTo(Module::class,'module_id');
+        return $this->belongsTo(Module::class,'module_id', 'id');
     }
 
-    public function workitems() {
-        return $this->belongsTo(WorkItem::class,'work_item_id');
+    public function work_items() {
+        return $this->belongsTo(WorkItem::class,'work_item_id', 'id');
     }
 
     public function users() {
-        return $this->belongsTo(User::class, 'emp_workdo');
+        return $this->belongsTo(User::class, 'emp_workdo', 'id');
     }
 }
