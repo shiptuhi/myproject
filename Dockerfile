@@ -25,4 +25,4 @@ RUN composer install
 EXPOSE 8080
 
 # Start Laravel development server
-CMD php artisan serve --host=localhost --port=8080
+CMD php artisan serve --host=0.0.0.0 --port=8080
