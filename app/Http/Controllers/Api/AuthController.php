@@ -14,13 +14,7 @@ class AuthController extends Controller {
    public function __construct() {
        $this->middleware('auth:api', ['except' => ['login', 'register']]);
    }
-
-   /**
-    * Get a JWT via given credentials.
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
-
+   
    public function login(Request $request){
     $rule = [
         'username' => 'required|string|max:255',
@@ -42,66 +36,53 @@ class AuthController extends Controller {
 
        return $this->createNewToken($token);
    }
-
-   /**
-    * Register a User.
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
    public function register(Request $request) {
-       $validator = Validator::make($request->all(), [
-           'name' => 'required|string|between:2,100',
-           'username' => 'required|string|max:255',
-           'email' => 'required|string|email|max:100|unique:users',
-           'password' => 'required|string|confirmed|min:6',
-           'gender' => 'required|in:Male,Female,Other',
-           'phoneNumber' => 'required|numeric|unique:users',
-           'active_status'=> 'required|in:Active,Inactive',
-       ]);
+    $rule = [
+        'name' => 'required|string|between:2,100',
+        'username' => 'required|string|max:255',
+        'email' => 'required|string|email|max:100|unique:users',
+        'password' => 'required|string|confirmed|min:6',
+        'gender' => 'required|in:Male,Female,Other',
+        'phoneNumber' => 'required|numeric|unique:users',
+        'active_status'=> 'required|in:Active,Inactive',
+        'roles' => 'required'
+    ];
+    $message = [
+        'name.required' => 'Tên  là bắt buộc.',
+        'username.required' => 'Tên đăng nhập là bắt buộc.',
+        'email.required'=> 'Email là bắt buộc.',
+        'password.required'=> 'Mật khẩu là bắt buộc.',
+        'gender.required'=> 'Giới tính là bắt buộc.',
+        'phoneNumber.required'=> 'Số điện thoại là bắt buộc.',
+        'active_status.required'=> 'Trạng thái hoạt động là bắt buộc.',
+        'roles.required'=> 'Chức vụ là bắt buộc.',
+    ];
 
-       if($validator->fails()){
-           return response()->json($validator->errors()->toJson(), 400);
-       }
+    $validator = Validator::make($request->all(), $rule, $message );
 
-       $user = User::create(array_merge(
-                   $validator->validated(),
-                   ['password' => bcrypt($request->password)]
-               ));
-        $user->syncRoles($request->input('roles'));
+    if($validator->fails()){
+        return response()->json($validator->errors()->toJson(), 404);
+    }
 
-       return response()->json([
-           'message' => 'User successfully registered',
-           'user' => $user,
-           'role' => $user->getRoleNames()
-       ], 201);
+    $user = User::create(array_merge(
+                $validator->validated(),
+                ['password' => bcrypt($request->password)]
+            ));
+    $user->syncRoles($request->input('roles'));
+
+    return response()->json([
+        'message' => 'User successfully registered',
+        'user' => $user,
+        'role' => $user->getRoleNames()
+    ], 201);
    }
 
-
-   /**
-    * Log the user out (Invalidate the token).
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
    public function logout() {
        auth('api')->logout();
 
        return response()->json(['message' => 'User successfully signed out']);
    }
 
-   /**
-    * Refresh a token.
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
-//    public function refresh() {
-//        return $this->createNewToken(auth('api')->refresh());
-//    }
-
-   /**
-    * Get the authenticated User.
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
    public function userProfile() {
        return response()->json(auth('api')->user());
    }
@@ -125,16 +106,6 @@ class AuthController extends Controller {
 //     abort(403, 'Unauthorized');
 
    }
-
-
-
-   /**
-    * Get the token array structure.
-    *
-    * @param  string $token
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
    protected function createNewToken($token){   
        return response()->json([
            'access_token' => $token,

@@ -12,7 +12,6 @@ class ModuleController extends Controller
     //     $this->middleware('auth:api');
       
     // }
-    //
     public function index(){
         // $module = Module::all();
         $module = Module::with('projects','users')->get();

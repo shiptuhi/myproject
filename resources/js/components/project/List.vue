@@ -2,7 +2,6 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách dự án</span>
-        <span> {{account}} </span>
         <form class="d-flex" role="search">
               <input class="form-control mb-6" type="search" placeholder="Search" aria-label="Search" @input="filter" v-model="input">
               <button class="btn btn-outline-success" @click.prevent="filter">Search</button>
@@ -33,7 +32,7 @@
                         <td>{{ prj.project_code }}</td>
                         <td>{{ prj.name }}</td>
                         <td>{{ prj.date_start }}</td>
-                        <td >{{ prj.users.name  }}</td>
+                        <!-- <td >{{ prj.users.name  }}</td> -->
                         <td><span v-if="prj.active_status === 'Active'" class="active text-success">Hoạt động</span>
                         <span v-else class="Inactive text-danger">Ngừng hoạt động</span></td>
                         <!-- <td>{{ prj.active_status }}</td> -->
@@ -53,14 +52,13 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'project-list',
     data() {
         return {
             projects: [],
             input: '',
-            account: localStorage.getItem('users'),
             
             
         };
@@ -71,8 +69,10 @@ export default {
     },
     methods:{
         getProjects(){
-            ;
-            axios.get("/api/project").then(response => {
+            // const header = localStorage.getItem('token');
+            // console.log(header);
+            // console.log(authHeader());
+            axios.get("/api/project", {headers: authHeader()}).then(response => {
                 // console.log(abc);
                 this.projects = response.data;
             });

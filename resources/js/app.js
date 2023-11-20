@@ -2,7 +2,7 @@ import 'bootstrap';
 
 import App from './components/App.vue';
 
-import Dashboard from './components/dashboard/Dashboard.vue';
+import Dashboard from './components/dashboard/dashboard.vue';
 
 import Login from './components/login/Login.vue';
 import Register from './components/login/Register.vue';
@@ -128,14 +128,14 @@ const app = createApp(App);
 app.use(router);
 app.mount('#app');
 
-// router.beforeEach((to, from, next) => {
-//     const publicPages = ['/login', '/register'];
-//     // const authRequired = !publicPages.includes(to.path);
-//     const loggedIn = localStorage.getItem('user');
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/login', '/register'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('user');
   
-//     // if (authRequired && !loggedIn) {
-//     //   return next('/login');
-//     // }
+    if (authRequired && !loggedIn) {
+      return next('/login');
+    }
   
-//     next();
-// });
+    next();
+});

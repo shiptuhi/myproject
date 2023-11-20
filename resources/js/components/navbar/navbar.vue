@@ -55,15 +55,19 @@
 <script>
 import axios from 'axios';
 
-import emp from 'D:/project/myproject/resources/assets/icon/nav-bar/user.svg';
-import task from 'D:/project/myproject/resources/assets/icon/nav-bar/task.svg';
-import email from 'D:/project/myproject/resources/assets/icon/nav-bar/username.svg';
+import emp from '/var/www/html/myproject/myproject/resources/assets/icon/nav-bar/user.svg';
+import task from '/var/www/html/myproject/myproject/resources/assets/icon/nav-bar/task.svg';
+import email from '/var/www/html/myproject/myproject/resources/assets/icon/nav-bar/username.svg';
+
+// import emp from 'D:/project/myproject/resources/assets/icon/nav-bar/user.svg';
+// import task from 'D:/project/myproject/resources/assets/icon/nav-bar/task.svg';
+// import email from 'D:/project/myproject/resources/assets/icon/nav-bar/username.svg';
 
   export default{
     name: "login",
     data() {
         return {
-          account:localStorage.getItem("user") || 'None',
+          account:localStorage.getItem("user-name") || 'None',
           email: email,
           task: task,
           emp: emp

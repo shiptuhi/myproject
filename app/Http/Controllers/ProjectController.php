@@ -10,21 +10,21 @@ use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
-    public function __construct() {
-        $this->middleware('auth:api');
+    // public function __construct() {
+    //     $this->middleware('auth:api');
       
-    }
+    // }
 
     public function index(){
         $project = Project::with('users')->get();
-        if(auth('api')->user()){
-            return response()-> json([
-                'project' => $project,
-            ]);
-        } 
-        abort(403, 'Unauthorized');
+        // if(auth('api')->user()){
+        //     return response()-> json([
+        //         'project' => $project,
+        //     ]);
+        // } 
+        // abort(403, 'Unauthorized');
             
-        // return response()-> json($project);
+        return response()-> json($project);
     }
 
     public function filter(Request $request){
@@ -45,9 +45,6 @@ class ProjectController extends Controller
 
         return response()->json($projects);
     }
-
-
-
     public function store(Request $request){
 
         $rules = [
@@ -76,11 +73,13 @@ class ProjectController extends Controller
         // Log::info($project);
         $project = Project::create(array_merge($validator->validated()));
 
-        return response()->json([
-            'message' => 'Project successfully registered',
-            'project' => $project
-        ], 201);
-        // return redirect('/api/project')->with('success', 'Thêm dự án thành công!');
+        if(auth('api')->user()){
+            return response()->json([
+                'message' => 'Project successfully registered',
+                'project' => $project
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
     }
 
 
@@ -119,20 +118,25 @@ class ProjectController extends Controller
 
         $project->update($request->all());
 
-        return response()->json([
-            'message' => 'Project successfully registered',
-            'project' => $project
-        ], 201);
-        // return redirect('/project')->with('success', 'Sửa dự án thành công!');
+        if(auth('api')->user()){
+            return response()->json([
+                'message' => 'Project successfully updated',
+                'project' => $project
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
     }
 
 
     public function destroy($id){
         $project = Project::findOrFail($id);
         $project->delete();
-        return response()->json([
-            'message'=> 'Xóa dự án thành công!!'
-        ]);
-        // return redirect('/project')->with('success', 'Xóa dự án thành công!');
+
+        if(auth('api')->user()){
+            return response()->json([
+                'message'=> 'Xóa dự án thành công!!'
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
     }
 }

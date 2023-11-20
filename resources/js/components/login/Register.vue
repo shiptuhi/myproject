@@ -201,7 +201,6 @@ export default {
     },
     methods: {
         getRole(){
-            
             axios.get("/api/roles").then(response => {
                 console.log(response.data);
                 this.user_role = response.data;

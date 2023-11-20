@@ -9,13 +9,13 @@
                             <div class="col-lg-12 login-form">
                                 <form @submit.prevent="login">
                                     <div class="form-group">
-                                        <input required type="text" placeholder="Email" class='form-control form-control-lg' v-model='users.email' />
-                                        <span v-if="!isUsernameValid" class="text-danger" >Email là bắt buộc!</span>
+                                        <input required type="text" placeholder="Tên đăng nhập" class='form-control form-control-lg' v-model='users.username' />
+                                        <!-- <span v-if="!isUsernameValid" class="text-danger" >Tên đăng nhập là bắt buộc!</span> -->
                                     </div>
 
                                     <div class="form-group">
                                         <input required type="password" placeholder="Password" class="form-control form-control-lg" v-model="users.password" />
-                                        <span v-if="!isPasswordValid" class="text-danger">Mật khẩu không chính xác!</span>
+                                        <!-- <span v-if="!isPasswordValid" class="text-danger">Mật khẩu không chính xác!</span> -->
                                     </div>
 
                                     <div class="col-12 justify-content-center d-flex p ">
@@ -43,11 +43,8 @@ export default {
     data() {
         return {
             users: {
-                email: "",
+                username: "",
                 password: "",
-                isUsernameValid: true,
-                isPasswordValid: true,
-                // roles:[]
             },
         }
     },
@@ -57,54 +54,18 @@ export default {
     methods: {
         login(event) {
             event.preventDefault();
-            // this.isUsernameValid = this.validateUsername();
-            // this.isPasswordValid = this.validatePassword();
-
-            // if(this.isUsernameValid && this.isPasswordValid) {
-                axios.post('/api/auth/login',this.users).then(response => {
-                    localStorage.setItem('user', response.data.user.name);
-                    // localStorage.setItem('role', userRole);
-                    localStorage.setItem('token', response.data.access_token);
+            axios.post('/api/auth/login',this.users).then(response => {
+                localStorage.setItem('user', response.data.user);
+                localStorage.setItem('user-name', response.data.user.name);
+                localStorage.setItem('role', response.data.user.roles[0].name);
+                localStorage.setItem('token', response.data.access_token);
                     
-                    this.$router.push('/dashboard');
-                }).catch(error => {
-                    console.error('Error:', error);
-                    alert('Đăng nhập thất bại!');
-                });
-            // }
+                this.$router.push('/dashboard');
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+            });
         },
-        // validateUsername() {
-        // // Implement username validation logic
-        //     return this.email.length > 0;
-        // },
-        // validatePassword() {
-        // // Implement password validation logic
-        //     return this.password.length >= 6;
-        // },
-
-
-
-
-        
-        // validateEmail: function(email) {
-        //     var re = /(.+)@(.+){2,}\.(.+){2,}/;
-        //     if(re.test(email.toLowerCase())){
-        //         return true;
-        //     }
-        // },
-        // validatePassword : function(password) {
-        //     if (password.length > 5) {
-        //         return true;
-        //     }
-        // },
-        
-        // validate : function(){
-        //     this.emailBlured = true;
-        //     this.passwordBlured = true;
-        //     if( this.validateEmail(this.users.email) && this.validPassword(this.users.password)){
-        //         this.valid = true;
-        //     }
-        // },
     }
 }
 </script>

@@ -1,0 +1,56 @@
+{
+  "resources/assets/icon/calendar-icon.svg": {
+    "file": "assets/calendar-icon-14c2a9db.svg",
+    "src": "resources/assets/icon/calendar-icon.svg"
+  },
+  "resources/assets/icon/dashboard-icon.svg": {
+    "file": "assets/dashboard-icon-42b10c39.svg",
+    "src": "resources/assets/icon/dashboard-icon.svg"
+  },
+  "resources/assets/icon/help-icon.svg": {
+    "file": "assets/help-icon-35eb4918.svg",
+    "src": "resources/assets/icon/help-icon.svg"
+  },
+  "resources/assets/icon/nav-bar/task.svg": {
+    "file": "assets/task-b7034e60.svg",
+    "src": "resources/assets/icon/nav-bar/task.svg"
+  },
+  "resources/assets/icon/nav-bar/user.svg": {
+    "file": "assets/user-988bb497.svg",
+    "src": "resources/assets/icon/nav-bar/user.svg"
+  },
+  "resources/assets/icon/nav-bar/username.svg": {
+    "file": "assets/username-8f82d780.svg",
+    "src": "resources/assets/icon/nav-bar/username.svg"
+  },
+  "resources/assets/icon/task-icon.svg": {
+    "file": "assets/task-icon-a3de5d51.svg",
+    "src": "resources/assets/icon/task-icon.svg"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-5ffef9fa.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-aab14546.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "assets": [
+      "assets/user-988bb497.svg",
+      "assets/task-b7034e60.svg",
+      "assets/username-8f82d780.svg",
+      "assets/dashboard-icon-42b10c39.svg",
+      "assets/task-icon-a3de5d51.svg",
+      "assets/calendar-icon-14c2a9db.svg",
+      "assets/help-icon-35eb4918.svg"
+    ],
+    "css": [
+      "assets/app-aab14546.css"
+    ],
+    "file": "assets/app-53c42919.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}

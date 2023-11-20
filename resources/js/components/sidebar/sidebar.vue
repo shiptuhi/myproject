@@ -22,10 +22,17 @@
     </div>
 </template>
 <script>
-import report from 'D:/project/myproject/resources/assets/icon/dashboard-icon.svg';
-import task from 'D:/project/myproject/resources/assets/icon/task-icon.svg';
-import calendar from 'D:/project/myproject/resources/assets/icon/calendar-icon.svg';
-import help from 'D:/project/myproject/resources/assets/icon/help-icon.svg';
+
+
+import report from '/var/www/html/myproject/myproject/resources/assets/icon/dashboard-icon.svg';
+import task from '/var/www/html/myproject/myproject/resources/assets/icon/task-icon.svg';
+import calendar from '/var/www/html/myproject/myproject/resources/assets/icon/calendar-icon.svg';
+import help from '/var/www/html/myproject/myproject/resources/assets/icon/help-icon.svg';
+
+// import report from 'D:/project/myproject/resources/assets/icon/dashboard-icon.svg';
+// import task from 'D:/project/myproject/resources/assets/icon/task-icon.svg';
+// import calendar from 'D:/project/myproject/resources/assets/icon/calendar-icon.svg';
+// import help from 'D:/project/myproject/resources/assets/icon/help-icon.svg';
 // import report from 'D:/project/myproject/resources/assets/icon/dashboard-icon.svg';
     export default {
         data(){

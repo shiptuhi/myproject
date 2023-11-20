@@ -29,8 +29,7 @@ class PermissionsSeeder extends Seeder
         // $role2->givePermissionTo($permisson2);
 
         $role3 = Role::create(['name' => 'Developer']);
-        // $permisson2 = Permission::create(['name' => 'view user']);
-        // $role2->givePermissionTo($permisson2);
+
 
 
 
