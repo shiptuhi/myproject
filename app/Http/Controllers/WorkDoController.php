@@ -101,10 +101,6 @@ class WorkDoController extends Controller
         $workDo = WorkDo::findOrFail($id);
         return response() -> json($workDo);
     }
-
-
-
-
     public function update(Request $request, $id){
         $workDo = WorkDo::findOrFail($id);
 
@@ -113,7 +109,7 @@ class WorkDoController extends Controller
             'name' => 'required|max:255',
             'project_id' => 'required|exists:projects,id',
             'module_id' => 'required|exists:modules,id',
-            'work_item_id' => 'required|exists:workitems,id',
+            'work_item_id' => 'required|exists:work_items,id',
             'emp_workdo' => 'required|exists:users,id',
             'priority' => 'required|in:Emergency,High,Medium,Low',
             'status' => 'required|in:Finish,Processing,Pause,Cancel',

@@ -68,7 +68,7 @@ class ProjectController extends Controller
 
         if(auth('api')->user()){
             return response()->json([
-                'message' => 'Project successfully registered',
+                'message' => 'Thêm dự án thành công!',
                 'project' => $project
             ], 201);
         } 
@@ -84,7 +84,7 @@ class ProjectController extends Controller
     public function update(Request $request, $id){
         $project = Project::findOrFail($id);
 
-        $request->validate([
+        $rules = [
             'project_code' => 'required|string|max:255',
             'name' => 'required|max:255',
             'active_status'=> 'required|in:Active,Inactive',
@@ -92,21 +92,24 @@ class ProjectController extends Controller
             'date_end' => 'date',
             'user_id' => 'required|exists:users,id',
             'note' => 'max:255',
-        ],
-        [
+        ];
+        $message = [
             'project_code.required' => 'Mã dự án là bắt buộc.',
             'name.required' => 'Tên dự án là bắt buộc.',
             'user_id.exists' => 'Nhân viên không tồn tại',
             'active_status.required'=> 'Trạng thái dự án là bắt buộc.',
             'active_status.in' => 'Trạng thái dự án phải là "Active" hoặc "Inactive".',
-        ]); 
+        ]; 
         // $project->save();
-
-        $project->update($request->all());
+        $validator  = Validator::make($request->all(), $rules, $message);
+        if($validator ->fails()){
+            return response()->json(['error' => $validator->errors()], 404);
+        }
+        $project->update(array_merge($validator->validated()));
 
         if(auth('api')->user()){
             return response()->json([
-                'message' => 'Project successfully updated',
+                'message' => 'Sửa dự án thành công!',
                 'project' => $project
             ], 201);
         } 

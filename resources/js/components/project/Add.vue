@@ -131,7 +131,7 @@ export default {
     },
     methods:{
         getUserList(){
-            axios.get("/api/list").then(response => {
+            axios.get("/api/list", {headers: authHeader()}).then(response => {
                 this.user_project = response.data;
             });
         },

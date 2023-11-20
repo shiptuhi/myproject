@@ -11,7 +11,7 @@
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
                                 CHỈNH SỬA MODULE
                             </h3>
-                            <form @submit.prevent="addModule">
+                            <form @submit.prevent="updateModule">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
@@ -101,33 +101,36 @@ export default {
     mounted(){
         this.getProjectList();
         this.getUserList();
+        
         this.showModule();
         console.log(this.$route.params.id);
     },
     methods:{
         getProjectList(){
-            axios.get("/api/project").then(response => {
+            axios.get("/api/project", {headers: authHeader()}).then(response => {
                 this.project_module = response.data;
             });
         },
         getUserList(){
-            axios.get("/api/list").then(response => {
+            axios.get("/api/list", {headers: authHeader()}).then(response => {
                 this.user_module = response.data;
             });
         },
 
         showModule(){
             const id = this.$route.params.id;
-            axios.get(`/api/module/update/${id}`).then(response => {
+            axios.get(`/api/module/update/${id}`, {headers: authHeader()}).then(response => {
                 this.modules = response.data;
             })
         },
 
         updateModule(){
             // console.log(this.modules);
-            axios.post("/api/module/create", this.modules, {headers: authHeader()}).then(response => {
-            this.$router.push('/module/list');
-        }).catch(error => {
+            const id = this.$route.params.id;
+            axios.put(`/api/module/update/${id}`, this.modules, {headers: authHeader()}).then(response => {
+                alert('Successfully updated');
+                this.$router.push('/module/list');
+            }).catch(error => {
                 console.error('Error:', error);
             });
         }

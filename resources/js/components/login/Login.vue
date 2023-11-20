@@ -8,8 +8,10 @@
                             <h3 class="mt-4 mb-4 pb-2 pb-md-0 mb-md-5 login-title"> <i class="fas fa-lock"></i>Login</h3>
                             <div class="col-lg-12 login-form">
                                 <form @submit.prevent="login">
+                                    <notifications position="top right" />
                                     <div class="form-group">
                                         <input required type="text" placeholder="Tên đăng nhập" class='form-control form-control-lg' v-model='users.username' />
+                                        <div>{{ errors.username }}</div>
                                         <!-- <span v-if="!isUsernameValid" class="text-danger" >Tên đăng nhập là bắt buộc!</span> -->
                                     </div>
 
@@ -36,8 +38,13 @@
 </template>
 
 <script>
-
+import { notify } from "@kyvg/vue3-notification";
 import axios from "axios";
+import { useForm } from 'vee-validate';
+import * as yup from 'yup';
+
+const loginSchema = ;
+
 export default {
     name: "login",
     data() {
@@ -54,17 +61,30 @@ export default {
     methods: {
         login(event) {
             event.preventDefault();
+            try {
             axios.post('/api/auth/login',this.users).then(response => {
                 localStorage.setItem('user', response.data.user);
                 localStorage.setItem('user-name', response.data.user.name);
                 localStorage.setItem('role', response.data.user.roles[0].name);
                 localStorage.setItem('token', response.data.access_token);
-                    
+
+                notify({
+                    group: 'app',
+                    title: 'User Created',
+                    text: 'The User has been loginned successfully.',
+                    type: 'success'
+                });
                 this.$router.push('/dashboard');
-            }).catch(error => {
+            });
+            } catch(error) {
                 console.error('Error:', error);
                 alert('Tên đăng nhập hoặc mật khẩu không đúng!');
-            });
+                // this.$notify({
+                //     title: 'Error',
+                //     text: 'Failed to create the project.',
+                //     type: 'error'
+                // });
+            }
         },
     }
 }

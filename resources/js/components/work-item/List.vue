@@ -69,7 +69,7 @@ export default {
     },
     methods:{
         getWorkItems(){
-            axios.get("/api/work_item").then(response => {
+            axios.get("/api/work_item", {headers: authHeader()}).then(response => {
             this.work_items = response.data;
             // console.log(response.data);
         });
@@ -88,7 +88,7 @@ export default {
                 input: this.input
             }
             try {
-            axios.get("/api/work_item/search", {params}).then(response=>{
+            axios.get("/api/work_item/search", {params}, {headers: authHeader()}).then(response=>{
                 // console.log(params);
                 this.work_items=response.data;
             });

@@ -78,11 +78,13 @@ class WorkItemController extends Controller
         $workItem = WorkItem::create(array_merge($validator->validated()));
         // Log::info($project);
 
-
-        return response()->json([
-            'message' => 'Đầu mục được tạo thành công',
-            'Work Item' => $workItem
-        ], 201);
+        if(auth('api')->user()){
+            return response()->json([
+                'message' => 'Đầu mục được tạo thành công',
+                'Work Item' => $workItem
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
     }
 
 
@@ -104,9 +106,7 @@ class WorkItemController extends Controller
             'priority' => 'required|in:Emergency,High,Medium,Low',
             // 'date_start' => 'date',
             'note' => 'max:255',
-            
         ];
-
         $message = [
             'work_item_code.required' => 'Mã đầu mục là bắt buộc.',
             'name.required' => 'Tên đầu mục là bắt buộc.',
@@ -122,19 +122,26 @@ class WorkItemController extends Controller
             return response()->json(['error' => $validator->errors()], 404);
         }
         $workItem->update(array_merge($validator->validated()));
-        return response()->json([
-            'message' => 'Đầu mục được cập nhật thành công',
-            'Work Item' => $workItem
-        ], 201);
+
+        if(auth('api')->user()){
+            return response()->json([
+                'message' => 'Đầu mục được cập nhật thành công',
+                'Work Item' => $workItem
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
     }
 
 
     public function destroy($id){
         $workItem = WorkItem::findOrFail($id);
         $workItem->delete();
-        return response()->json([
-            'message'=> 'Xóa đầu mục thành công!!'
-        ]);
+        if(auth('api')->user()){
+            return response()->json([
+                'message'=> 'Xóa đầu mục thành công!!'
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
     }
 
 }

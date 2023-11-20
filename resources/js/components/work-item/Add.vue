@@ -33,7 +33,7 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="name">Tên đầu mục : <span>*</span></label>
-                                            <input required type="text" placeholder="Nhập tên module" class="form-control form-control-lg" v-model="work_items.name"/>
+                                            <input required type="text" placeholder="Nhập tên đầu mục" class="form-control form-control-lg" v-model="work_items.name"/>
                                         </div>
                                     </div>
 
@@ -180,13 +180,13 @@ export default {
     },
     methods:{
         getProjectList(){
-            axios.get("/api/project").then(response => {
+            axios.get("/api/project", {headers: authHeader()}).then(response => {
                 this.project_work_items = response.data;
             });
         },
 
         getModuleList(){
-            axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`).then(response => {
+            axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`, {headers: authHeader()}).then(response => {
                 this.module_work_items = response.data;
             });
         },
@@ -201,7 +201,7 @@ export default {
             // console.log(this.work_items);
             axios.post("/api/work_item/create", this.work_items, {headers: authHeader()}).then(response => {
                 // console.log(this.work_items);
-                this.$router.push('/work_item/list');
+                this.$router.push('/work-item/list');
             }).catch(error => {
                 console.error('Error:', error);
             });

@@ -112,7 +112,7 @@
                                                             formControlName="type_of_work"
                                                             v-model="work_does.type_of_work"
                                                         />
-                                                        <label Class="form-check-label" for="priority">Đơn giản</label>
+                                                        <label Class="form-check-label" for="type_of_work">Đơn giản</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -306,12 +306,12 @@ export default {
     },
     methods:{
         getWorkItemList(){
-            axios.get("/api/work_item").then(response => {
+            axios.get("/api/work_item", {headers: authHeader()}).then(response => {
                 this.wItem_work_does = response.data;
             });
         },
         getModuleList(){
-            axios.get("/api/module").then(response => {
+            axios.get("/api/module", {headers: authHeader()}).then(response => {
                 this.module_work_does = response.data;
             });
         },
@@ -323,20 +323,20 @@ export default {
         // },
 
         getProjectList(){
-            axios.get("/api/project").then(response => {
+            axios.get("/api/project", {headers: authHeader()}).then(response => {
                 this.project_work_does = response.data;
             });
         },
         getUserList(){
-            axios.get("/api/list").then(response => {
+            axios.get("/api/list", {headers: authHeader()}).then(response => {
                 this.user_work_does = response.data;
             });
         },
         showWorkDo(){
             const id = this.$route.params.id;
             try {
-                axios.get(`/api/work_do/update/${id}`).then(response => {
-                    console.log(id);
+                axios.get(`/api/work_do/update/${id}`, {headers: authHeader()}).then(response => {
+                    // console.log(id);
                     console.log(response.data);
                     this.work_does=response.data;
                     // console.log(this.work_does);
@@ -350,8 +350,8 @@ export default {
         updateWorkDo(){
             // console.log(this.work_does);
             const id = this.$route.params.id;
-            axios.post(`/api/work_do/update/${id}`, this.work_does, {headers: authHeader()}).then(response => {
-                alert('Successfully created');
+            axios.put(`/api/work_do/update/${id}`, this.work_does, {headers: authHeader()}).then(response => {
+                alert('Successfully updated');
                 // console.log(this.work_does);
                 this.$router.push('/work-do/list');
             }).catch(error => {

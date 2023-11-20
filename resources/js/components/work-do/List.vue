@@ -67,7 +67,7 @@ export default {
     },
     methods:{
         getWorkDoes(){
-            axios.get("/api/work_do").then(response => {
+            axios.get("/api/work_do", {headers: authHeader()}).then(response => {
                 this.work_does = response.data;
             });
         },
@@ -86,7 +86,7 @@ export default {
                 input: this.input
             }
             try {
-            axios.get("/api/work_do/search", {params}).then(response=>{
+            axios.get("/api/work_do/search", {params}, {headers: authHeader()}).then(response=>{
                 this.work_does=response.data;
             });
             } catch(error){

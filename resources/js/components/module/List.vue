@@ -77,7 +77,7 @@ export default {
                 input: this.input 
             }
             try {
-                axios.get("/api/module/search", {params}).then(response => {
+                axios.get("/api/module/search", {params}, {headers: authHeader()}).then(response => {
                     console.log(params);
                     this.modules=response.data;
                 });

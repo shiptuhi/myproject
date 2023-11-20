@@ -139,7 +139,7 @@ export default {
     },
     methods:{
         getUserList(){
-            axios.get("/api/list").then(response => {
+            axios.get("/api/list", {headers: authHeader()}).then(response => {
                 this.user_project = response.data;
             });
         },
@@ -155,6 +155,7 @@ export default {
             const id = this.$route.params.id;
             axios.put(`/api/project/update/${id}`, this.projects, {headers: authHeader() }).then(response => {
                 // console.log(response.data);
+                alert("Successfully updated");
                 this.$router.push('/project/list');
             }).catch(error => {
                 console.error('Error:', error);

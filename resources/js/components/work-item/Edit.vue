@@ -180,19 +180,19 @@ export default {
     },
     methods:{
         getProjectList(){
-            axios.get("/api/project").then(response => {
+            axios.get("/api/project", {headers: authHeader()}).then(response => {
                 this.project_work_items = response.data;
             });
         },
         getModuleList(){
-            axios.get("/api/module").then(response => {
+            axios.get("/api/module", {headers: authHeader()}).then(response => {
                 this.module_work_items = response.data;
             });
         },
 
 
         getModuleList_2(){
-            axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`).then(response => {
+            axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`, {headers: authHeader()}).then(response => {
                 this.module_work_items = response.data;
             });
         },
@@ -200,14 +200,14 @@ export default {
         
         
         getUserList(){
-            axios.get("/api/list").then(response => {
+            axios.get("/api/list", {headers: authHeader()}).then(response => {
                 this.user_work_items = response.data;
             });
         },
 
         showWorkItem(){
             const id = this.$route.params.id;
-            axios.get(`/api/work_item/update/${id}`).then(response => {
+            axios.get(`/api/work_item/update/${id}`, {headers: authHeader()}).then(response => {
                 this.work_items=response.data;
                 // console.log(this.projects);
             }).catch(error => {
@@ -219,6 +219,7 @@ export default {
             const id = this.$route.params.id;
             axios.put(`/api/work_item/update/${id}`, this.work_items, {headers: authHeader()}).then(response => {
                 // console.log(response.data);
+                alert("Successfully updated");
                 this.$router.push('/work-item/list');
             }).catch(error => {
                 console.error('Error:', error);

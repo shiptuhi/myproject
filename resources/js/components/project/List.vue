@@ -92,7 +92,7 @@ export default {
                 input: this.input
             }
             try {
-                axios.get("/api/project/search/", {params}).then(response=>{
+                axios.get("/api/project/search/", {params}, {headers: authHeader()}).then(response=>{
                     // console.log(params);
                     this.projects = response.data;
                 });

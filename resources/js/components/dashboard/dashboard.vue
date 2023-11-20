@@ -2,6 +2,7 @@
     <div id="report">
         <h4>Báo cáo công việc</h4>
         <div class="container-fluid main">
+            <notifications position="top right" />
             <div class="row">
                 <div class="col-6">
                     <div class="chart-title" style="background-color: rgba(193, 161, 44, 1);">

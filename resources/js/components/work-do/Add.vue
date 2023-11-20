@@ -304,12 +304,12 @@ export default {
     },
     methods:{
         getWorkItemList(){
-            axios.get("/api/work_item").then(response => {
+            axios.get("/api/work_item", {headers: authHeader()}).then(response => {
                 this.wItem_work_does = response.data;
             });
         },
         getModuleList(){
-            axios.get("/api/module").then(response => {
+            axios.get("/api/module", {headers: authHeader()}).then(response => {
                 this.module_work_does = response.data;
             });
         },
@@ -321,12 +321,12 @@ export default {
         // },
 
         getProjectList(){
-            axios.get("/api/project").then(response => {
+            axios.get("/api/project", {headers: authHeader()}).then(response => {
                 this.project_work_does = response.data;
             });
         },
         getUserList(){
-            axios.get("/api/list").then(response => {
+            axios.get("/api/list", {headers: authHeader()}).then(response => {
                 this.user_work_does = response.data;
             });
         },
