@@ -2,6 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách dự án</span>
+        <span> {{account}} </span>
         <form class="d-flex" role="search">
               <input class="form-control mb-6" type="search" placeholder="Search" aria-label="Search" @input="filter" v-model="input">
               <button class="btn btn-outline-success" @click.prevent="filter">Search</button>
@@ -38,8 +39,8 @@
                         <!-- <td>{{ prj.active_status }}</td> -->
                         
                         <td>
-                            <router-link :to= "{path: '/project/edit/' + prj.id}" class="btn btn-info">Sửa</router-link>
-                            <button type="button" @click    ="deleteProject(prj.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>
+                            <router-link :to="{path: '/project/edit/' + prj.id}" class="btn btn-info">Sửa</router-link>
+                            <button type="button" @click="deleteProject(prj.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>
                             
                         </td>
                     </tr>
@@ -59,6 +60,7 @@ export default {
         return {
             projects: [],
             input: '',
+            account: localStorage.getItem('users'),
             
             
         };
@@ -69,7 +71,9 @@ export default {
     },
     methods:{
         getProjects(){
+            ;
             axios.get("/api/project").then(response => {
+                // console.log(abc);
                 this.projects = response.data;
             });
         },

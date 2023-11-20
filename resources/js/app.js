@@ -1,11 +1,8 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 import 'bootstrap';
 
 import App from './components/App.vue';
+
+import Dashboard from './components/dashboard/Dashboard.vue';
 
 import Login from './components/login/Login.vue';
 import Register from './components/login/Register.vue';
@@ -31,11 +28,11 @@ import WorkDoEdit from './components/work-do/Edit.vue';
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
+// import { library } from "@fortawesome/fontawesome-svg-core";
+// import { faPhone } from "@fortawesome/free-solid-svg-icons";
 
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import store from './store';
+// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+// import store from './store';
 
 
 const router = createRouter({
@@ -50,6 +47,11 @@ const router = createRouter({
             path: '/register',
             name: 'register',
             component: Register, 
+        },
+        { 
+            path: '/dashboard',
+            name: 'dashboard',
+            component: Dashboard, 
         },
         { 
             path: '/employee/list',
@@ -120,19 +122,20 @@ const router = createRouter({
     ]
 });
 
-library.add(faPhone);
+// library.add(faPhone);
 
 const app = createApp(App);
-app.use(router,store).component("font-awesome-icon", FontAwesomeIcon).mount('#app');
+app.use(router);
+app.mount('#app');
 
-router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register'];
-    // const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('user');
+// router.beforeEach((to, from, next) => {
+//     const publicPages = ['/login', '/register'];
+//     // const authRequired = !publicPages.includes(to.path);
+//     const loggedIn = localStorage.getItem('user');
   
-    // if (authRequired && !loggedIn) {
-    //   return next('/login');
-    // }
+//     // if (authRequired && !loggedIn) {
+//     //   return next('/login');
+//     // }
   
-    next();
-});
+//     next();
+// });

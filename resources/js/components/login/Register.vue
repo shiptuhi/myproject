@@ -48,18 +48,32 @@
                                             v-model="users.password_confirmation"
                                         />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label" for="phoneNumber">Số điện thoại: <span>*</span></label>
-                                        <input
-                                            required
-                                            type="text"
-                                            class="form-control"
-                                            id="phoneNumber"
-                                            v-model="users.phoneNumber"
-                                        />
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="phoneNumber">Số điện thoại: <span>*</span></label>
+                                                <input
+                                                    required
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="phoneNumber"
+                                                    v-model="users.phoneNumber"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="role">Chức vụ: <span>*</span></label>
+                                                <select class="form-control form-control-lg" v-model="users.role">
+                                                    <option value="">--Chọn--</option>
+                                                    <option v-for="rol in user_role" :key="rol.id">{{rol}}</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="col-12">
+                                    <div class="row">
                                         <div class="form-group">
                                             <label for="gender" class="form-label">Giới tính: <span>*</span></label>
                                             <div class="row">
@@ -109,7 +123,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12">
+                                    <div class="row">
                                         <div class="form-group">
                                             <label for="status" class="form-label">Trạng thái hoạt động: <span>*</span></label>
                                             <div class="row">
@@ -176,11 +190,23 @@ export default {
                 gender: "",
                 phoneNumber:"",
                 active_status:"",
+                role: [],
 
             },
+            user_role:[]    
         };
     },
+    mounted(){
+        this.getRole();
+    },
     methods: {
+        getRole(){
+            
+            axios.get("/api/roles").then(response => {
+                console.log(response.data);
+                this.user_role = response.data;
+            });
+        },
         register(event) {
             event.preventDefault();
             axios.post("/api/auth/register", this.users).then((response) => {

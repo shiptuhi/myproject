@@ -3,33 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 use Illuminate\Support\Facades\Log;
-
-use Carbon\Carbon;
 
 class ProjectController extends Controller
 {
-    // public function __construct() {
-    //     $this->middleware('auth:api');
+    public function __construct() {
+        $this->middleware('auth:api');
       
-    // }
+    }
 
     public function index(){
         $project = Project::with('users')->get();
-
-        // if(auth('api')->user()){
-        //     return response()-> json([
-        //         'project' => $project,
-        //     ]);
-        // } 
-        // abort(403, 'Unauthorized');
+        if(auth('api')->user()){
+            return response()-> json([
+                'project' => $project,
+            ]);
+        } 
+        abort(403, 'Unauthorized');
             
-        return response()-> json($project);
+        // return response()-> json($project);
     }
 
     public function filter(Request $request){

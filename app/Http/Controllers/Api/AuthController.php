@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller {
     
@@ -22,19 +22,23 @@ class AuthController extends Controller {
     */
 
    public function login(Request $request){
-       $validator = Validator::make($request->all(), [
-        'email' => 'required|email',
+    $rule = [
+        'username' => 'required|string|max:255',
         'password' => 'required|string|min:6',
-    ]);
+    ];
+    $message = [
+        'username.required' => 'Tên đăng nhập là bắt buộc.',
+        'password.required'=> 'Mật khẩu là bắt buộc.',
+    ];
+    $validator = Validator::make($request->all(), $rule, $message );
 
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 404);
+    }
 
-       if ($validator->fails()) {
-           return response()->json($validator->errors(), 422);
-       }
-
-       if (!$token = auth('api')->attempt($validator->validated())) {
-           return response()->json(['error' => 'Unauthorized'], 401);
-       }
+    if (!$token = auth('api')->attempt($validator->validated())) {
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
 
        return $this->createNewToken($token);
    }
@@ -47,11 +51,12 @@ class AuthController extends Controller {
    public function register(Request $request) {
        $validator = Validator::make($request->all(), [
            'name' => 'required|string|between:2,100',
+           'username' => 'required|string|max:255',
            'email' => 'required|string|email|max:100|unique:users',
            'password' => 'required|string|confirmed|min:6',
            'gender' => 'required|in:Male,Female,Other',
            'phoneNumber' => 'required|numeric|unique:users',
-            'active_status'=> 'required|in:Active,Inactive',
+           'active_status'=> 'required|in:Active,Inactive',
        ]);
 
        if($validator->fails()){
@@ -62,10 +67,12 @@ class AuthController extends Controller {
                    $validator->validated(),
                    ['password' => bcrypt($request->password)]
                ));
+        $user->syncRoles($request->input('roles'));
 
        return response()->json([
            'message' => 'User successfully registered',
-           'user' => $user
+           'user' => $user,
+           'role' => $user->getRoleNames()
        ], 201);
    }
 

@@ -1,34 +1,51 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-sm">
     
           <div class="nav-item dropdown">
-              <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Nhân viên</button>
+              <button class="btn dropdown-toggle text-light fw-bolder" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="emp" alt="emp" />
+                <span class="text-light fw-bolder" style="margin-left: 10px">Nhân viên</span>
+              </button>
                 <ul class="dropdown-menu">
-                  <li><router-link to="/employee/list" class="nav-item nav-link text-center" >Nhân viên</router-link></li>
+                  <li><router-link to="/employee/list" class="nav-item nav-link text-center">Nhân viên</router-link></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><router-link to="/employee/list" class="nav-item nav-link text-center">Khách hàng</router-link></li>
                 </ul>
           </div>
     
           <div class="nav-item dropdown">
-              <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Công việc</button>
+              <button class="btn dropdown-toggle text-light fw-bolder" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="task" alt="task"> 
+                <span class="text-light fw-bolder" style="margin-left: 10px">Công việc</span>
+              </button>
                 <ul class="dropdown-menu">
-                  <li><router-link to="/project/list" class="nav-item nav-link text-center" >Dự án</router-link></li>
-                  <li><router-link to="/module/list" class="nav-item nav-link text-center" >Module</router-link></li>
-                  <li><router-link to="/work-item/list" class="nav-item nav-link text-center" >Đầu Mục</router-link></li>
-                  <li><router-link to="/work-do/list" class="nav-item nav-link text-center" >Công việc</router-link></li>
+                  <li><router-link to="/project/list" class="nav-item nav-link text-center" >Danh sách dự án</router-link></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><router-link to="/module/list" class="nav-item nav-link text-center" >Danh sách module</router-link></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><router-link to="/work-item/list" class="nav-item nav-link text-center" >Danh sách đầu mục</router-link></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><router-link to="/work-do/list" class="nav-item nav-link text-center" >Danh sách công việc</router-link></li>
                   <!-- <li><a class="dropdown-item" href="#">Công Việc</a></li> -->
                 </ul>
           </div>
           
     
-          <a class="navbar-brand" to="#">TASK MANAGEMENT</a>
+          <!-- <a class="navbar-brand text-light fw-bolder" to="#">TASK MANAGEMENT</a> -->
     
-          <router-link to="/project/list" class="nav-item nav-link">Home</router-link>
-
+          <router-link to="/dashboard" class="nav-item nav-link text-light fw-bolder">TASK MANAGEMENT</router-link>
+         
           <div class="nav-item dropdown ">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <button class="btn dropdown-toggle-lg" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img :src="email" alt="Email" />
+              <span class="text-light fw-bolder" style="margin-left: 10px">Hello, {{ account }}</span>
+                
+            </button>
+            <!-- <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button> -->
               <ul class="dropdown-menu">
                 <li><router-link to="/project/list" class="dropdown-item text-center" >Đổi mật khẩu</router-link></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><span class="dropdown-item text-center" v-on:click="logout">Đăng xuất</span></li>
               </ul>
           </div>
@@ -38,9 +55,20 @@
 <script>
 import axios from 'axios';
 
+import emp from 'D:/project/myproject/resources/assets/icon/nav-bar/user.svg';
+import task from 'D:/project/myproject/resources/assets/icon/nav-bar/task.svg';
+import email from 'D:/project/myproject/resources/assets/icon/nav-bar/username.svg';
+
   export default{
-    computed: {
-    },
+    name: "login",
+    data() {
+        return {
+          account:localStorage.getItem("user") || 'None',
+          email: email,
+          task: task,
+          emp: emp
+        }
+      },
     methods: {
       logout(){
         try{
@@ -57,5 +85,7 @@ import axios from 'axios';
 
 </script>
 <style>
-
+.navbar {
+  background-color: #624DE3;
+}
 </style>

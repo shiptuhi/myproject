@@ -1,55 +1,55 @@
-version: '3'
+# version: '3'
 
-services:
-  # PHP service
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    volumes:
-      - .:/var/www/html/project
+# services:
+#   # PHP service
+#   php:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#       - "8080:8080"
+#     volumes:
+#       - .:/var/www/html/project
 
-  # Node.js service
-  node:
-    image: node:18.17.1
-    working_dir: /var/www/html/project
-    volumes:
-      - .:/var/www/html/project
+#   # Node.js service
+#   node:
+#     image: node:18.17.1
+#     working_dir: /var/www/html/project
+#     volumes:
+#       - .:/var/www/html/project
 
-  # MySQL service
-  mysql:
-    image: mysql:8
-    container_name : mysql
-    volumes:
-      - ./mysql/data:/var/lib/mysql
+#   # MySQL service
+#   mysql:
+#     image: mysql:8
+#     container_name : mysql
+#     volumes:
+#       - ./mysql/data:/var/lib/mysql
 
-    environment:
-      MYSQL_DATABASE: TASK_MANAGEMENT
-      MYSQL_USERNAME: root
-      MYSQL_PASSWORD: 
-    ports:
-      - "3306:3306"
-    # volumes:
-    #   - ./mysql-data:/var/lib/mysql
-    # command: --default-authentication-plugin=mysql_native_password
+#     environment:
+#       MYSQL_DATABASE: TASK_MANAGEMENT
+#       MYSQL_USERNAME: root
+#       MYSQL_PASSWORD: 
+#     ports:
+#       - "3306:3306"
+#     # volumes:
+#     #   - ./mysql-data:/var/lib/mysql
+#     # command: --default-authentication-plugin=mysql_native_password
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: mysql
-      PMA_PASSWORD: 
-    depends_on:
-      - mysql
+#   phpmyadmin:
+#     image: phpmyadmin/phpmyadmin
+#     container_name: phpmyadmin
+#     ports:
+#       - "8081:80"
+#     environment:
+#       PMA_HOST: mysql
+#       PMA_PASSWORD: 
+#     depends_on:
+#       - mysql
 
-  # Vue.js service
-  vue:
-    image: node:18.17.1
-    working_dir: /var/www/html/project
-    command: "npm run dev"  # You might need to adjust this command based on your Vue.js project setup
-    volumes:
-      - .:/var/www/html/project
+#   # Vue.js service
+#   vue:
+#     image: node:18.17.1
+#     working_dir: /var/www/html/project
+#     command: "npm run dev"  # You might need to adjust this command based on your Vue.js project setup
+#     volumes:
+#       - .:/var/www/html/project

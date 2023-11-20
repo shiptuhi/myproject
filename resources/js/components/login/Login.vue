@@ -10,12 +10,12 @@
                                 <form @submit.prevent="login">
                                     <div class="form-group">
                                         <input required type="text" placeholder="Email" class='form-control form-control-lg' v-model='users.email' />
-                                        <!-- <span v-if="!users.email" class="text-danger" @change="login">Email là bắt buộc!</span> -->
+                                        <span v-if="!isUsernameValid" class="text-danger" >Email là bắt buộc!</span>
                                     </div>
 
                                     <div class="form-group">
                                         <input required type="password" placeholder="Password" class="form-control form-control-lg" v-model="users.password" />
-                                        <!-- <span v-if="!users.password" class="text-danger">Mật khẩu không chính xác!</span> -->
+                                        <span v-if="!isPasswordValid" class="text-danger">Mật khẩu không chính xác!</span>
                                     </div>
 
                                     <div class="col-12 justify-content-center d-flex p ">
@@ -45,51 +45,42 @@ export default {
             users: {
                 email: "",
                 password: "",
+                isUsernameValid: true,
+                isPasswordValid: true,
                 // roles:[]
             },
         }
     },
-
-    // computed: {
-    //     isEmailValid() {
-    //     return this.users.email.trim() !== '';
-    //     },
-    //     isPasswordValid() {
-    //     return this.users.password.trim() !== '';
-    //     },
-    //     isFormValid() {
-    //     return this.isEmailValid && this.isPasswordValid;
-    //     },
-    // },
     mounted() {
         // this.login();
     },
     methods: {
         login(event) {
             event.preventDefault();
-            console.log(this.users);
-            try {
-            axios.post('/api/auth/login',this.users).then(response => {
-            //     console.log(this.users);
-            //    console.log(response.data.access_token); 
-                // console.log(response.data.users.roles.name);
-                // const base64Url = response.data.accessToken.split('.')[1];
-                // const base64 = base64Url.replace('-', '+').replace('_', '/');
-                // const payload = JSON.parse(atob(base64));
-                // const userRole = payload.roles.name;
+            // this.isUsernameValid = this.validateUsername();
+            // this.isPasswordValid = this.validatePassword();
 
-                // console.log(userRole);
-                localStorage.setItem('user', response.data.users);
-                // localStorage.setItem('role', userRole);
-                localStorage.setItem('token', response.data.access_token);
-                
-                this.$router.push('/project/list');
-            });
-            }catch(error){
-                console.error('Error:', error);
-                alert('Đăng nhập thất bại!');
-            };
+            // if(this.isUsernameValid && this.isPasswordValid) {
+                axios.post('/api/auth/login',this.users).then(response => {
+                    localStorage.setItem('user', response.data.user.name);
+                    // localStorage.setItem('role', userRole);
+                    localStorage.setItem('token', response.data.access_token);
+                    
+                    this.$router.push('/dashboard');
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('Đăng nhập thất bại!');
+                });
+            // }
         },
+        // validateUsername() {
+        // // Implement username validation logic
+        //     return this.email.length > 0;
+        // },
+        // validatePassword() {
+        // // Implement password validation logic
+        //     return this.password.length >= 6;
+        // },
 
 
 

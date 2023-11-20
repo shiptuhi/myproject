@@ -44,7 +44,7 @@
                                             <label class="form-label" for="user_id">Người phụ trách</label>
                                             <select class="form-control form-control-lg" v-model="projects.user_id">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="user in user_project" :value="user.id">{{ user.name}}</option>
+                                                <option v-for="user in user_project" :key="user.id">{{ user.name}}</option>
                                             </select>
                                             <!-- <input required type="text" class="form-control form-control-lg" id="user_id" v-model="projects.user_id"/> -->
                                         </div>
