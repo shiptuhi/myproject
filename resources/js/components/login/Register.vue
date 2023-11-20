@@ -19,6 +19,16 @@
                                         />
                                     </div>
                                     <div class="form-group">
+                                        <label class="form-label" for="username">Tên đăng nhập: <span>*</span></label>
+                                        <input
+                                            required
+                                            type="text"
+                                            class="form-control"
+                                            id="username"
+                                            v-model="users.username"
+                                        />
+                                    </div>
+                                    <div class="form-group">
                                         <label class="form-label" for="email">Email: <span>*</span></label>
                                         <input
                                             required
@@ -185,6 +195,7 @@ export default {
             users: {
                 name: "",
                 email: "",
+                username: "",
                 password: "",
                 password_confirmation: "",
                 gender: "",
