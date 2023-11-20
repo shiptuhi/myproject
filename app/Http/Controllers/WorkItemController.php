@@ -10,22 +10,14 @@ use Illuminate\Support\Facades\Validator;
 class WorkItemController extends Controller
 {
     //
-    // public function __construct() {
-    //     $this->middleware('auth:api');
+    public function __construct() {
+        $this->middleware('auth:api');
       
-    // }
+    }
     public function index(){
         $workitem = WorkItem::with('modules','projects','users')->get();
-        // if(auth('api')->user()){
-        //     return response()-> json([
-        //         'workitem' => $workitem,
-        //     ]);
-        // } 
-        // abort(403, 'Unauthorized');
         return response()->json($workitem);
     }
-
-
     public function filter(Request $request){
         $query = WorkItem::query();
 

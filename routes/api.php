@@ -20,7 +20,7 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Auth::routes();
 
-Route::get('/roles',[RoleController::class, 'index']);
+
 //login
 Route::prefix('auth')->middleware('api')->group( function () {
     Route::post('/login', [AuthController::class, 'login']);
@@ -35,8 +35,11 @@ Route::prefix('auth')->middleware('api')->group( function () {
     // });
 });
 
+Route::get('/roles',[RoleController::class, 'index']);
+
 Route::get('/list',[UserController::class, 'index']);
 
+Route::get('/project',[ProjectController::class, 'index']);
 Route::get('/project/search',[ProjectController::class, 'filter']);
 Route::get('/project/update/{id}', [ProjectController::class, 'edit']);  
 
@@ -56,8 +59,7 @@ Route::get('/work_do/update/{id}', [WorkDoController::class, 'edit']);
 Route::put('/work_do/update/{id}',[WorkDoController::class, 'update']);
 Route::delete('/work_do/delete/{id}',[WorkDoController::class, 'destroy']);
 
-// Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('Admin')]], function () {
-    Route::get('/project',[ProjectController::class, 'index']);
+Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('Admin')]], function () {
     Route::post('/project/create',[ProjectController::class, 'store']);
     Route::put('/project/update/{id}',[ProjectController::class, 'update']);
     Route::delete('/project/delete/{id}',[ProjectController::class, 'destroy']);
@@ -71,7 +73,7 @@ Route::delete('/work_do/delete/{id}',[WorkDoController::class, 'destroy']);
     Route::delete('/work_item/delete/{id}',[WorkItemController::class, 'destroy']);
 
 
-// });
+});
 // Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('user')]], function () {
 
 // });

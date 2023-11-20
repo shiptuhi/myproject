@@ -10,20 +10,13 @@ use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
-    // public function __construct() {
-    //     $this->middleware('auth:api');
+    public function __construct() {
+        $this->middleware('auth:api');
       
-    // }
+    }
 
     public function index(){
-        $project = Project::with('users')->get();
-        // if(auth('api')->user()){
-        //     return response()-> json([
-        //         'project' => $project,
-        //     ]);
-        // } 
-        // abort(403, 'Unauthorized');
-            
+        $project = Project::with('users')->get(); 
         return response()-> json($project);
     }
 
@@ -88,13 +81,6 @@ class ProjectController extends Controller
         return response()->json($project);
     
     }
-
-    // public function getUserByProject($id){
-    //     $user = Project::where('user_id', $id)->get();
-    //     return response()->json($user);
-    // }
-
-
     public function update(Request $request, $id){
         $project = Project::findOrFail($id);
 

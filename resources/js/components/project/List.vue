@@ -32,7 +32,7 @@
                         <td>{{ prj.project_code }}</td>
                         <td>{{ prj.name }}</td>
                         <td>{{ prj.date_start }}</td>
-                        <!-- <td >{{ prj.users.name  }}</td> -->
+                        <td >{{ prj.users.name  }}</td>
                         <td><span v-if="prj.active_status === 'Active'" class="active text-success">Hoạt động</span>
                         <span v-else class="Inactive text-danger">Ngừng hoạt động</span></td>
                         <!-- <td>{{ prj.active_status }}</td> -->
@@ -51,8 +51,8 @@
     </div>
 </template>
 <script>
-import axios from "axios";
 import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
+import axios from 'axios';
 export default {
     name: 'project-list',
     data() {
@@ -73,14 +73,14 @@ export default {
             // console.log(header);
             // console.log(authHeader());
             axios.get("/api/project", {headers: authHeader()}).then(response => {
-                // console.log(abc);
+                // console.log(response.data);
                 this.projects = response.data;
             });
         },
 
         deleteProject(id){
             if(confirm("Bạn có chắc chắn muốn xóa dự án không?")){
-                axios.delete(`/api/project/delete/${id}`).then(response=>{
+                axios.delete(`/api/project/delete/${id}`, {headers: authHeader()}).then(response=>{
                     this.getProjects()
                 }).catch(error=>{
                     console.log(error)

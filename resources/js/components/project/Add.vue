@@ -107,7 +107,7 @@
     </section>
 </template>
 <script>
-import { computed } from "@vue/reactivity";
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 import axios from "axios";
 export default {
     name: "project-add",
@@ -141,7 +141,7 @@ export default {
         addProject(event){
             event.preventDefault();
             console.log(this.projects);
-            axios.post("/api/project/create", this.projects).then(response => {
+            axios.post("/api/project/create", this.projects, {headers: authHeader()}).then(response => {
                 console.log(response.data);
                 console.log('Success');
                 this.$router.push('/project/list');

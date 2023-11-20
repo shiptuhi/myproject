@@ -78,7 +78,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'module-add',
     data() {
@@ -102,19 +102,19 @@ export default {
     },
     methods:{
         getProjectList(){
-            axios.get("/api/project").then(response => {
+            axios.get("/api/project", {headers: authHeader()}).then(response => {
                 this.project_module = response.data;
             });
         },
         getUserList(){
-            axios.get("/api/list").then(response => {
+            axios.get("/api/list", {headers: authHeader()}).then(response => {
                 this.user_module = response.data;
             });
         },
         addModule(event){
             event.preventDefault();
             // console.log(this.modules);
-            axios.post("/api/module/create", this.modules).then(response => {
+            axios.post("/api/module/create", this.modules, {headers: authHeader()}).then(response => {
             this.$router.push('/module/list');
         }).catch(error => {
                 console.error('Error:', error);

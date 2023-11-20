@@ -74,7 +74,7 @@
                                         <div class="col-md-6 mb-4">
                                             <div class="form-group">
                                                 <label class="form-label" for="role">Chức vụ: <span>*</span></label>
-                                                <select class="form-control form-control-lg" v-model="users.role">
+                                                <select class="form-control form-control-lg" v-model="users.roles">
                                                     <option value="">--Chọn--</option>
                                                     <option v-for="rol in user_role" :key="rol.id">{{rol}}</option>
                                                     
@@ -201,7 +201,7 @@ export default {
                 gender: "",
                 phoneNumber:"",
                 active_status:"",
-                role: [],
+                roles: [],
 
             },
             user_role:[]    
@@ -213,7 +213,7 @@ export default {
     methods: {
         getRole(){
             axios.get("/api/roles").then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.user_role = response.data;
             });
         },

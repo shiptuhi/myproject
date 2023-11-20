@@ -150,7 +150,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'work-item-add',
     data() {
@@ -199,7 +199,7 @@ export default {
         addWorkItem(event){
             event.preventDefault();
             // console.log(this.work_items);
-            axios.post("/api/work_item/create", this.work_items).then(response => {
+            axios.post("/api/work_item/create", this.work_items, {headers: authHeader()}).then(response => {
                 // console.log(this.work_items);
                 this.$router.push('/work_item/list');
             }).catch(error => {

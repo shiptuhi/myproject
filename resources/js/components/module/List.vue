@@ -46,7 +46,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'module-list',
     data() {
@@ -60,12 +60,12 @@ export default {
     },
     methods:{
         getModules(){
-            axios.get("/api/module").then(response => {
+            axios.get("/api/module", {headers: authHeader()}).then(response => {
             this.modules = response.data;
         });
         },
         deleteModule(id){
-            axios.delete(`/api/module/delete/${id}`).then(response => {
+            axios.delete(`/api/module/delete/${id}`, {headers: authHeader()}).then(response => {
                 this.getModules();
             }).catch(error=>{
                 console.log(error)

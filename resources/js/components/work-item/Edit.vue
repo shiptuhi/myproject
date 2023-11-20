@@ -148,7 +148,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'work-item-edit',
     data() {
@@ -217,7 +217,7 @@ export default {
 
         updateWorkItem(){
             const id = this.$route.params.id;
-            axios.put(`/api/work_item/update/${id}`, this.work_items).then(response => {
+            axios.put(`/api/work_item/update/${id}`, this.work_items, {headers: authHeader()}).then(response => {
                 // console.log(response.data);
                 this.$router.push('/work-item/list');
             }).catch(error => {

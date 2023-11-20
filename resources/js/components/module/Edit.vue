@@ -9,7 +9,7 @@
                     >
                         <div class="p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
-                                THÊM MODULE
+                                CHỈNH SỬA MODULE
                             </h3>
                             <form @submit.prevent="addModule">
                                 <div class="row">
@@ -80,7 +80,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'module-edit',
     data() {
@@ -125,7 +125,7 @@ export default {
 
         updateModule(){
             // console.log(this.modules);
-            axios.post("/api/module/create", this.modules).then(response => {
+            axios.post("/api/module/create", this.modules, {headers: authHeader()}).then(response => {
             this.$router.push('/module/list');
         }).catch(error => {
                 console.error('Error:', error);

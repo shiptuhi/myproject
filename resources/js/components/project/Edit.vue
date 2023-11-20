@@ -108,6 +108,7 @@
 </template>
 <script>
 import axios from 'axios';
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 
 export default {
     name: 'project-edit',
@@ -130,9 +131,9 @@ export default {
     },
 
     mounted(){
-        this.showProject();
         this.getUserList();
-        this.updateProject();
+        this.showProject();
+        // this.updateProject();
         // console.log(this.$route.params.id);
         
     },
@@ -144,15 +145,15 @@ export default {
         },
         showProject(){
             const id = this.$route.params.id;
-            // console.log(this.projects);
-            axios.get(`/api/project/update/${id}`).then(response => {
+            // console.log(id);
+            axios.get(`/api/project/update/${id}`, {headers: authHeader()}).then(response => {
                 this.projects=response.data;
                 // console.log(this.projects);
             });
         },
         updateProject(){
             const id = this.$route.params.id;
-            axios.put(`/api/project/update/${id}`, this.projects).then(response => {
+            axios.put(`/api/project/update/${id}`, this.projects, {headers: authHeader() }).then(response => {
                 // console.log(response.data);
                 this.$router.push('/project/list');
             }).catch(error => {

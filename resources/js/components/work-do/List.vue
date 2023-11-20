@@ -53,7 +53,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'work-do-list',
     data() {
@@ -73,7 +73,7 @@ export default {
         },
         deleteWorkDo(id){
             if(confirm("Bạn có chắc chắn muốn xóa công việc không?")){
-                axios.delete(`/api/work_do/delete/${id}`).then(response=>{
+                axios.delete(`/api/work_do/delete/${id}`, {headers: authHeader()}).then(response=>{
                     this.getWorkDoes()
                 }).catch(error=>{
                     console.log(error)

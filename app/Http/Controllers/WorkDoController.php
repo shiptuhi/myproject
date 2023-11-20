@@ -10,18 +10,12 @@ use Illuminate\Support\Facades\Validator;
 class WorkDoController extends Controller
 {
     //
-    // public function __construct() {
-    //     $this->middleware('auth:api');
+    public function __construct() {
+        $this->middleware('auth:api');
       
-    // }
+    }
     public function index(){
         $workDo = WorkDo::with('work_items','modules','projects','users')->get();
-        // if(auth('api')->user()){
-        //     return response()-> json([
-        //         'workDo' => $workDo,
-        //     ]);
-        // } 
-        // abort(403, 'Unauthorized');
         return response()->json($workDo);
     }
 

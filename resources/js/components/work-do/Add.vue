@@ -273,7 +273,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'work-do-add',
     data() {
@@ -333,7 +333,7 @@ export default {
         addWorkDo(event){
             event.preventDefault();
             // console.log(this.work_does);
-            axios.post("/api/work_do/create", this.work_does).then(response => {
+            axios.post("/api/work_do/create", this.work_does, {headers: authHeader()}).then(response => {
                 alert('Successfully created');
                 // console.log(this.work_does);
                 this.$router.push('/work-do/list');

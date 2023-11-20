@@ -273,7 +273,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 export default {
     name: 'work-do-edit',
     data() {
@@ -350,7 +350,7 @@ export default {
         updateWorkDo(){
             // console.log(this.work_does);
             const id = this.$route.params.id;
-            axios.post(`/api/work_do/update/${id}`, this.work_does).then(response => {
+            axios.post(`/api/work_do/update/${id}`, this.work_does, {headers: authHeader()}).then(response => {
                 alert('Successfully created');
                 // console.log(this.work_does);
                 this.$router.push('/work-do/list');
