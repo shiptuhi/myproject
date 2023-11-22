@@ -11,6 +11,10 @@
     "file": "assets/help-icon-35eb4918.svg",
     "src": "resources/assets/icon/help-icon.svg"
   },
+  "resources/assets/icon/nav-bar/notification.svg": {
+    "file": "assets/notification-09b029cb.svg",
+    "src": "resources/assets/icon/nav-bar/notification.svg"
+  },
   "resources/assets/icon/nav-bar/task.svg": {
     "file": "assets/task-b7034e60.svg",
     "src": "resources/assets/icon/nav-bar/task.svg"
@@ -33,7 +37,7 @@
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-aab14546.css",
+    "file": "assets/app-697679f8.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -41,15 +45,16 @@
       "assets/user-988bb497.svg",
       "assets/task-b7034e60.svg",
       "assets/username-8f82d780.svg",
+      "assets/notification-09b029cb.svg",
       "assets/dashboard-icon-42b10c39.svg",
       "assets/task-icon-a3de5d51.svg",
       "assets/calendar-icon-14c2a9db.svg",
       "assets/help-icon-35eb4918.svg"
     ],
     "css": [
-      "assets/app-aab14546.css"
+      "assets/app-697679f8.css"
     ],
-    "file": "assets/app-53c42919.js",
+    "file": "assets/app-e18d8dfd.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
