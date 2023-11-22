@@ -1,5 +1,5 @@
 <template>
-    <section class="vh-100 gradient-custom">
+    <section class="vh-200 gradient-custom">
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
@@ -22,7 +22,7 @@
                                             <label class="form-label" for="module_id">Module : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.module_id">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="mod in module_work_items" :key="mod.id">{{ mod.module_code }}</option>  
+                                                <option v-for="mod in module_work_items" :value="mod.id">{{ mod.module_code }}</option>  
                                             </select>
                                         </div>
                                     </div>
@@ -42,7 +42,7 @@
                                             <label class="form-label" for="user_id">Người phụ trách : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.emp_workitem">
                                                 <option value="" default>--Chọn--</option>
-                                                <option v-for="user in user_work_items" :key="user.id">{{ user.name}}</option>  
+                                                <option v-for="user in user_work_items" :value="user.id">{{ user.name}}</option>  
                                             </select>
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@
                                             <label class="form-label" for="project_id">Dự án :</label>
                                             <select class="form-control form-control-lg" id="project_id" v-model="work_items.project_id" @change="getModuleList">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="prj in project_work_items" :key="prj.id">{{prj.project_code}}</option>
+                                                <option v-for="prj in project_work_items" :value="prj.id">{{prj.project_code}}</option>
                                                 
                                             </select>
                                         </div>
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="col-12">
+                                <div class="col-12 justify-content-center d-flex p ">
                                     <button type="submit" class="btn btn-primary">Save</button>
                                     <router-link to="/module/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
                                 </div>
@@ -188,12 +188,15 @@ export default {
     },
     mounted(){
         this.getProjectList();
-        this.getModuleList();
+        // this.getModuleList();
         this.getUserList();
 
         // this.showModule();
         // this.addWorkItem();
         // console.log(this.$route.params.id);
+    },
+    computed(){
+        this.getModuleList();
     },
     methods:{
         getProjectList(){
@@ -204,6 +207,8 @@ export default {
 
         getModuleList(){
             axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`, {headers: authHeader()}).then(response => {
+                
+                console.log(response.data);
                 this.module_work_items = response.data;
             });
         },
@@ -217,10 +222,14 @@ export default {
             event.preventDefault();
             // console.log(this.work_items);
             axios.post("/api/work_item/create", this.work_items, {headers: authHeader()}).then(response => {
-                // console.log(this.work_items);
+                alert('Đầu mục được tạo thành công')
                 this.$router.push('/work-item/list');
             }).catch(error => {
-                console.error('Error:', error);
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                } else{
+                    alert('Thêm đầu mục thất bại');
+                }
             });
         }
     }

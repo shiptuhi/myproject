@@ -81,9 +81,12 @@ export default {
         deleteProject(id){
             if(confirm("Bạn có chắc chắn muốn xóa dự án không?")){
                 axios.delete(`/api/project/delete/${id}`, {headers: authHeader()}).then(response=>{
-                    this.getProjects()
+                    this.getProjects();
+                    alert('Xóa dự án thành công');
                 }).catch(error=>{
-                    console.log(error)
+                    if(error = '403'){
+                        alert('Không đủ thẩm quyền');
+                    }
                 })
             }
         },
@@ -91,14 +94,12 @@ export default {
             const params = {
                 input: this.input
             }
-            try {
-                axios.get("/api/project/search/", {params}, {headers: authHeader()}).then(response=>{
-                    // console.log(params);
-                    this.projects = response.data;
-                });
-            }catch(error)  {
+            axios.get("/api/project/search/", {params, headers: authHeader()}).then(response=>{
+                // console.log(params);
+                this.projects = response.data;
+            }).catch(error =>  {
                 console.error(error);
-            }
+            });
         },
     }
     // const getProjects = async()=>{

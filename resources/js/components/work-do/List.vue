@@ -74,9 +74,10 @@ export default {
         deleteWorkDo(id){
             if(confirm("Bạn có chắc chắn muốn xóa công việc không?")){
                 axios.delete(`/api/work_do/delete/${id}`, {headers: authHeader()}).then(response=>{
-                    this.getWorkDoes()
+                    this.getWorkDoes();
+                    alert("Xóa công việc thành công");
                 }).catch(error=>{
-                    console.log(error)
+                    alert("Xóa công việc thất bại");
                 })
             }
         },
@@ -86,7 +87,7 @@ export default {
                 input: this.input
             }
             try {
-            axios.get("/api/work_do/search", {params}, {headers: authHeader()}).then(response=>{
+            axios.get("/api/work_do/search", {params, headers: authHeader()}).then(response=>{
                 this.work_does=response.data;
             });
             } catch(error){

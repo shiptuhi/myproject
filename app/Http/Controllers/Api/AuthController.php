@@ -43,7 +43,7 @@ class AuthController extends Controller {
         'email' => 'required|string|email|max:100|unique:users',
         'password' => 'required|string|confirmed|min:6',
         'gender' => 'required|in:Male,Female,Other',
-        'phoneNumber' => 'required|numeric|max|10|unique:users',
+        'phoneNumber' => 'required|numeric|unique:users',
         'active_status'=> 'required|in:Active,Inactive',
         'roles' => 'required'
     ];

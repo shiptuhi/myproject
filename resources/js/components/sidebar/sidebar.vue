@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="item">
             <img :src="report" class="icon" alt="report">
-            <router-link to="/dashboard ">
+            <router-link to="/dashboard">
                 <span class="text-dark fw-normal" style="margin-left: 10px">Dashboard</span>
             </router-link>
         </div>

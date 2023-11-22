@@ -12,8 +12,10 @@ class RoleController extends Controller
 {
     //
     public function index(){
-        $roles = Role::all()->pluck('name');
-        Log::info($roles);
+        $roles = Role::all()->pluck('name')->reject(function ($role) {
+            return $role === 'Admin';
+        });
+        // Log::info($roles);
         return response()->json($roles);
     }
 }

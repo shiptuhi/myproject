@@ -27,9 +27,9 @@
                         <td>{{ cus.email }}</td>
 
                         <td>
-                            <span v-if="us.gender === 'Male'" class="Male text-success">Nam</span>
-                            <span v-else-if="us.gender === 'Female'" class="Female text-danger">Nữ</span>
-                            <span v-else-if="us.gender === 'Other'" class="Other text-danger-emphasis">Khác</span>
+                            <span v-if="cus.gender === 'Male'" class="Male text-success">Nam</span>
+                            <span v-else-if="cus.gender === 'Female'" class="Female text-danger">Nữ</span>
+                            <span v-else-if="cus.gender === 'Other'" class="Other text-danger-emphasis">Khác</span>
                         </td>
 
                         <td>{{ cus.company }}</td>

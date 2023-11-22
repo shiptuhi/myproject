@@ -10,7 +10,7 @@
                 <ul class="dropdown-menu">
                   <li><router-link to="/employee/list" class="nav-item nav-link text-center">Nhân viên</router-link></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><router-link to="/employee/list" class="nav-item nav-link text-center">Khách hàng</router-link></li>
+                  <li><router-link to="/customer/list" class="nav-item nav-link text-center">Khách hàng</router-link></li>
                 </ul>
           </div>
     
@@ -49,7 +49,7 @@
             </button>
             <!-- <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button> -->
               <ul class="dropdown-menu">
-                <li><router-link to="/project/list" class="dropdown-item text-center" >Đổi mật khẩu</router-link></li>
+                <li><router-link to="/change-password" class="dropdown-item text-center" >Đổi mật khẩu</router-link></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><span class="dropdown-item text-center" v-on:click="logout">Đăng xuất</span></li>
               </ul>

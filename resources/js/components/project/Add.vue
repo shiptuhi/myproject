@@ -2,9 +2,9 @@
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
-                <div class="col-12 col-lg-9 col-xl-7">
+                <div class="col-12 col-lg-9 col-xl-11">
                     <div class="card shadow-2-strong form-add" style="border-radius: 15px">
-                        <div class="p-4 p-md-5">
+                        <div class="p-4 p-md-9">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
                                 THÊM MỚI DỰ ÁN
                             </h3>
@@ -49,7 +49,7 @@
                                             <!-- <input required type="text" class="form-control form-control-lg" id="user_id" v-model="projects.user_id"/> -->
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-4">
+                                    <div class="col-md-6 mb-6">
                                         <div class="form-group">
                                             <label for="status" class="form-label">Trạng thái: <span>*</span></label>
                                             <div class="row">
@@ -86,14 +86,17 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-group">
-                                        <label class="form-label" for="note">Ghi chú</label>
-                                        <input type="note" class="form-control form-control-lg" id="note" v-model="projects.note"/>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="note">Ghi chú</label>
+                                            <input type="note" class="form-control form-control-lg" id="note" v-model="projects.note"/>
+                                        </div>
                                     </div>
                                 </div>
+                                <br />
 
-                                <div class="col-12">
+                                <div class="col-12 justify-content-center d-flex p ">
                                     <button type="submit" class="btn btn-primary">Save</button>
                                     <router-link to="/project/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
                                 </div>
@@ -135,22 +138,20 @@ export default {
                 this.user_project = response.data;
             });
         },
-
-
-
         addProject(event){
             event.preventDefault();
-            console.log(this.projects);
+            // console.log(this.projects);
             axios.post("/api/project/create", this.projects, {headers: authHeader()}).then(response => {
-                console.log(response.data);
-                console.log('Success');
+                alert('Thêm dự án thành công');
                 this.$router.push('/project/list');
             }).catch(error => {
-                console.error('Error:', error);
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                } else{
+                    alert('Thêm dự án thất bại');
+                }
             });
         }
-
-    
         // async create(){
         //     await this.axios.post('/api/project/create',this.projects).then(response=>{
         //         this.$router.push({name:"project-list"})

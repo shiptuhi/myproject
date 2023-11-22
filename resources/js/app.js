@@ -6,9 +6,15 @@ import Dashboard from './components/dashboard/dashboard.vue';
 
 import Login from './components/login/Login.vue';
 import Register from './components/login/Register.vue';
+import ChangePassword from './components/login/changePassword.vue'
 
 import EmployeeList from './components/employee/List.vue';
 import EmployeeEdit from './components/employee/Edit.vue';
+import EmployeeAdd from './components/employee/Add.vue';
+
+import CustomerList from './components/customer/List.vue';
+import CustomerAdd from './components/customer/Add.vue';
+import CustomerEdit from './components/customer/Edit.vue';
 
 import ProjectList from './components/project/List.vue';
 import ProjectAdd from './components/project/Add.vue';
@@ -51,6 +57,11 @@ const router = createRouter({
             component: Register, 
         },
         { 
+            path: '/change-password',
+            name: 'change-password',
+            component: ChangePassword, 
+        },
+        { 
             path: '/dashboard',
             name: 'dashboard',
             component: Dashboard, 
@@ -59,6 +70,11 @@ const router = createRouter({
             path: '/employee/list',
             name: 'employee-list',
             component: EmployeeList, 
+        },
+        { 
+            path: '/employee/add',
+            name: 'employee-add',
+            component: EmployeeAdd, 
         },
         { 
             path: '/employee/edit/:id',

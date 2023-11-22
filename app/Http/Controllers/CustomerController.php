@@ -28,8 +28,8 @@ class CustomerController extends Controller
             'username' => 'required|string|max:255',
             'name' => 'required|max:255',
             'email' =>'required|string|email|max:100',
-            'phoneNumber' => 'required|numeric|max:10',
-            'company' =>  'required|max:255',
+            'phoneNumber' => 'required|numeric',
+            'company' =>  'max:255',
             'gender' => 'required|in:Male,Female,Other',
             'active_status' => 'required|in:Active,Inactive',
             'note' => 'max:255'
@@ -41,7 +41,6 @@ class CustomerController extends Controller
             'username.required' => 'Tên đăng nhập là bắt buộc.',
             'email.required'=> 'Email là bắt buộc.',
             'phoneNumber.required'=> 'Số điện thoại là bắt buộc.',
-            'company.required'=> 'Tên công ty là bắt buộc.',
             'gender.required'=> 'Giới tính là bắt buộc.',
             'active_status.required'=> 'Trạng thái hoạt động là bắt buộc.',
         ];
@@ -76,8 +75,8 @@ class CustomerController extends Controller
             'username' => 'required|string|max:255',
             'name' => 'required|max:255',
             'email' =>'required|string|email|max:100',
-            'phoneNumber' => 'required|numeric|max:10',
-            'company' =>  'required|max:255',
+            'phoneNumber' => 'required|numeric',
+            'company' =>  'max:255',
             'gender' => 'required|in:Male,Female,Other',
             'active_status' => 'required|in:Active,Inactive',
             'note' => 'max:255'
@@ -89,7 +88,6 @@ class CustomerController extends Controller
             'username.required' => 'Tên đăng nhập là bắt buộc.',
             'email.required'=> 'Email là bắt buộc.',
             'phoneNumber.required'=> 'Số điện thoại là bắt buộc.',
-            'company.required'=> 'Tên công ty là bắt buộc.',
             'gender.required'=> 'Giới tính là bắt buộc.',
             'active_status.required'=> 'Trạng thái hoạt động là bắt buộc.',
         ];

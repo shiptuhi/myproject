@@ -23,7 +23,7 @@
                                             <label class="form-label" for="work_item_id">Thuộc đầu mục:</label>
                                             <select class="form-control form-control-lg" id="work_item_id" v-model="work_does.work_item_id">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="wi in wItem_work_does" :key="wi.id">{{wi.work_item_code}}</option>
+                                                <option v-for="wi in wItem_work_does" :value="wi.id">{{wi.work_item_code}}</option>
                                                 
                                             </select>
                                         </div>
@@ -43,7 +43,7 @@
                                             <label class="form-label" for="emp_workdo">Người thực hiện : </label>
                                             <select class="form-control form-control-lg" v-model="work_does.emp_workdo">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="user in user_work_does" :key="user.id">{{ user.name}}</option>  
+                                                <option v-for="user in user_work_does" :value="user.id">{{ user.name}}</option>  
                                             </select>
                                         </div>
                                     </div>
@@ -54,9 +54,9 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="project_id">Dự án :</label>
-                                            <select class="form-control form-control-lg" id="project_id" v-model="work_does.project_id">
+                                            <select class="form-control form-control-lg" id="project_id" v-model="work_does.project_id" @change="getModuleList">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="prj in project_work_does" :key="prj.id">{{prj.project_code}}</option>
+                                                <option v-for="prj in project_work_does" :value="prj.id">{{prj.project_code}}</option>
                                                 
                                             </select>
                                         </div>
@@ -74,9 +74,9 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="module_id">Thuộc module : </label>
-                                            <select class="form-control form-control-lg" v-model="work_does.module_id">
+                                            <select class="form-control form-control-lg" v-model="work_does.module_id" @change="getWorkItemList">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="mod in module_work_does" :key="mod.id">{{ mod.module_code }}</option>  
+                                                <option v-for="mod in module_work_does" :value="mod.id">{{ mod.module_code }}</option>  
                                             </select>
                                         </div>
                                     </div>
@@ -275,7 +275,7 @@
                                 </div>
 
                                 <br>
-                                <div class="col-12">
+                                <div class="col-12 justify-content-center d-flex p ">
                                     <button type="submit" class="btn btn-primary">Save</button>
                                     <router-link to="/work-do/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
                                 </div>
@@ -316,29 +316,22 @@ export default {
         };
     },
     mounted(){
-        this.getWorkItemList();
-        this.getModuleList();
+        // this.getWorkItemList();
+        // this.getModuleList();
         this.getProjectList();
         this.getUserList();
     },
     methods:{
         getWorkItemList(){
-            axios.get("/api/work_item", {headers: authHeader()}).then(response => {
+            axios.get(`/api/get-work_item-by-module/${this.work_does.module_id}`, {headers: authHeader()}).then(response => {
                 this.wItem_work_does = response.data;
             });
         },
         getModuleList(){
-            axios.get("/api/module", {headers: authHeader()}).then(response => {
+            axios.get(`/api/get-modules-by-project/${this.work_does.project_id}`, {headers: authHeader()}).then(response => {
                 this.module_work_does = response.data;
             });
         },
-
-        // getModuleList(){
-        //     axios.get(`/api/get-modules-by-project/${this.work_items.project_id}`).then(response => {
-        //         this.module_work_does = response.data;
-        //     });
-        // },
-
         getProjectList(){
             axios.get("/api/project", {headers: authHeader()}).then(response => {
                 this.project_work_does = response.data;
@@ -353,11 +346,11 @@ export default {
             event.preventDefault();
             // console.log(this.work_does);
             axios.post("/api/work_do/create", this.work_does, {headers: authHeader()}).then(response => {
-                alert('Successfully created');
+                alert('Thêm công việc thành công');
                 // console.log(this.work_does);
                 this.$router.push('/work-do/list');
             }).catch(error => {
-                console.error('Error:', error);
+                alert('Thêm công việc thất bại! Xin hãy xem lại')
             });
         }
     }

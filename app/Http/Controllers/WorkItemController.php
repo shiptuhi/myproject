@@ -94,6 +94,11 @@ class WorkItemController extends Controller
         return response() -> json($workItem);
     }
 
+    public function getWorkItemByModule($id){
+        $workItem = WorkItem::where('module_id', $id)->get();
+        return response()->json($workItem);
+    }
+
 
     public function update(Request $request, $id){
         $workItem = WorkItem::findOrFail($id);

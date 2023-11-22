@@ -77,10 +77,13 @@ export default {
         deleteWorkItem(id){
             if(confirm("Bạn có chắc chắn muốn xóa đầu mục công việc không?")){
                 axios.delete(`/api/work_item/delete/${id}`, {headers: authHeader()}).then(response => {
-                    this.getWorkItems();
-                }).catch(error =>{
-                    console.log(error);
-                })
+                this.getWorkItems();
+                alert('Xóa đầu mục thành công');
+            }).catch(error =>{
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                }
+            })
             }
         },
         filter(){
@@ -88,7 +91,7 @@ export default {
                 input: this.input
             }
             try {
-            axios.get("/api/work_item/search", {params}, {headers: authHeader()}).then(response=>{
+            axios.get("/api/work_item/search", {params, headers: authHeader()}).then(response=>{
                 // console.log(params);
                 this.work_items=response.data;
             });

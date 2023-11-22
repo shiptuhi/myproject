@@ -78,8 +78,8 @@ class ModuleController extends Controller
 
         if(auth('api')->user()){
             return response()->json([
-                'message' => 'Module được thành công!',
-            'project' => $module
+                'message' => 'Thêm module được thành công!',
+                'module' => $module
             ], 201);
         } 
         abort(403, 'Unauthorized');   

@@ -128,10 +128,14 @@ export default {
             // console.log(this.modules);
             const id = this.$route.params.id;
             axios.put(`/api/module/update/${id}`, this.modules, {headers: authHeader()}).then(response => {
-                alert('Successfully updated');
+                alert("Cập nhật module được thành công!");
                 this.$router.push('/module/list');
             }).catch(error => {
-                console.error('Error:', error);
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                } else{
+                    alert('Cập nhật module thất bại');
+                }
             });
         }
     }

@@ -25,8 +25,8 @@ class WorkDoSeeder extends Seeder
                 'priority' => 'Emergency',
                 'type_of_work' => 'Complex',
                 'status' => 'Finish',
-                'date_start' => '06-05-2022',
-                'date_end' => '06-05-2022',  
+                'date_start' => '2021-06-08',
+                'date_end' => '2021-06-08',
                 'note' => 'aasdadada',
                 
             ],
@@ -40,8 +40,8 @@ class WorkDoSeeder extends Seeder
                 'priority' => 'High',
                 'type_of_work' => 'Simple',
                 'status' => 'Processing',
-                'date_start' => '06-05-2022',
-                'date_end' => '06-05-2022',  
+                'date_start' => '2021-06-08',
+                'date_end' => '2021-06-08',
                 'note' => 'aasdadada',
             ],
             [
@@ -54,8 +54,8 @@ class WorkDoSeeder extends Seeder
                 'priority' => 'Medium',
                 'type_of_work' => 'Simple',
                 'status' => 'Pause',
-                'date_start' => '06-05-2022',
-                'date_end' => '06-05-2022',  
+                'date_start' => '2021-06-08',
+                'date_end' => '2021-06-08',
                 'note' => 'aasdadada',
             ],
         ]);

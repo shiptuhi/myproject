@@ -11,8 +11,7 @@
                                     <notifications position="top right" />
                                     <div class="form-group">
                                         <input required type="text" placeholder="Tên đăng nhập" class='form-control form-control-lg' v-model='users.username' />
-                                        <div>{{ errors.username }}</div>
-                                        <p>Error Message</p>
+                                        <div id="error message"></div>
                                         <!-- <span v-if="!isUsernameValid" class="text-danger" >Tên đăng nhập là bắt buộc!</span> -->
                                     </div>
 
@@ -24,10 +23,10 @@
                                     <div class="col-12 justify-content-center d-flex p ">
                                         <button class="btn btn-primary" type="submit">LOGIN</button>
                                     </div>
-                                    <div class="col-12 justify-content-center d-flex p mt-4 form-link">
+                                    <!-- <div class="col-12 justify-content-center d-flex p mt-4 form-link">
                                         <p class="message">Not registered? <router-link to="/register" class="link"
                                                 style="margin-left: 20px;">Create an account</router-link></p>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                         </div>
@@ -62,30 +61,18 @@ export default {
     methods: {
         login(event) {
             event.preventDefault();
-            try {
+            // try {
             axios.post('/api/auth/login',this.users).then(response => {
                 localStorage.setItem('user', response.data.user);
                 localStorage.setItem('user-name', response.data.user.name);
                 localStorage.setItem('role', response.data.user.roles[0].name);
                 localStorage.setItem('token', response.data.access_token);
-
-                notify({
-                    group: 'app',
-                    title: 'User Created',
-                    text: 'The User has been loginned successfully.',
-                    type: 'success'
-                });
                 this.$router.push('/dashboard');
-            });
-            } catch(error) {
-                console.error('Error:', error);
+                alert("Đăng nhập thành công");
+            }).catch(error => {
+                // console.error('Error:', error);
                 alert('Tên đăng nhập hoặc mật khẩu không đúng!');
-                // this.$notify({
-                //     title: 'Error',
-                //     text: 'Failed to create the project.',
-                //     type: 'error'
-                // });
-            }
+            });
         },
     }
 }

@@ -22,8 +22,8 @@ class WorkItemSeeder extends Seeder
                 'project_id' => 1,
                 'emp_workitem' => 1,
                 'priority' => 'Emergency',
-                'date_start' => '06-05-2022',
-                'date_end' => '06-05-2022',  
+                'date_start' => '2021-06-08',
+                'date_end' => '2021-06-08',
                 'note' => 'aasdadada',
                 
             ],
@@ -34,8 +34,8 @@ class WorkItemSeeder extends Seeder
                 'project_id' => 2,
                 'emp_workitem' => 2,
                 'priority' => 'High',
-                'date_start' => '06-05-2022',
-                'date_end' => '06-05-2022',  
+                'date_start' => '2021-06-08',
+                'date_end' => '2021-06-08',
                 'note' => 'aasdadada',
             ],
             [
@@ -45,8 +45,8 @@ class WorkItemSeeder extends Seeder
                 'project_id' => 3,
                 'emp_workitem' => 3,
                 'priority' => 'Medium',
-                'date_start' => '06-05-2022',
-                'date_end' => '06-05-2022',  
+                'date_start' => '2021-06-08',
+                'date_end' => '2021-06-08',
                 'note' => 'aasdadada',
             ],
         ]);

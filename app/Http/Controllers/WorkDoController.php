@@ -7,6 +7,8 @@ use App\Models\WorkDo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\DB;
+
 class WorkDoController extends Controller
 {
     //
@@ -150,5 +152,53 @@ class WorkDoController extends Controller
         return response()->json([
             'message'=> 'Xóa công việc thành công!!'
         ]);
+    }
+
+    public function getTypeOfWork(){
+        $type = WorkDo::select(
+            DB::raw('SUM(CASE WHEN type_of_work = "Complex" THEN 1 ELSE 0 END) as type_0_count'),
+            DB::raw('SUM(CASE WHEN type_of_work = "Simple" THEN 1 ELSE 0 END) as type_1_count'),
+        )->first();
+        
+        $type0Count = $type->type_0_count;
+        $type1Count = $type->type_1_count;
+
+        return response()->json([$type0Count, $type1Count]);
+
+    }
+    public function getPriority(){
+        $priority = WorkDo::select(
+            DB::raw('SUM(CASE WHEN priority = "Emergency" THEN 1 ELSE 0 END) as type_0_count'),
+            DB::raw('SUM(CASE WHEN priority = "High" THEN 1 ELSE 0 END) as type_1_count'),
+            DB::raw('SUM(CASE WHEN priority = "Medium" THEN 1 ELSE 0 END) as type_2_count'),
+            DB::raw('SUM(CASE WHEN priority = "Low" THEN 1 ELSE 0 END) as type_3_count'),
+        )->first();
+        
+        $type0Count = $priority->type_0_count;
+        $type1Count = $priority->type_1_count;
+        $type2Count = $priority->type_2_count;
+        $type3Count = $priority->type_3_count;
+
+        return response()->json([$type0Count, $type1Count, $type2Count, $type3Count]);
+
+        
+    }
+    public function getStatus(){
+        $status = WorkDo::select(
+            DB::raw('SUM(CASE WHEN status = "Finish" THEN 1 ELSE 0 END) as type_0_count'),
+            DB::raw('SUM(CASE WHEN status = "Processing" THEN 1 ELSE 0 END) as type_1_count'),
+            DB::raw('SUM(CASE WHEN status = "Pause" THEN 1 ELSE 0 END) as type_2_count'),
+            DB::raw('SUM(CASE WHEN status = "Cancel" THEN 1 ELSE 0 END) as type_3_count'),
+        )->first();
+        
+        // Access the results as properties
+        $type0Count = $status->type_0_count;
+        $type1Count = $status->type_1_count;
+        $type2Count = $status->type_2_count;
+        $type3Count = $status->type_3_count;
+
+        return response()->json([$type0Count, $type1Count, $type2Count, $type3Count]);
+
+        
     }
 }

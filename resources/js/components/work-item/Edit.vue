@@ -1,5 +1,5 @@
 <template>
-    <section class="vh-100 gradient-custom">
+    <section class="vh-200 gradient-custom">
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
@@ -20,7 +20,7 @@
                                             <label class="form-label" for="module_id">Module : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.module_id" @change="getProjectList_2">
                                                 <option value="" disabled>--Chọn--</option>
-                                                <option v-for="mod in module_work_items" :key="mod.id">{{ mod.module_code }}</option>  
+                                                <option v-for="mod in module_work_items" :value="mod.id">{{ mod.module_code }}</option>  
                                             </select>
                                         </div>
                                     </div>
@@ -40,7 +40,7 @@
                                             <label class="form-label" for="user_id">Người phụ trách : </label>
                                             <select class="form-control form-control-lg" v-model="work_items.emp_workitem">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="user in user_work_items" :key="user.id">{{ user.name}}</option>  
+                                                <option v-for="user in user_work_items" :value="user.id">{{ user.name}}</option>  
                                             </select>
                                         </div>
                                     </div>
@@ -51,9 +51,9 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="form-label" for="project_id">Dự án :</label>
-                                            <select class="form-control form-control-lg" id="project_id" v-model="work_items.project_id">
+                                            <select class="form-control form-control-lg" id="project_id" v-model="work_items.project_id" @change="getModuleList_2">
                                                 <option value="" default>--Chọn--</option>
-                                                <option v-for="prj in project_work_items" :key="prj.id">{{prj.project_code}}</option>
+                                                <option v-for="prj in project_work_items" :value="prj.id">{{prj.project_code}}</option>
                                                 
                                             </select>
                                         </div>
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="col-12">
+                                <div class="col-12 justify-content-center d-flex p ">
                                     <button type="submit" class="btn btn-primary">Save</button>
                                     <router-link to="/module/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
                                 </div>
@@ -196,6 +196,9 @@ export default {
         this.showWorkItem();
         // this.updateWorkItem();
     },
+    computed(){
+        this.getModuleList_2();
+    },
     methods:{
         getProjectList(){
             axios.get("/api/project", {headers: authHeader()}).then(response => {
@@ -237,10 +240,14 @@ export default {
             const id = this.$route.params.id;
             axios.put(`/api/work_item/update/${id}`, this.work_items, {headers: authHeader()}).then(response => {
                 // console.log(response.data);
-                alert("Successfully updated");
+                alert("Cập nhật đầu mục thành công");
                 this.$router.push('/work-item/list');
             }).catch(error => {
-                console.error('Error:', error);
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                } else{
+                    alert('Cập nhật đầu mục thất bại');
+                }
             });
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <section class="vh-100 gradient-custom">
+    <section class="vh-110 gradient-custom">
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
@@ -8,18 +8,18 @@
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">
                                 THÊM MỚI KHÁCH HÀNG
                             </h3>
-                            <form @submit.prevent="addProject">
+                            <form @submit.prevent="addCustomer">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
-                                            <label class="form-label" for="project_code">Mã dự án: <span>*</span></label>
-                                            <input required type="text" placeholder="Nhập mã dự án" class='form-control form-control-lg' id='project_code' v-model='projects.project_code'/>
+                                            <label class="form-label" for="name">Họ tên khách hàng: <span>*</span></label>
+                                            <input required type="text" placeholder="Nhập họ tên" class='form-control form-control-lg' id='name' v-model='customers.name'/>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
-                                            <label class="form-label" for="date_start">Ngày bắt đầu :</label>
-                                            <input type="text" placeholder="dd-mm-yyyy" class="form-control form-control-lg" id='date_start' v-model="projects.date_start"/>
+                                            <label class="form-label" for="email">Email :<span>*</span></label>
+                                            <input required type="text" class="form-control form-control-lg" id='email' v-model="customers.email"/>
                                         </div>
                                     </div>
                                 </div>
@@ -27,29 +27,76 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
-                                            <label class="form-label" for="name">Tên dự án: <span>*</span></label>
-                                            <input required type="text" placeholder="Nhập tên dự án" class="form-control form-control-lg" id='name' v-model="projects.name"/>
+                                            <label class="form-label" for="username">Tên đăng nhập: <span>*</span></label>
+                                            <input required type="text" placeholder="Nhập tên đăng nhập" class="form-control form-control-lg" id='username' v-model="customers.username"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
-                                            <label class="form-label" for="date_end">Ngày kết thúc :</label>
-                                            <input type="text" placeholder="dd-mm-yyyy" class="form-control form-control-lg" id='date_end' v-model="projects.date_end"/>
+                                            <label class="form-label" for="phoneNumber">Số điện thoại :</label>
+                                            <input type="text" class="form-control form-control-lg" id='phoneNumber' v-model="customers.phoneNumber"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-group">
-                                            <label class="form-label" for="user_id">Người phụ trách</label>
-                                            <select class="form-control form-control-lg" v-model="projects.user_id">
-                                                <option value="">--Chọn--</option>
-                                                <option v-for="user in user_project" :key="user.id">{{ user.name}}</option>
-                                            </select>
+                                            <label class="form-label" for="company">Công ty</label>
+                                            <input type="text" class="form-control form-control-lg" id='company' v-model="customers.company"/>
                                             <!-- <input required type="text" class="form-control form-control-lg" id="user_id" v-model="projects.user_id"/> -->
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
+                                        <div class="form-group">
+                                            <label for="gender" class="form-label">Giới tính: <span>*</span></label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="gender"
+                                                            id="gender"
+                                                            value="Male"
+                                                            formControlName="gender"
+                                                            v-model="customers.gender"
+                                                        />
+                                                        <label class="form-check-label" for="gender">Nam</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="gender"
+                                                            id="gender"
+                                                            value="Female"
+                                                            formControlName="gender"
+                                                            v-model="customers.gender"
+                                                        />
+                                                        <label Class="form-check-label" for="gender">Nữ</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="gender"
+                                                            id="gender"
+                                                            value="Other"
+                                                            formControlName="gender"
+                                                            v-model="customers.gender"
+                                                        />
+                                                        <label Class="form-check-label" for="gender">Khác</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <label for="status" class="form-label">Trạng thái: <span>*</span></label>
                                             <div class="row">
@@ -62,7 +109,7 @@
                                                             id="active_status"
                                                             value="Active"
                                                             formControlName="status"
-                                                            v-model="projects.active_status"
+                                                            v-model="customers.active_status"
                                                         />
                                                         <label class="form-check-label" for="active_status"> Hoạt động</label>
                                                     </div>
@@ -76,7 +123,7 @@
                                                         id="active_status"
                                                         value="Inactive"
                                                         formControlName="status"
-                                                        v-model="projects.active_status"
+                                                        v-model="customers.active_status"
                                                     />
                                                     <label Class="form-check-label" for="active_status">Ngừng hoạt động</label>
                                                 </div>
@@ -86,16 +133,16 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-4">
+                                <div class="col-12">
                                     <div class="form-group">
                                         <label class="form-label" for="note">Ghi chú</label>
-                                        <input type="note" class="form-control form-control-lg" id="note" v-model="projects.note"/>
+                                        <input type="note" class="form-control form-control-lg" id="note" v-model="customers.note"/>
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 justify-content-center d-flex p ">
                                     <button type="submit" class="btn btn-primary">Save</button>
-                                    <router-link to="/project/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
+                                    <router-link to="/customer/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
                                 </div>
 
                             </form>
@@ -110,54 +157,36 @@
 import authHeader from '/var/www/html/myproject/myproject/resources/js/auth-header.js';
 import axios from "axios";
 export default {
-    name: "project-add",
+    name: "customer-add",
     data() {
         return {
-            projects: {
-                project_code: "",
+            customers: {
                 name: "",
+                username: "",
+                email: "",
+                phoneNumber: "",
+                company: "",
+                gender: "",
                 active_status: "",
-                date_start: "",
-                date_end: "",
-                user_id: [],
                 note: "",
             },
-            user_project: [],
         }
         
     },
-    mounted(){
-        this.getUserList();
-    },
     methods:{
-        getUserList(){
-            axios.get("/api/list", {headers: authHeader()}).then(response => {
-                this.user_project = response.data;
-            });
-        },
-
-
-
-        addProject(event){
+        addCustomer(event){
             event.preventDefault();
-            console.log(this.projects);
-            axios.post("/api/project/create", this.projects, {headers: authHeader()}).then(response => {
-                console.log(response.data);
-                console.log('Success');
-                this.$router.push('/project/list');
+            axios.post("/api/customer/create", this.customers, {headers: authHeader()}).then(response => {
+                alert("Thêm mới khách hàng thành công");
+                this.$router.push('/customer/list');
             }).catch(error => {
-                console.error('Error:', error);
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                } else{
+                    alert('Thêm khách hàng thất bại');
+                }
             });
         }
-
-    
-        // async create(){
-        //     await this.axios.post('/api/project/create',this.projects).then(response=>{
-        //         this.$router.push({name:"project-list"})
-        //     }).catch(error=>{
-        //         console.log(error)
-        //     })
-        // }
     },
 }
 

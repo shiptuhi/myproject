@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">Danh sách nhân viên</span>
-            <router-link to="/register" class="btn btn-primary">Thêm mới</router-link>
+        <router-link to="/employee/add" class="btn btn-primary" v-if="isAdmin" :disabled="!isAdmin">Thêm mới</router-link>
     </div>
     </nav>
     
@@ -17,7 +17,7 @@
                         <th scope="col">Giới tính</th>
                         <th scope="col">Vai trò</th>
                         <th scope="col">Trạng thái hoạt động</th>
-                        <th scope="col">Hành động</th>
+                        <th scope="col" v-if="isAdmin" :disabled="!isAdmin">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,9 +41,9 @@
                             <span v-else class="Inactive text-danger">Ngừng hoạt động</span>
                         </td>
                         
-                        <td>
-                            <router-link :to= "{path: '/employee/edit/' + us.id}" class="btn btn-info">Sửa</router-link>
-                            <button type="button" @click="deleteEmployee(us.id)" class="btn btn-danger" style="margin-left: 10px;">Xóa</button>
+                        <td v-if="isAdmin" :disabled="!isAdmin">
+                            <router-link :to= "{path: '/employee/edit/' + us.id}" class="btn btn-info" >Sửa</router-link>
+                            <button type="button" @click="deleteEmployee(us.id)" class="btn btn-danger" style="margin-left: 10px;" >Xóa</button>
                             
                         </td>
                     </tr>
@@ -59,12 +59,18 @@ export default {
     name: 'employee-list',
     data() {
         return {
-            users: []
+            users: [],
+            role:localStorage.getItem('role')
             
         };
     },
     mounted(){
         this.getUsers();
+    },
+    computed:{
+        isAdmin(){
+            return this.role === 'Admin' ;
+        }
     },
     methods:{
         getUsers(){
@@ -75,10 +81,13 @@ export default {
 
         deleteEmployee(id){
             if(confirm("Bạn có chắc chắn muốn xóa nhân viên này không?")){
-                axios.delete(`/api/auth/employee/delete/${id}`, {headers: authHeader()}).then(response=>{
+                axios.delete(`/api/employee/delete/${id}`, {headers: authHeader()}).then(response=>{
                     this.getUsers()
+                    alert("Xóa nhân viên thành công")
                 }).catch(error=>{
-                    console.log(error)
+                    if(error = '403'){
+                        alert('Không đủ thẩm quyền');
+                    } 
                 })
             }
         }

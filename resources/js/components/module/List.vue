@@ -67,8 +67,11 @@ export default {
         deleteModule(id){
             axios.delete(`/api/module/delete/${id}`, {headers: authHeader()}).then(response => {
                 this.getModules();
+                alert('Xóa module thành công');
             }).catch(error=>{
-                console.log(error)
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                }
             })
         },
 
@@ -77,7 +80,7 @@ export default {
                 input: this.input 
             }
             try {
-                axios.get("/api/module/search", {params}, {headers: authHeader()}).then(response => {
+                axios.get("/api/module/search", {params, headers: authHeader()}).then(response => {
                     console.log(params);
                     this.modules=response.data;
                 });

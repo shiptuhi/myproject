@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 justify-content-center d-flex p ">
                                     <button type="submit" class="btn btn-primary">Save</button>
                                     <router-link to="/module/list" class="btn btn-warning" style="margin-left: 30px;">Return</router-link>
                                 </div>
@@ -115,9 +115,14 @@ export default {
             event.preventDefault();
             // console.log(this.modules);
             axios.post("/api/module/create", this.modules, {headers: authHeader()}).then(response => {
-            this.$router.push('/module/list');
-        }).catch(error => {
-                console.error('Error:', error);
+                alert("Thêm module được thành công!");
+                this.$router.push('/module/list');
+            }).catch(error => {
+                if(error = '403'){
+                    alert('Không đủ thẩm quyền');
+                } else{
+                    alert('Thêm module thất bại');
+                }
             });
         }
     }
