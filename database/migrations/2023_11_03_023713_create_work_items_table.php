@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('work_items', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('module_id')->index();
             $table->unsignedBigInteger('project_id')->index();
@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('priority');
             $table->string('note');
+
+            $table->date('date_start');
+            $table->date('date_end');
 
             $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

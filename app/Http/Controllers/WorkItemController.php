@@ -56,7 +56,8 @@ class WorkItemController extends Controller
             'module_id' => 'required|exists:modules,id',
             'emp_workitem' => 'required|exists:users,id',
             'priority' => 'required|in:Emergency,High,Medium,Low',
-            // 'date_start' => 'date',
+            'date_start' => 'nullable|date|date_format:d-m-Y',
+            'date_end' => 'nullable|date|date_format:d-m-Y',
             'note' => 'max:255',
             
         ];
@@ -104,7 +105,8 @@ class WorkItemController extends Controller
             'module_id' => 'required|exists:modules,id',
             'emp_workitem' => 'required|exists:users,id',
             'priority' => 'required|in:Emergency,High,Medium,Low',
-            // 'date_start' => 'date',
+            'date_start' => 'nullable|date|date_format:d-m-Y',
+            'date_end' => 'nullable|date|date_format:d-m-Y',
             'note' => 'max:255',
         ];
         $message = [

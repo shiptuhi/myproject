@@ -11,6 +11,7 @@ class Customer extends Model
     protected $table = 'customers';
     protected $fillable = [
         'name', 
+        'username',
         'email',
         'phoneNumber',
         'company',
@@ -20,6 +21,8 @@ class Customer extends Model
     ];
 
     // public function projects(){
-    //     return $this->hasMany(Project::class, 'project_id');
+    //     return $this->hasMany(Project::class, 'customer_id', 'id');
     // } 
+
+
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index();
             // $table->unsignedBigInteger('customer_id')->index();
 
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('date_end');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('customer_id')->references('id')->on('customers');
+            // $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->string('note');
             $table->timestamps();
         });

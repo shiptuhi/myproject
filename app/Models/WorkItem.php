@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class WorkItem extends Model
 {
     use HasFactory;
@@ -15,7 +17,9 @@ class WorkItem extends Model
         'module_id',
         'project_id',
         'priority',
-        'emp_workitem', 
+        'emp_workitem',
+        'date_start',
+        'date_end', 
         'note'
 
     ];
@@ -33,6 +37,25 @@ class WorkItem extends Model
 
     public function workdo(){
         return $this->hasMany(WorkItem::class, 'work_item_id', 'id');
+    }
+    public function getDateStartAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function setDateStartAttribute($value)
+    {
+        $this->attributes['date_start'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+    }
+
+    public function getDateEndAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function setDateEndAttribute($value)
+    {
+        $this->attributes['date_end'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
     }
 
 

@@ -34,9 +34,9 @@ class Project extends Model
     public function users(){
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-//     public function customers(){
-//         return $this->belongsTo(Customer::class, 'customer_id');
-//     }
+    // public function customers(){
+    //     return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    // }
 
 
     public function getDateStartAttribute($value)

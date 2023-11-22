@@ -63,11 +63,11 @@ class WorkDoController extends Controller
             'module_id' => 'required|exists:modules,id',
             'work_item_id' => 'required|exists:work_items,id',
             'emp_workdo' => 'required|exists:users,id',
-
             'priority' => 'required|in:Emergency,High,Medium,Low',
             'status' => 'required|in:Finish,Processing,Pause,Cancel',
             'type_of_work' => 'required|in:Complex,Simple',
-            
+            'date_start' => 'nullable|date|date_format:d-m-Y',
+            'date_end' => 'nullable|date|date_format:d-m-Y',
             'note' => 'max:255',
             
         ];
@@ -114,6 +114,8 @@ class WorkDoController extends Controller
             'priority' => 'required|in:Emergency,High,Medium,Low',
             'status' => 'required|in:Finish,Processing,Pause,Cancel',
             'type_of_work' => 'required|in:Complex,Simple',
+            'date_start' => 'nullable|date|date_format:d-m-Y',
+            'date_end' => 'nullable|date|date_format:d-m-Y',
             'note' => 'max:255',
             
         ];

@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('work_dos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('module_id')->index();
             $table->unsignedBigInteger('project_id')->index();
             $table->unsignedBigInteger('work_item_id')->index();
-            $table->unsignedBigInteger('emp_workdo');
+            $table->unsignedBigInteger('emp_workdo')->index();
 
             $table->string('work_do_code');
             $table->string('name');
@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('priority');
             $table->string('status');
             $table->string('note');
+
+            $table->date('date_start');
+            $table->date('date_end');
 
             $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

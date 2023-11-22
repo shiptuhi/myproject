@@ -1,106 +1,126 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Customer;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     //
+    public function __construct() {
+        $this->middleware('auth:api');
+      
+    } 
+
     public function index(){
-        $project = Project::all();
-        // $project = Project::take(10)->get();
-
-        return view('project.index',['project' => $project]);
-        // return response()->json($project);
+        $customer = Customer::all();
+        return response()-> json($customer);
     }
 
-    public function create() {
-        return view('project.create');
+    public function filter() {
+        return 0;
     }
+
     public function store(Request $request){
 
         $rules = [
-            'project_code' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'name' => 'required|max:255',
-            'active_status'=> 'required|in:Active,Inactive',
-            'date_start' => 'date',
-            'date_end' => 'date',
-            'note' => 'max:255',
+            'email' =>'required|string|email|max:100',
+            'phoneNumber' => 'required|numeric|max:10',
+            'company' =>  'required|max:255',
+            'gender' => 'required|in:Male,Female,Other',
+            'active_status' => 'required|in:Active,Inactive',
+            'note' => 'max:255'
+            
         ];
 
         $message = [
-            'project_code.required' => 'Mã dự án là bắt buộc.',
-            'name.required' => 'Tên dự án là bắt buộc.',
-            'active_status.required'=> 'Trạng thái dự án là bắt buộc.',
+            'name.required' => 'Tên  là bắt buộc.',
+            'username.required' => 'Tên đăng nhập là bắt buộc.',
+            'email.required'=> 'Email là bắt buộc.',
+            'phoneNumber.required'=> 'Số điện thoại là bắt buộc.',
+            'company.required'=> 'Tên công ty là bắt buộc.',
+            'gender.required'=> 'Giới tính là bắt buộc.',
+            'active_status.required'=> 'Trạng thái hoạt động là bắt buộc.',
         ];
 
         $validator  = Validator::make($request->all(), $rules, $message);
+        
         if($validator ->fails()){
-            return redirect()
-                ->route('project.create')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json($validator->errors(),404);
         }
  
-        // $user = Project::create(array_merge(
-        //             $validator->validated(),
-        //         ));
- 
-        // return response()->json([
-        //     'message' => 'User successfully registered',
-        //     'user' => $user
-        // ], 201);
+        $customer = Customer::create(array_merge($validator->validated()));
 
-        return redirect('/project')->with('success', 'Thêm dự án thành công!');
+        if(auth('api')->user()){
+            return response()->json([
+                'message' => 'Thêm khách hàng thành công',
+                'customer' => $customer
+            ], 201);
+        }
+        abort(403, 'Unauthorized'); 
     }
-
 
     public function edit($id) {
-        $project = Project::findOrFail($id);
-        return view('project.edit', ['project' => $project]);
+        $customer = Customer::findOrFail($id);
+        return response()->json($customer);
     }
-    public function update(Request $request, $id){
-        // $project = Project::findOrFail($id);
 
-        // $project->code = is_null($request->code) ? $project->code : $request->code;
-        // $project->name = is_null($request->name)? $project->name : $request->name;
-        // $project->note = is_null($request->note) ? $project->note: $request->note;
-        
-        // $project->save();
+    public function update(Request $request, $id){
+
+        $customer = Customer::findOrFail($id);
 
         $rules = [
-            'project_code' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'name' => 'required|max:255',
-            'active_status'=> 'required|in:Active,Inactive',
-            'date_start' => 'date',
-            'date_end' => 'date',
-            'note' => 'max:255',
+            'email' =>'required|string|email|max:100',
+            'phoneNumber' => 'required|numeric|max:10',
+            'company' =>  'required|max:255',
+            'gender' => 'required|in:Male,Female,Other',
+            'active_status' => 'required|in:Active,Inactive',
+            'note' => 'max:255'
+            
         ];
 
         $message = [
-            'project_code.required' => 'Mã dự án là bắt buộc.',
-            'name.required' => 'Tên dự án là bắt buộc.',
-            'active_status.required'=> 'Trạng thái dự án là bắt buộc.',
-            'active_status.in' => 'Trạng thái dự án phải là "Active" hoặc "Inactive".',
+            'name.required' => 'Tên  là bắt buộc.',
+            'username.required' => 'Tên đăng nhập là bắt buộc.',
+            'email.required'=> 'Email là bắt buộc.',
+            'phoneNumber.required'=> 'Số điện thoại là bắt buộc.',
+            'company.required'=> 'Tên công ty là bắt buộc.',
+            'gender.required'=> 'Giới tính là bắt buộc.',
+            'active_status.required'=> 'Trạng thái hoạt động là bắt buộc.',
         ];
 
         $validator  = Validator::make($request->all(), $rules, $message);
-        if($validator ->fails()){
-            return redirect()
-                ->route('project.edit', $id)
-                ->withErrors($validator)
-                ->withInput();
 
-            // return response()->json($validator->errors()->toJson(), 400);
+        if($validator ->fails()){
+            return response()->json($validator->errors(),404);
         }
-        return redirect('/project')->with('success', 'Sửa dự án thành công!');
+
+        $customer->update(array_merge($validator->validated()));
+
+        if(auth('api')->user()){
+            return response()->json([
+                'message' => 'Sửa khách hàng thành công',
+                'customer' => $customer
+            ], 201);
+        }
+        abort(403, 'Unauthorized'); 
+
+
     }
 
-
     public function destroy($id){
-        $project = Project::findOrFail($id);
-        $project->delete();
-        return redirect('/project')->with('success', 'Xóa dự án thành công!');
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        if(auth('api')->user()){
+            return response()->json([
+                'message'=> 'Xóa khách hàng thành công!!'
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
     }
 }

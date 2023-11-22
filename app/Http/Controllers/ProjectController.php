@@ -47,6 +47,7 @@ class ProjectController extends Controller
             'date_start' => 'nullable|date|date_format:d-m-Y',
             'date_end' => 'nullable|date|date_format:d-m-Y',
             'user_id' => 'required|exists:users,id',
+            'customer_id' => 'required|exists:customers,id',
             'note' => 'max:255',
             
         ];
@@ -54,8 +55,10 @@ class ProjectController extends Controller
         $message = [
             'project_code.required' => 'Mã dự án là bắt buộc.',
             'name.required' => 'Tên dự án là bắt buộc.',
+            'user_id.exists' => 'Nhân viên không tồn tại',
+            'customer_id.exists' => 'Khách hàng không tồn tại',
             'active_status.required'=> 'Trạng thái dự án là bắt buộc.',
-            'user_id.exists' => 'Nhân viên không tồn tại'
+            'active_status.in' => 'Trạng thái dự án phải là "Active" hoặc "Inactive".',
         ];
 
         $validator  = Validator::make($request->all(), $rules, $message);
@@ -91,12 +94,14 @@ class ProjectController extends Controller
             'date_start' => 'date',
             'date_end' => 'date',
             'user_id' => 'required|exists:users,id',
+            'customer_id' => 'required|exists:customers,id',
             'note' => 'max:255',
         ];
         $message = [
             'project_code.required' => 'Mã dự án là bắt buộc.',
             'name.required' => 'Tên dự án là bắt buộc.',
             'user_id.exists' => 'Nhân viên không tồn tại',
+            'customer_id.exists' => 'Khách hàng không tồn tại',
             'active_status.required'=> 'Trạng thái dự án là bắt buộc.',
             'active_status.in' => 'Trạng thái dự án phải là "Active" hoặc "Inactive".',
         ]; 

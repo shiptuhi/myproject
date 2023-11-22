@@ -33,11 +33,14 @@ class PermissionsSeeder extends Seeder
 
 
 
-        // $user1 = User::findOrFail(1);
-        // $user1->assignRole($role1);
+        $user1 = User::findOrFail(1);
+        $user1->assignRole($role1);
 
-        // $user2 = User::findOrFail(2);
-        // $user2->assignRole($role2);
+        $user2 = User::findOrFail(2);
+        $user2->assignRole($role2);
+
+        $user3 = User::findOrFail(3);
+        $user3->assignRole($role3);
 
 
     }

@@ -8,6 +8,7 @@ import Login from './components/login/Login.vue';
 import Register from './components/login/Register.vue';
 
 import EmployeeList from './components/employee/List.vue';
+import EmployeeEdit from './components/employee/Edit.vue';
 
 import ProjectList from './components/project/List.vue';
 import ProjectAdd from './components/project/Add.vue';
@@ -58,6 +59,27 @@ const router = createRouter({
             path: '/employee/list',
             name: 'employee-list',
             component: EmployeeList, 
+        },
+        { 
+            path: '/employee/edit/:id',
+            name: 'employee-edit',
+            component: EmployeeEdit, 
+        },
+
+        { 
+            path: '/customer/list',
+            name: 'customer-list',
+            component: CustomerList,
+        },
+        { 
+            path: '/customer/add',
+            name: 'customer-add',
+            component: CustomerAdd, 
+        },
+        { 
+            path: '/customer/edit/:id',
+            name: 'customer-edit',
+            component: CustomerEdit, 
         },
         { 
             path: '/project/list',

@@ -12,6 +12,7 @@
                                     <div class="form-group">
                                         <input required type="text" placeholder="Tên đăng nhập" class='form-control form-control-lg' v-model='users.username' />
                                         <div>{{ errors.username }}</div>
+                                        <p>Error Message</p>
                                         <!-- <span v-if="!isUsernameValid" class="text-danger" >Tên đăng nhập là bắt buộc!</span> -->
                                     </div>
 
@@ -38,12 +39,12 @@
 </template>
 
 <script>
-import { notify } from "@kyvg/vue3-notification";
+// import { notify } from "@kyvg/vue3-notification";
 import axios from "axios";
-import { useForm } from 'vee-validate';
-import * as yup from 'yup';
+// import { useForm } from 'vee-validate';
+// import * as yup from 'yup';
 
-const loginSchema = ;
+
 
 export default {
     name: "login",

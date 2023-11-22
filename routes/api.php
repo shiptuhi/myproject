@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\WorkItemController;
@@ -29,10 +30,13 @@ Route::prefix('auth')->middleware('api')->group( function () {
     Route::post('/change-pass', [AuthController::class, 'changePassWord']); 
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile',[AuthController::class, 'userProfile']);
+    
+    Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('Admin')]], function () {
+        Route::delete('/employee/delete/{id}',[AuthController::class, 'destroy']);
+    });
+    
 
-    // Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('admin')]], function () {
     // Route::get('/user-list', [AuthController::class, 'userList']);    
-    // });
 });
 
 Route::get('/roles',[RoleController::class, 'index']);
@@ -59,6 +63,14 @@ Route::get('/work_do/update/{id}', [WorkDoController::class, 'edit']);
 Route::put('/work_do/update/{id}',[WorkDoController::class, 'update']);
 Route::delete('/work_do/delete/{id}',[WorkDoController::class, 'destroy']);
 
+
+Route::get('/customer', [CustomerController::class], 'index');
+Route::get('/customer/search', [CustomerController::class], 'filter');
+Route::get('/customer/update/{id}', [CustomerController::class], 'edit');
+
+
+
+
 Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('Admin')]], function () {
     Route::post('/project/create',[ProjectController::class, 'store']);
     Route::put('/project/update/{id}',[ProjectController::class, 'update']);
@@ -72,11 +84,10 @@ Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::usi
     Route::put('/work_item/update/{id}',[WorkItemController::class, 'update']);
     Route::delete('/work_item/delete/{id}',[WorkItemController::class, 'destroy']);
 
-
+    Route::post('/customer/create', [CustomerController::class], 'store');
+    Route::put('/customer/update/{id}', [CustomerController::class], 'update');
+    Route::delete('/customer/delete/{id}', [CustomerController::class], 'update');
 });
-// Route::group(['middleware' => [\Spatie\Permission\Middleware\RoleMiddleware::using('user')]], function () {
-
-// });
 
 
 

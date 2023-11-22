@@ -43,7 +43,7 @@ class AuthController extends Controller {
         'email' => 'required|string|email|max:100|unique:users',
         'password' => 'required|string|confirmed|min:6',
         'gender' => 'required|in:Male,Female,Other',
-        'phoneNumber' => 'required|numeric|unique:users',
+        'phoneNumber' => 'required|numeric|max|10|unique:users',
         'active_status'=> 'required|in:Active,Inactive',
         'roles' => 'required'
     ];
@@ -134,5 +134,18 @@ class AuthController extends Controller {
            'message' => 'User successfully changed password',
            'user' => $user,
        ], 201);
+   }
+
+   public function destroy($id){
+        $user = User::findOrDail($id);
+        $user->delete();
+
+        if(auth('api')->user()){
+            return response()->json([
+                'message'=> 'Xóa dự án thành công!!'
+            ], 201);
+        } 
+        abort(403, 'Unauthorized');   
+
    }
 }

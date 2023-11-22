@@ -23,7 +23,7 @@
                                             <label class="form-label" for="work_item_id">Thuộc đầu mục:</label>
                                             <select class="form-control form-control-lg" id="work_item_id" v-model="work_does.work_item_id">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="wi in wItem_work_does" :value="wi.id">{{wi.work_item_code}}</option>
+                                                <option v-for="wi in wItem_work_does" :key="wi.id">{{wi.work_item_code}}</option>
                                                 
                                             </select>
                                         </div>
@@ -43,7 +43,7 @@
                                             <label class="form-label" for="emp_workdo">Người thực hiện : </label>
                                             <select class="form-control form-control-lg" v-model="work_does.emp_workdo">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="user in user_work_does" :value="user.id">{{ user.name}}</option>  
+                                                <option v-for="user in user_work_does" :key="user.id">{{ user.name}}</option>  
                                             </select>
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@
                                             <label class="form-label" for="project_id">Dự án :</label>
                                             <select class="form-control form-control-lg" id="project_id" v-model="work_does.project_id">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="prj in project_work_does" :value="prj.id">{{prj.project_code}}</option>
+                                                <option v-for="prj in project_work_does" :key="prj.id">{{prj.project_code}}</option>
                                                 
                                             </select>
                                         </div>
@@ -76,8 +76,25 @@
                                             <label class="form-label" for="module_id">Thuộc module : </label>
                                             <select class="form-control form-control-lg" v-model="work_does.module_id">
                                                 <option value="">--Chọn--</option>
-                                                <option v-for="mod in module_work_does" :value="mod.id">{{ mod.module_code }}</option>  
+                                                <option v-for="mod in module_work_does" :key="mod.id">{{ mod.module_code }}</option>  
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="date_start">Ngày bắt đầu :</label>
+                                            <input type="text" placeholder="dd-mm-yyyy" class="form-control form-control-lg" id='date_start' v-model="work_does.date_start"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="date_start">Ngày kết thúc :</label>
+                                            <input type="text" placeholder="dd-mm-yyyy" class="form-control form-control-lg" id='date_start' v-model="work_does.date_end"/>
                                         </div>
                                     </div>
                                 </div>
@@ -289,6 +306,8 @@ export default {
                 'emp_workdo': [],
                 'status': "",
                 'note': "",
+                'date_start':"",
+                'date_end':"", 
             },
             wItem_work_does:[],
             module_work_does: [],

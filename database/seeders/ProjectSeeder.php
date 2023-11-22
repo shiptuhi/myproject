@@ -19,27 +19,30 @@ class ProjectSeeder extends Seeder
                 'project_code'=> 'John Doe', 
                 'name' => 'QL Server 2017', 
                 'active_status'=> 'Active',
-                'date_start'=> '2021-02-02',
-                'date_end'=> '2021-03-02',
+                'date_start'=> '20-05-2021',
+                'date_end'=> '20-05-2021',
                 'note' => 'dsadadada',
                 'user_id' => '1',
+                'customer_id'=> '1'
             ],
             [
                 'project_code'=> 'Johsn Doe', 
                 'name' => 'QL Sssserver 2017', 
                 'active_status'=> 'Active',
-                'date_start'=> '2021-02-02',
-                'date_end'=> '2021-04-02',
-                'note' => 'dsadadada',
+                'date_start'=> '20-05-2021',
+                'date_end'=> '20-05-2021',
+                'note' => '20-05-2021',
                 'user_id' => '2',
+                'customer_id' => '2',
             ],[
                 'project_code'=> 'Joahn Doe', 
                 'name' => 'QL Servsssser 2017', 
                 'active_status'=> 'Active',
-                'date_start'=> '2021-02-02',
-                'date_end'=> '2021-06-02',
+                'date_start'=> '20-05-2021',
+                'date_end'=> '20-05-2021',
                 'note' => 'dsadadada',
-                'user_id' => '1',
+                'user_id' => '3',
+                'customer_id' => '3',
             ]    
         ]);
     }

@@ -18,22 +18,25 @@ class ModuleSeeder extends Seeder
             [
                 'module_code' => 'John Doe',
                 'name' => 'QL Server 2017',
-                'project_id' => 4,
+                'project_id' => 1,
+                'date_start' => '02-06-2021',
                 'user_module' => 1,
                 'note' => 'aasdadada',
             ],
             [
                 'module_code' => 'Johsdadsadadn Doe',
                 'name' => 'QL Server 2014654646',
-                'project_id' => 5,
-                'user_module' => 1,
+                'project_id' => 2,
+                'date_start' => '02-06-2021',
+                'user_module' => 2,
                 'note' => 'aasdadada',
             ],
             [
                 'module_code' => 'John Doeewqeqe',
                 'name' => 'qweqweqqweqeQL Server 2017',
-                'project_id' => 4,
-                'user_module' => 1,
+                'project_id' => 3,
+                'date_start' => '02-06-2021',
+                'user_module' => 3,
                 'note' => 'aasdadada',
             ]
         ]);
